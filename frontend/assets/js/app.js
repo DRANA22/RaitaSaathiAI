@@ -1646,14 +1646,14 @@ function renderDashboardRecentApps(apps) {
       <tr style="border-bottom:1px solid #f1f5f9; transition:background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
         <td style="padding:12px 14px; font-weight:700; color:var(--primary); font-family:monospace;">${appNumber}</td>
         <td style="padding:12px 14px;">
-          <div style="font-weight:700; color:var(--primary);">${schemeTitle}</div>
-          <div style="font-size:0.75rem; color:var(--text-muted);">${deptTitle}</div>
+          <div style="font-weight:700; color:var(--primary); font-size:1.05rem;">${schemeTitle}</div>
+          <div style="font-size:0.88rem; color:#475569; margin-top:2px;">${deptTitle}</div>
         </td>
         <td style="padding:12px 14px; color:var(--text-secondary);">${app.applied_at ? app.applied_at.substring(0, 10) : '2026-10-15'}</td>
         <td style="padding:12px 14px; font-weight:700; color:#059669;">${amt}</td>
         <td style="padding:12px 14px;">${statusBadge}</td>
         <td style="padding:12px 14px; text-align:right;">
-          <button class="btn btn-outline" onclick="openTimelineModal('${appNumber}')" style="padding:4px 10px; font-size:0.78rem; border-radius:6px; font-weight:700;">
+          <button class="btn btn-outline" onclick="openTimelineModal('${appNumber}')" style="padding:6px 14px; font-size:0.9rem; border-radius:8px; font-weight:700;">
             ${dict.view_timeline_btn}
           </button>
         </td>
@@ -1850,10 +1850,10 @@ function renderSchemesGrid(schemes) {
           <div class="scheme-card-header">
             <div>
               <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:4px;">
-                <span style="font-size:0.75rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">
+                <span style="font-size:0.88rem; font-weight:800; color:var(--text-muted); text-transform:uppercase;">
                   ${levelLabel} &bull; ${deptText}
                 </span>
-                <span style="background:#f1f5f9; color:#475569; font-size:0.72rem; font-weight:700; padding:2px 8px; border-radius:12px; border:1px solid #cbd5e1;">
+                <span style="background:#f1f5f9; color:#475569; font-size:0.85rem; font-weight:700; padding:3px 10px; border-radius:12px; border:1px solid #cbd5e1;">
                   ${catInfo.icon} ${catInfo.label}
                 </span>
               </div>
@@ -1865,7 +1865,7 @@ function renderSchemesGrid(schemes) {
           </div>
 
           <div style="margin:10px 0;">
-            <span class="scheme-benefit-badge" style="background:#ecfdf5; color:#047857; font-weight:800; padding:4px 10px; border-radius:6px; font-size:0.85rem; border:1px solid #a7f3d0; display:inline-block;">
+            <span class="scheme-benefit-badge" style="background:#ecfdf5; color:#047857; font-weight:800; padding:4px 10px; border-radius:6px; font-size:0.98rem; border:1px solid #a7f3d0; display:inline-block;">
               💰 ${benefitText}
             </span>
           </div>
@@ -1880,17 +1880,17 @@ function renderSchemesGrid(schemes) {
           </div>
 
           <!-- Documents Checklist Pills -->
-          <div style="font-size:0.78rem; font-weight:700; color:var(--text-muted); margin-top:8px;">${dict.required_docs_label}</div>
+          <div style="font-size:0.9rem; font-weight:700; color:var(--text-muted); margin-top:8px;">${dict.required_docs_label}</div>
           <div class="scheme-docs-pills" style="display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;">
-            ${docs.map(d => '<span class="scheme-doc-pill" style="font-size:0.75rem; background:#f8fafc; border:1px solid #e2e8f0; padding:2px 8px; border-radius:6px; color:#475569;">📄 ' + d + '</span>').join('')}
+            ${docs.map(d => '<span class="scheme-doc-pill" style="font-size:0.88rem; background:#f8fafc; border:1px solid #e2e8f0; padding:2px 8px; border-radius:6px; color:#475569;">📄 ' + d + '</span>').join('')}
           </div>
         </div>
 
         <div style="display:flex; gap:10px; margin-top:14px; border-top:1px solid #f1f5f9; padding-top:12px;">
-          <button class="btn btn-emerald" onclick="openApplyModal(${s.id}, '${schemeTitle.replace(/'/g, "\\'")}', '${benefitText.replace(/'/g, "\\'")}')" style="flex:1; padding:8px; font-size:0.85rem; font-weight:700;">
+          <button class="btn btn-emerald" onclick="openApplyModal(${s.id}, '${schemeTitle.replace(/'/g, "\\'")}', '${benefitText.replace(/'/g, "\\'")}')" style="flex:1; padding:10px; font-size:0.98rem; font-weight:700;">
             ${dict.apply_btn}
           </button>
-          <a href="${s.official_portal || s.official_url || 'https://raitamitra.karnataka.gov.in'}" target="_blank" class="btn btn-outline" style="padding:8px 12px; font-size:0.85rem; font-weight:700; text-decoration:none;" title="Portal">
+          <a href="${s.official_portal || s.official_url || 'https://raitamitra.karnataka.gov.in'}" target="_blank" class="btn btn-outline" style="padding:10px 14px; font-size:0.98rem; font-weight:700; text-decoration:none;" title="Portal">
             ${dict.official_portal_btn}
           </a>
         </div>
@@ -1982,14 +1982,14 @@ function renderApplicationsTable(apps) {
       <tr style="border-bottom:1px solid #e2e8f0; transition:background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
         <td style="padding:14px; font-weight:800; color:var(--primary); font-family:monospace; font-size:0.95rem;">${appNumber}</td>
         <td style="padding:14px;">
-          <div style="font-weight:700; color:var(--primary);">${schemeTitle}</div>
-          <div style="font-size:0.75rem; color:var(--text-muted);">${deptTitle}</div>
+          <div style="font-weight:700; color:var(--primary); font-size:1.05rem;">${schemeTitle}</div>
+          <div style="font-size:0.88rem; color:#475569; margin-top:2px;">${deptTitle}</div>
         </td>
         <td style="padding:14px; color:var(--text-secondary);">${app.applied_at ? app.applied_at.substring(0, 10) : '2026-10-15'}</td>
         <td style="padding:14px; font-weight:800; color:#059669;">${amt}</td>
         <td style="padding:14px;">${statusBadge}</td>
         <td style="padding:14px; text-align:right;">
-          <button class="btn btn-emerald" onclick="openTimelineModal('${appNumber}')" style="padding:6px 14px; font-size:0.8rem; font-weight:700; border-radius:6px;">
+          <button class="btn btn-emerald" onclick="openTimelineModal('${appNumber}')" style="padding:8px 16px; font-size:0.95rem; font-weight:700; border-radius:8px;">
             ${dict.view_timeline_btn}
           </button>
         </td>
@@ -2663,7 +2663,7 @@ async function submitCropDiagnostic() {
         <div class="diagnosis-header">
           <div>
             <div class="diagnosis-badge-wrap">
-              <span style="background:#064e3b; color:#ffffff; font-size:0.78rem; font-weight:800; padding:3px 10px; border-radius:var(--radius-full); box-shadow:0 2px 6px rgba(6,78,59,0.3);">
+              <span style="background:#064e3b; color:#ffffff; font-size:0.92rem; font-weight:800; padding:4px 12px; border-radius:var(--radius-full); box-shadow:0 2px 6px rgba(6,78,59,0.3);">
                 🌾 ${isEn ? 'Target Crop: ' + (d.selected_crop || crop) : 'ಆಯ್ಕೆಮಾಡಿದ ಬೆಳೆ: ' + (d.selected_crop || crop)}
               </span>
               <span class="severity-pill ${d.severity_class}">
@@ -2672,7 +2672,7 @@ async function submitCropDiagnostic() {
               <span class="confidence-chip">
                 🎯 ${d.confidence_display} ${isEn ? '100% Precision' : '100% ನಿಖರತೆ'}
               </span>
-              ${d.has_image ? `<span style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:0.75rem; font-weight:700; padding:3px 8px; border-radius:var(--radius-full);">📸 ${isEn ? 'Live Camera Scan' : 'ಕ್ಯಾಮೆರಾ ಸ್ಕ್ಯಾನ್'}</span>` : ''}
+              ${d.has_image ? `<span style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:0.88rem; font-weight:700; padding:4px 10px; border-radius:var(--radius-full);">📸 ${isEn ? 'Live Camera Scan' : 'ಕ್ಯಾಮೆರಾ ಸ್ಕ್ಯಾನ್'}</span>` : ''}
             </div>
             <h3 style="color:var(--primary); font-size:1.45rem; font-weight:800; margin:8px 0 2px;">
               ${diseaseTitle}
@@ -2694,10 +2694,10 @@ async function submitCropDiagnostic() {
           ${d.top_predictions && d.top_predictions.length > 0 ? `
             <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:14px;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
-                <span style="font-size:0.78rem; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.02em;">
+                <span style="font-size:0.92rem; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.02em;">
                   🧠 Deep CNN Multi-Crop Pathology &bull; 38 Classes (Paddy, Ragi, Sugarcane, Maize, Cotton, Potato, Chilli, Tomato, Arecanut)
                 </span>
-                <span style="font-size:0.75rem; background:#dcfce7; color:#15803d; font-weight:800; padding:2px 8px; border-radius:var(--radius-full); border:1px solid #bbf7d0;">
+                <span style="font-size:0.88rem; background:#dcfce7; color:#15803d; font-weight:800; padding:4px 10px; border-radius:var(--radius-full); border:1px solid #bbf7d0;">
                   🎯 100.0% Benchmark Validation Accuracy
                 </span>
               </div>
@@ -2724,7 +2724,7 @@ async function submitCropDiagnostic() {
             <strong style="color:var(--primary); font-size:0.92rem; display:block; margin-bottom:6px;">
               🔍 ${isEn ? 'Visual Observations on Foliage:' : 'ಎಲೆಯಲ್ಲಿ ಕಂಡುಬಂದ ದೃಷ್ಟಿಗೋಚರ ಲಕ್ಷಣಗಳು:'}
             </strong>
-            <ul style="margin:0; padding-left:1.2rem; font-size:0.88rem; color:var(--text-secondary);">
+            <ul style="margin:0; padding-left:1.2rem; font-size:1.02rem; color:var(--text-secondary); line-height:1.6;">
               ${observations.map(obs => `<li>${obs}</li>`).join('')}
             </ul>
           </div>

@@ -57,6 +57,18 @@
   --shadow-glow: 0 0 28px rgba(16, 185, 129, 0.25);
 }
 
+/* Base Root Typography Scale */
+html {
+  font-size: 18.5px;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (min-width: 1400px) {
+  html {
+    font-size: 19.5px;
+  }
+}
+
 /* Base Reset */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -114,21 +126,21 @@ body {
   text-decoration: none;
   color: var(--primary);
   font-weight: 800;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
   letter-spacing: -0.02em;
   flex-shrink: 0;
 }
 
 .brand-icon {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   background: var(--emerald-gradient);
   color: white;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   box-shadow: 0 2px 6px rgba(16, 185, 129, 0.25);
   flex-shrink: 0;
 }
@@ -182,8 +194,8 @@ body {
   text-decoration: none;
   color: #1e293b;
   font-weight: 700;
-  font-size: 0.82rem;
-  padding: 0.45rem 0.88rem;
+  font-size: 0.96rem;
+  padding: 0.52rem 1rem;
   border-radius: 9999px;
   transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
@@ -216,7 +228,7 @@ body {
 }
 
 .nav-links a .nav-icon {
-  font-size: 0.95rem;
+  font-size: 1.15rem;
   display: inline-flex;
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -299,7 +311,7 @@ body {
   padding: 0.7rem 1.4rem;
   border-radius: var(--radius-sm);
   font-weight: 700;
-  font-size: 0.92rem;
+  font-size: 1rem;
   border: none;
   cursor: pointer;
   transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
@@ -379,7 +391,7 @@ body {
   padding: 6px 16px;
   background: #ecfdf5;
   color: var(--status-match);
-  font-size: 0.85rem;
+  font-size: 0.96rem;
   font-weight: 700;
   border-radius: var(--radius-full);
   margin-bottom: 1.5rem;
@@ -809,7 +821,7 @@ select:focus {
 
 label {
   display: block;
-  font-size: 0.88rem;
+  font-size: 1rem; font-weight: 700;
   font-weight: 600;
   color: var(--text-secondary);
   margin-bottom: 6px;
@@ -822,7 +834,7 @@ label {
   gap: 6px;
   padding: 4px 12px;
   border-radius: var(--radius-full);
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -944,17 +956,17 @@ label {
 }
 
 .metric-kpi-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.15rem;
+  font-size: 1.35rem;
 }
 
 .metric-kpi-value {
-  font-size: 1.85rem;
+  font-size: 2.25rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--primary);
@@ -963,14 +975,14 @@ label {
 }
 
 .metric-kpi-title {
-  font-size: 0.82rem;
+  font-size: 0.98rem; font-weight: 800;
   font-weight: 700;
   color: var(--text-secondary);
   line-height: 1.35;
 }
 
 .metric-kpi-sub {
-  font-size: 0.74rem;
+  font-size: 0.88rem; color: #475569;
   color: var(--text-muted);
   margin-top: 0.3rem;
 }
@@ -1289,8 +1301,8 @@ label {
   background: white;
   border: 1.5px solid #cbd5e1;
   border-radius: 50%;
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1954,7 +1966,7 @@ label {
   padding: 8px 14px;
   border-radius: var(--radius-full);
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: 1.02rem; padding: 10px 18px;
   color: var(--text-secondary);
   cursor: pointer;
   transition: all 0.2s ease;

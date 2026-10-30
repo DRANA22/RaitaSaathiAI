@@ -37,15 +37,15 @@
       
       <!-- Karnataka District Selector -->
       <div style="display:inline-flex; align-items:center; gap:4px; background:#ffffff; border:1.5px solid #d1fae5; border-radius:var(--radius-full); padding:2px 8px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
-        <span style="font-size:0.82rem;">📍</span>
-        <select id="nav-select-district" onchange="onDistrictSelectChange(this.value, 'nav')" title="ಜಿಲ್ಲೆ" style="padding:1px 2px; font-size:0.78rem; border:none; background:transparent; font-weight:700; color:var(--primary); cursor:pointer; outline:none;">
+        <span style="font-size:0.95rem;">📍</span>
+        <select id="nav-select-district" onchange="onDistrictSelectChange(this.value, 'nav')" title="ಜಿಲ್ಲೆ" style="padding:1px 2px; font-size:0.92rem; border:none; background:transparent; font-weight:700; color:var(--primary); cursor:pointer; outline:none;">
         </select>
       </div>
 
       <!-- Clean Language Switcher: Kannada & English ONLY -->
       <div style="display:inline-flex; background:#f1f5f9; border-radius:var(--radius-full); padding:2px; border:1px solid #cbd5e1;">
-        <button type="button" onclick="setLanguage('kn')" id="lang-kn" class="btn" style="padding:3px 10px; font-size:0.76rem; border-radius:var(--radius-full); background:#ffffff; font-weight:800; color:var(--primary); box-shadow:0 1px 2px rgba(0,0,0,0.08); cursor:pointer; transition:all 0.15s;">ಕನ್ನಡ</button>
-        <button type="button" onclick="setLanguage('en')" id="lang-en" class="btn" style="padding:3px 10px; font-size:0.76rem; border-radius:var(--radius-full); background:transparent; font-weight:700; color:#64748b; cursor:pointer; transition:all 0.15s;">English</button>
+        <button type="button" onclick="setLanguage('kn')" id="lang-kn" class="btn" style="padding:4px 12px; font-size:0.92rem; border-radius:var(--radius-full); background:#ffffff; font-weight:800; color:var(--primary); box-shadow:0 1px 2px rgba(0,0,0,0.08); cursor:pointer; transition:all 0.15s;">ಕನ್ನಡ</button>
+        <button type="button" onclick="setLanguage('en')" id="lang-en" class="btn" style="padding:4px 12px; font-size:0.92rem; border-radius:var(--radius-full); background:transparent; font-weight:700; color:#64748b; cursor:pointer; transition:all 0.15s;">English</button>
       </div>
 
       <!-- Notification Bell -->
@@ -66,7 +66,7 @@
       </div>
 
       <!-- Farmer Logout -->
-      <button onclick="farmerLogout()" class="btn" style="padding:5px 14px; font-size:0.8rem; border-radius:var(--radius-full); font-weight:800; background:#fef2f2; color:#991b1b; border:1px solid #fecaca; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:0 1px 2px rgba(0,0,0,0.04); white-space:nowrap;" title="Logout">
+      <button onclick="farmerLogout()" class="btn" style="padding:6px 18px; font-size:0.95rem; border-radius:var(--radius-full); font-weight:800; background:#fef2f2; color:#991b1b; border:1px solid #fecaca; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:0 1px 2px rgba(0,0,0,0.04); white-space:nowrap;" title="Logout">
         <span data-i18n="nav_logout">🚪 ನಿರ್ಗಮಿಸಿ</span>
       </button>
     </div>
@@ -85,23 +85,23 @@
           <div style="flex:1; min-width:320px;">
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
               <span class="badge badge-match" id="verification-status-badge"><span class="badge-dot"></span> <span data-i18n="verified_profile_badge">ದೃಢೀಕರಿಸಲ್ಪಟ್ಟ ರೈತ ಪ್ರೊಫೈಲ್</span></span>
-              <span id="farmer-id-badge" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; font-size:0.78rem; font-weight:800; padding:2px 8px; border-radius:6px;">KM-KA-2026-0842</span>
-              <span id="active-location-badge" style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">ಮಂಡ್ಯ ಜಿಲ್ಲೆ &bull; ಕರ್ನಾಟಕ</span>
+              <span id="farmer-id-badge" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; font-size:0.92rem; font-weight:800; padding:4px 10px; border-radius:6px;">KM-KA-2026-0842</span>
+              <span id="active-location-badge" style="font-size:0.95rem; color:var(--text-muted); font-weight:700;">ಮಂಡ್ಯ ಜಿಲ್ಲೆ &bull; ಕರ್ನಾಟಕ</span>
             </div>
 
             <!-- Greeting Headline with Edit Button -->
             <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px; flex-wrap:wrap;">
-              <h2 id="greeting-name" style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin:0;">
+              <h2 id="greeting-name" style="color:var(--primary); font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; margin:0;">
                 ನಮಸ್ಕಾರ, ರೈತ ಮಿತ್ರ
               </h2>
-              <button id="btn-edit-name" onclick="toggleNameInput(true)" class="btn btn-outline" style="padding:4px 12px; font-size:0.8rem; border-radius:var(--radius-full); display:inline-flex; align-items:center; gap:4px; background:#ffffff; box-shadow:var(--shadow-sm);" title="ಹೆಸರು ಬದಲಾಯಿಸಿ">
+              <button id="btn-edit-name" onclick="toggleNameInput(true)" class="btn btn-outline" style="padding:6px 14px; font-size:0.92rem; border-radius:var(--radius-full); display:inline-flex; align-items:center; gap:4px; background:#ffffff; box-shadow:var(--shadow-sm);" title="ಹೆಸರು ಬದಲಾಯಿಸಿ">
                 ✏️ <span id="btn-edit-name-text" data-i18n="btn_edit_name">ಹೆಸರು ಬದಲಾಯಿಸಿ</span>
               </button>
             </div>
 
             <!-- Voice or Text Farmer Name Entry Bar -->
             <div id="name-input-container" style="display:none; margin:10px 0; align-items:center; gap:8px; flex-wrap:wrap; background:#ffffff; padding:10px 14px; border-radius:var(--radius-md); border:1.5px solid #a7f3d0; box-shadow:0 2px 6px rgba(0,0,0,0.05); max-width:640px;">
-              <span style="font-size:0.88rem; font-weight:700; color:var(--text-secondary); white-space:nowrap;" data-i18n="farmer_name_label">👨‍🌾 ರೈತರ ಹೆಸರು:</span>
+              <span style="font-size:0.98rem; font-weight:700; color:var(--text-secondary); white-space:nowrap;" data-i18n="farmer_name_label">👨‍🌾 ರೈತರ ಹೆಸರು:</span>
               <div class="input-with-voice" style="flex:1; min-width:200px;">
                 <input type="text" id="farmer-name-input" placeholder="ಹೆಸರನ್ನು ಹೇಳಿ ಅಥವಾ ಬರೆಯಿರಿ..." data-i18n-ph="farmer_name_placeholder" style="width:100%; padding:6px 42px 6px 12px; font-size:0.9rem; border:1.5px solid #d1d5db; border-radius:6px; outline:none;" onkeydown="if(event.key==='Enter') saveFarmerName();">
                 <button type="button" onclick="startFieldVoice('farmer-name-input', 'name')" class="input-mic-btn" title="ಮಾತನಾಡಿ">🎙️</button>
@@ -124,7 +124,7 @@
 
             <!-- Profile Completion Progress Bar -->
             <div style="margin-top:10px; max-width:480px;">
-              <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700; color:var(--text-secondary); margin-bottom:3px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.92rem; font-weight:700; color:var(--text-secondary); margin-bottom:4px;">
                 <span data-i18n="profile_completion_label">ಪ್ರೊಫೈಲ್ ಪೂರ್ಣಗೊಂಡಿದೆ</span>
                 <span id="profile-pct-text">85%</span>
               </div>
@@ -221,15 +221,15 @@
       <div class="card" style="margin-bottom:2rem;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:1.2rem;">
           <div>
-            <h3 style="color:var(--primary); font-size:1.35rem; font-weight:800; margin:0;" data-i18n="recent_apps_title">
+            <h3 style="color:var(--primary); font-size:1.55rem; font-weight:800; margin:0;" data-i18n="recent_apps_title">
               ಇತ್ತೀಚಿನ ಅರ್ಜಿಗಳ ಸ್ಥಿತಿ
             </h3>
-            <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:2px;" data-i18n="recent_apps_sub">
+            <p style="color:var(--text-secondary); font-size:0.98rem; margin-top:4px;" data-i18n="recent_apps_sub">
               ಅರ್ಜಿ ಪ್ರಗತಿ, ಪರಿಶೀಲನಾ ಹಂತ ಮತ್ತು ನೇರ ಹಣ ಜಮೆ ವಿವರಗಳು
             </p>
           </div>
           <div style="display:flex; gap:8px;">
-            <button class="btn btn-outline" onclick="showTab('tracking')" style="font-size:0.85rem;">
+            <button class="btn btn-outline" onclick="showTab('tracking')" style="font-size:0.95rem; padding:7px 16px;">
               <span data-i18n="view_all_apps_btn">ಎಲ್ಲಾ ಅರ್ಜಿಗಳು ನೋಡಿ &rarr;</span>
             </button>
           </div>
@@ -237,14 +237,14 @@
 
         <!-- Tracking Table -->
         <div style="overflow-x:auto;">
-          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
+          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:1rem;">
             <thead>
               <tr style="border-bottom:2px solid #e2e8f0; color:var(--text-secondary); background:#f8fafc;">
-                <th style="padding:10px 14px;" data-i18n="th_app_id">ಅರ್ಜಿ ಸಂಖ್ಯೆ</th>
-                <th style="padding:10px 14px;" data-i18n="th_scheme_name">ಯೋಜನೆಯ ಹೆಸರು</th>
-                <th style="padding:10px 14px;" data-i18n="th_date">ದಿನಾಂಕ</th>
-                <th style="padding:10px 14px;" data-i18n="th_benefit">ಸೌಲಭ್ಯ ಮೊತ್ತ</th>
-                <th style="padding:10px 14px;" data-i18n="th_status">ಸ್ಥಿತಿ</th>
+                <th style="padding:14px 16px; font-size:1.02rem;" data-i18n="th_app_id">ಅರ್ಜಿ ಸಂಖ್ಯೆ</th>
+                <th style="padding:14px 16px; font-size:1.02rem;" data-i18n="th_scheme_name">ಯೋಜನೆಯ ಹೆಸರು</th>
+                <th style="padding:14px 16px; font-size:1.02rem;" data-i18n="th_date">ದಿನಾಂಕ</th>
+                <th style="padding:14px 16px; font-size:1.02rem;" data-i18n="th_benefit">ಸೌಲಭ್ಯ ಮೊತ್ತ</th>
+                <th style="padding:14px 16px; font-size:1.02rem;" data-i18n="th_status">ಸ್ಥಿತಿ</th>
                 <th style="padding:10px 14px; text-align:right;" data-i18n="th_action">ವಿವರ</th>
               </tr>
             </thead>
@@ -263,13 +263,13 @@
             ಪ್ರಸ್ತುತ ಋತುವಿನ ಬೆಳೆಗಳು ಮತ್ತು ಕೀಟ ನಿರ್ವಹಣೆಯ ಬಗ್ಗೆ ಧ್ವನಿಯ ಮೂಲಕ ಕೇಳಿ.
           </p>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="btn btn-outline" style="font-size:0.85rem;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'How to manage fertilizer for Ragi crop?' : 'ರಾಗಿ ಬೆಳೆಗೆ ಎಷ್ಟು ಗೊಬ್ಬರ ಹಾಕಬೇಕು?')">
+            <button class="btn btn-outline" style="font-size:0.95rem; padding:8px 16px;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'How to manage fertilizer for Ragi crop?' : 'ರಾಗಿ ಬೆಳೆಗೆ ಎಷ್ಟು ಗೊಬ್ಬರ ಹಾಕಬೇಕು?')">
               <span data-i18n="chip_ragi">🌱 ರಾಗಿ ಗೊಬ್ಬರ ನಿರ್ವಹಣೆ</span>
             </button>
-            <button class="btn btn-outline" style="font-size:0.85rem;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'How to control stem borer in paddy crop?' : 'ಭತ್ತದ ಬೆಳೆಯ ಕಾಂಡ ಕೊರೆಯುವ ಹುಳು ಹತೋಟಿ ಹೇಗೆ?')">
+            <button class="btn btn-outline" style="font-size:0.95rem; padding:8px 16px;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'How to control stem borer in paddy crop?' : 'ಭತ್ತದ ಬೆಳೆಯ ಕಾಂಡ ಕೊರೆಯುವ ಹುಳು ಹತೋಟಿ ಹೇಗೆ?')">
               <span data-i18n="chip_paddy">🌾 ಭತ್ತದ ಹುಳು ಹತೋಟಿ</span>
             </button>
-            <button class="btn btn-outline" style="font-size:0.85rem;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'What government schemes are available for my 2.5 acres land?' : 'ನನ್ನ 2.5 ಎಕರೆ ಜಮೀನಿಗೆ ಯಾವ ಯಾವ ಯೋಜನೆಗಳಿವೆ?')">
+            <button class="btn btn-outline" style="font-size:0.95rem; padding:8px 16px;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'What government schemes are available for my 2.5 acres land?' : 'ನನ್ನ 2.5 ಎಕರೆ ಜಮೀನಿಗೆ ಯಾವ ಯಾವ ಯೋಜನೆಗಳಿವೆ?')">
               <span data-i18n="chip_schemes">📜 ನನ್ನ ಅರ್ಹ ಯೋಜನೆಗಳು</span>
             </button>
           </div>
@@ -294,7 +294,7 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
         <div>
           <span class="hero-pill">🏛️ Government Scheme Discovery Engine</span>
-          <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="schemes_heading">
+          <h2 style="color:var(--primary); font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="schemes_heading">
             ಸರ್ಕಾರಿ ಕೃಷಿ ಯೋಜನೆಗಳು
           </h2>
           <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="schemes_sub">
@@ -332,7 +332,7 @@
       <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
         <div>
           <span class="hero-pill">📤 Benefit Tracking & Audit Trail</span>
-          <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="tracking_heading">
+          <h2 style="color:var(--primary); font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="tracking_heading">
             ನನ್ನ ಅರ್ಜಿಗಳ ಟ್ರ್ಯಾಕಿಂಗ್
           </h2>
           <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="tracking_sub">
@@ -380,7 +380,7 @@
     <section id="view-profile" style="display:none;">
       <div style="margin-bottom:1.8rem;">
         <span class="hero-pill">👤 Farmer Digital Identity</span>
-        <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="profile_heading">
+        <h2 style="color:var(--primary); font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="profile_heading">
           ರೈತರ ಡಿಜಿಟಲ್ ಗುರುತು
         </h2>
         <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="profile_sub">
@@ -397,37 +397,37 @@
             <span class="badge badge-match">VERIFIED</span>
           </div>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:0.9rem;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:1.05rem;">
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_farmer_id">ರೈತ ಸಂಖ್ಯೆ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_farmer_id">ರೈತ ಸಂಖ್ಯೆ:</span>
               <strong id="prof-farmer-id" style="color:var(--primary);">KM-KA-2026-0842</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_full_name">ಪೂರ್ಣ ಹೆಸರು:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_full_name">ಪೂರ್ಣ ಹೆಸರು:</span>
               <strong id="prof-farmer-name">ರಮೇಶ್ ಗೌಡ</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_mobile">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_mobile">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ:</span>
               <strong id="prof-mobile">+91 98XXXX2345</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_ekyc">ಆಧಾರ್ ದೃಢೀಕರಣ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_ekyc">ಆಧಾರ್ ದೃಢೀಕರಣ:</span>
               <strong style="color:#059669;">✓ Masked (XXXX-XXXX-8421)</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_state">ರಾಜ್ಯ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_state">ರಾಜ್ಯ:</span>
               <strong id="prof-state">ಕರ್ನಾಟಕ</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_district">ಜಿಲ್ಲೆ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_district">ಜಿಲ್ಲೆ:</span>
               <strong id="prof-district">ಮಂಡ್ಯ</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_taluk">ತಾಲ್ಲೂಕು:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_taluk">ತಾಲ್ಲೂಕು:</span>
               <strong id="prof-taluk">ಪಾಂಡವಪುರ</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_village">ಗ್ರಾಮ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_village">ಗ್ರಾಮ:</span>
               <strong id="prof-village">ಚಿಕ್ಕ ಬ್ಯಾಡರಹಳ್ಳಿ</strong>
             </div>
           </div>
@@ -440,29 +440,29 @@
             <span class="badge" style="background:#eff6ff; color:#1d4ed8;">RTC SEEDED</span>
           </div>
 
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:0.9rem;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; font-size:1.05rem;">
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_total_land">ಒಟ್ಟು ಭೂಮಿ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_total_land">ಒಟ್ಟು ಭೂಮಿ:</span>
               <strong id="prof-land-acres">2.5 ಎಕರೆ</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_ownership">ಭೂಮಾಲೀಕತ್ವ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_ownership">ಭೂಮಾಲೀಕತ್ವ:</span>
               <strong data-i18n="val_owned">ಸ್ವಂತ ಭೂಮಿ</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_category">ರೈತರ ವರ್ಗ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_category">ರೈತರ ವರ್ಗ:</span>
               <strong id="prof-farmer-category" data-i18n="val_small_farmer">ಸಣ್ಣ ರೈತರು</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_irrigation">ನೀರಾವರಿ ವ್ಯವಸ್ಥೆ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_irrigation">ನೀರಾವರಿ ವ್ಯವಸ್ಥೆ:</span>
               <strong id="prof-irrigation" data-i18n="val_borewell">ಬೋರ್‌ವೆಲ್ ನೀರಾವರಿ</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_soil_type">ಮಣ್ಣಿನ ವಿಧ:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_soil_type">ಮಣ್ಣಿನ ವಿಧ:</span>
               <strong id="prof-soil-type" data-i18n="val_red_soil">ಕೆಂಪು ಮರಳು ಮಿಶ್ರಿತ ಮಣ್ಣು</strong>
             </div>
             <div>
-              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_main_crops">ಮುಖ್ಯ ಬೆಳೆಗಳು:</span>
+              <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_main_crops">ಮುಖ್ಯ ಬೆಳೆಗಳು:</span>
               <strong id="prof-crops">ಭತ್ತ, ರಾಗಿ</strong>
             </div>
           </div>
@@ -476,17 +476,17 @@
           <span class="badge badge-match">DBT ENABLED</span>
         </div>
 
-        <div class="grid-3" style="font-size:0.9rem;">
+        <div class="grid-3" style="font-size:1.05rem;">
           <div>
-            <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_bank_name">ಬ್ಯಾಂಕ್ ಹೆಸರು:</span>
+            <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_bank_name">ಬ್ಯಾಂಕ್ ಹೆಸರು:</span>
             <strong data-i18n="val_sbi">ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್ ಆಫ್ ಇಂಡಿಯಾ</strong>
           </div>
           <div>
-            <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_account_no">ಖಾತೆ ಸಂಖ್ಯೆ:</span>
+            <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_account_no">ಖಾತೆ ಸಂಖ್ಯೆ:</span>
             <strong>XXXX-XXXX-4521</strong>
           </div>
           <div>
-            <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_aadhaar_seed">ಆಧಾರ್ ಜೋಡಣೆ:</span>
+            <span style="color:var(--text-muted); font-size:0.92rem; display:block; margin-bottom:2px;" data-i18n="lbl_aadhaar_seed">ಆಧಾರ್ ಜೋಡಣೆ:</span>
             <strong style="color:#059669;" data-i18n="val_seeded">✓ ಜೋಡಿಸಲಾಗಿದೆ ಮತ್ತು ಸಕ್ರಿಯವಾಗಿದೆ</strong>
           </div>
         </div>
@@ -643,7 +643,7 @@
     <section id="view-calculator" style="display:none;">
       <div style="margin-bottom:2rem;">
         <span class="hero-pill">📊 Financial Intelligence</span>
-        <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="calc_heading">
+        <h2 style="color:var(--primary); font-size:2.2rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="calc_heading">
           ಕೃಷಿ ಬಜೆಟ್ ಲ್ಯಾಬ್
         </h2>
         <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="calc_sub">
