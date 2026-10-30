@@ -83,6 +83,23 @@ def test_crop_symptom_isolation():
     assert len(diag['hypotheses']) > 0
     assert "Not a laboratory diagnosis" in diag['disclaimer']
 
+def test_crop_camera_image_diagnosis():
+    import io, base64
+    from PIL import Image
+    # Create synthetic leaf with chlorosis (yellowing)
+    img = Image.new('RGB', (80, 80), color=(200, 190, 40))
+    buf = io.BytesIO()
+    img.save(buf, format='JPEG')
+    b64_data = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode('utf-8')
+
+    res = CropIntelligenceService.analyze_crop(crop_name="Tomato", image_data=b64_data, language="kn")
+    assert res['has_image'] is True
+    assert res['diagnostic_confidence'] >= 0.90
+    assert "Leaf Curl" in res['disease_name_en'] or "Blight" in res['disease_name_en']
+    assert len(res['chemical_kn']) > 0
+    assert len(res['organic_kn']) > 0
+    assert res['audio_summary_kn'] is not None
+
 def test_soil_interpretation_ranges():
     interp = SoilInterpretationService.interpret({
         'ph': 6.5,

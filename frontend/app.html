@@ -654,32 +654,152 @@
     </section>
 
     <!-- ====================================================================
-         7. CROP DIAGNOSTIC VIEW
+         7. CROP DIAGNOSTIC VIEW (CAMERA & AI VISION)
          ==================================================================== -->
     <section id="view-crop" style="display:none;">
-      <div class="card" style="max-width:760px; margin:0 auto;">
-        <span class="hero-pill">🔬 Agronomic Intelligence</span>
-        <h3 style="font-size:1.6rem; color:var(--primary); margin:0.4rem 0 1rem;" data-i18n="crop_heading">
-          ಬೆಳೆ ರೋಗ ತಪಾಸಣೆ
-        </h3>
+      <div class="card crop-scanner-container">
         
-        <label data-i18n="lbl_crop_name">ಬೆಳೆಯ ಹೆಸರು:</label>
-        <div class="input-with-voice" style="margin-bottom:14px;">
-          <input type="text" id="crop-diag-name" value="Tomato" style="padding-right:48px;">
-          <button type="button" onclick="startFieldVoice('crop-diag-name', 'general')" class="input-mic-btn" title="ಮಾತನಾಡಿ">🎙️</button>
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px; margin-bottom:0.8rem;">
+          <div>
+            <span class="hero-pill">📷 AI Camera Vision &bull; Agronomic Intelligence</span>
+            <h3 style="font-size:1.6rem; color:var(--primary); margin:0.4rem 0 0.2rem;" data-i18n="crop_heading">
+              ಬೆಳೆ ರೋಗ ಕ್ಯಾಮೆರಾ ತಪಾಸಣೆ
+            </h3>
+            <p style="color:var(--text-muted); font-size:0.88rem; margin:0;" data-i18n="crop_subheading">
+              ಎಲೆಯ ಸ್ಪಷ್ಟ ಫೋಟೋ ತೆಗೆಯಿರಿ ಅಥವಾ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ, ತಕ್ಷಣ ರೋಗ ಪತ್ತೆ ಮತ್ತು ಕೃಷಿ ವಿವಿ ಪರಿಹಾರ ಪಡೆಯಿರಿ.
+            </p>
+          </div>
         </div>
 
-        <label data-i18n="lbl_crop_symptoms">ರೋಗದ ಲಕ್ಷಣಗಳನ್ನು ವಿವರಿಸಿ:</label>
-        <div class="input-with-voice" style="margin-bottom:16px;">
-          <textarea id="crop-diag-symptoms" rows="4" style="width:100%; padding-right:48px;" placeholder="ಎಲೆಗಳು ಹಳದಿಯಾಗುತ್ತಿವೆ ಮತ್ತು ಸುರುಳಿಯಾಗುತ್ತಿವೆ..." data-i18n-ph="crop_symptoms_ph"></textarea>
-          <button type="button" onclick="startFieldVoice('crop-diag-symptoms', 'general')" class="input-mic-btn" style="top:12px; right:10px;" title="ಮಾತನಾಡಿ">🎙️</button>
+        <!-- Mode Switcher: Camera / Upload / Text -->
+        <div class="camera-mode-switcher">
+          <button type="button" class="cam-mode-btn active" id="tab-mode-camera" onclick="switchCropInputMode('camera')">
+            <span>📷</span> <span data-i18n="crop_tab_camera">ಲೈವ್ ಕ್ಯಾಮೆರಾ</span>
+          </button>
+          <button type="button" class="cam-mode-btn" id="tab-mode-upload" onclick="switchCropInputMode('upload')">
+            <span>📁</span> <span data-i18n="crop_tab_upload">ಫೋಟೋ ಅಪ್‌ಲೋಡ್</span>
+          </button>
+          <button type="button" class="cam-mode-btn" id="tab-mode-text" onclick="switchCropInputMode('text')">
+            <span>✍️</span> <span data-i18n="crop_tab_text">ಧ್ವನಿ / ವಿವರಣೆ</span>
+          </button>
         </div>
 
-        <button class="btn btn-emerald" onclick="submitCropDiagnostic()" style="width:100%; padding:0.85rem;">
-          <span data-i18n="btn_analyze_crop">ವಿಶ್ಲೇಷಿಸಿ</span>
+        <!-- 1. LIVE CAMERA VIEWFINDER -->
+        <div id="crop-camera-mode-wrap">
+          <div class="camera-viewfinder-card" id="crop-camera-box">
+            <div class="cam-video-wrap">
+              <div class="cam-status-pill">
+                <span class="cam-status-dot" id="cam-status-indicator"></span>
+                <span id="cam-status-text" data-i18n="cam_status_idle">ಕ್ಯಾಮೆರಾ ಸಿದ್ಧವಾಗಿದೆ</span>
+              </div>
+              
+              <!-- Scanning Reticle & Animated Green Laser -->
+              <div class="cam-reticle-overlay" id="cam-reticle">
+                <div class="cam-corner top-left"></div>
+                <div class="cam-corner top-right"></div>
+                <div class="cam-corner bottom-left"></div>
+                <div class="cam-corner bottom-right"></div>
+                <div class="cam-scan-laser" id="cam-scan-laser"></div>
+              </div>
+
+              <!-- Live Video Stream -->
+              <video id="crop-video-stream" autoplay playsinline muted style="display:none;"></video>
+              
+              <!-- Hidden Canvas for frame snapshot capture -->
+              <canvas id="crop-canvas-capture" style="display:none;"></canvas>
+
+              <!-- Standby Placeholder -->
+              <div class="cam-placeholder" id="cam-placeholder">
+                <div class="cam-placeholder-icon">📷</div>
+                <div>
+                  <strong style="display:block; color:#f1f5f9; font-size:1.05rem;" data-i18n="cam_prompt_title">ಕ್ಯಾಮೆರಾ ಆನ್ ಮಾಡಲು ಕೆಳಗೆ ಕ್ಲಿಕ್ ಮಾಡಿ</strong>
+                  <span style="font-size:0.85rem; color:#94a3b8;" data-i18n="cam_prompt_sub">ರೋಗಪೀಡಿತ ಎಲೆಯನ್ನು ಚೌಕಟ್ಟಿನಲ್ಲಿಟ್ಟು ಸ್ಪಷ್ಟ ಫೋಟೋ ತೆಗೆದುಕೊಳ್ಳಿ</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Viewfinder Controls -->
+            <div class="cam-controls-bar">
+              <button type="button" class="btn btn-emerald" id="btn-start-camera" onclick="startCropCamera()">
+                <span>📷</span> <span data-i18n="btn_start_cam">ಕ್ಯಾಮೆರಾ ಪ್ರಾರಂಭಿಸಿ</span>
+              </button>
+              <button type="button" class="btn btn-emerald" id="btn-capture-photo" onclick="captureCropPhoto()" style="display:none; background:#059669; border-color:#059669; box-shadow:0 0 12px rgba(16,185,129,0.5);">
+                <span>📸</span> <span data-i18n="btn_capture_cam">ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ</span>
+              </button>
+              <button type="button" class="btn btn-outline" id="btn-switch-camera" onclick="switchCropCamera()" style="display:none; background:rgba(255,255,255,0.08); color:#fff; border-color:rgba(255,255,255,0.2);">
+                <span>🔄</span> <span data-i18n="btn_switch_cam">ಕ್ಯಾಮೆರಾ ಬದಲಾಯಿಸಿ</span>
+              </button>
+              <button type="button" class="btn btn-outline" id="btn-stop-camera" onclick="stopCropCamera()" style="display:none; background:rgba(239,68,68,0.15); color:#fca5a5; border-color:rgba(239,68,68,0.3);">
+                <span>⏹️</span> <span data-i18n="btn_stop_cam">ಕ್ಯಾಮೆರಾ ಮುಚ್ಚಿ</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. FILE UPLOAD DROPZONE -->
+        <div id="crop-upload-mode-wrap" style="display:none;">
+          <div class="crop-file-dropzone" id="crop-upload-dropzone" onclick="document.getElementById('crop-file-input').click()">
+            <input type="file" id="crop-file-input" accept="image/*" capture="environment" style="display:none;" onchange="onCropFileSelected(event)">
+            <div style="font-size:2.5rem; margin-bottom:8px;">📁</div>
+            <strong style="display:block; color:var(--primary); font-size:1.05rem;" data-i18n="upload_drop_title">ಫೋಟೋ ಆಯ್ಕೆಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ</strong>
+            <span style="font-size:0.85rem; color:var(--text-muted); display:block; margin-top:4px;" data-i18n="upload_drop_sub">ಅಥವಾ ನಿಮ್ಮ ಗ್ಯಾಲರಿಯಿಂದ ಎಲೆಯ ಚಿತ್ರವನ್ನು ಎಳೆದು ಹಾಕಿ (JPG, PNG)</span>
+          </div>
+        </div>
+
+        <!-- 3. CAPTURED / UPLOADED LEAF PREVIEW -->
+        <div class="crop-preview-box" id="crop-preview-box" style="display:none;">
+          <div style="display:flex; align-items:center; gap:12px;">
+            <img id="crop-preview-thumb" class="crop-preview-thumb" src="" alt="Captured Leaf Photo">
+            <div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="color:#059669; font-weight:800; font-size:0.92rem;" data-i18n="lbl_leaf_ready">✓ ಎಲೆ ಫೋಟೋ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ</span>
+                <span id="crop-img-dims-badge" style="background:#d1fae5; color:#065f46; font-size:0.75rem; padding:1px 6px; border-radius:4px; font-weight:700;">HD</span>
+              </div>
+              <span style="font-size:0.8rem; color:var(--text-muted);" data-i18n="lbl_ready_to_analyze">ವಿಶ್ಲೇಷಣೆ ನಡೆಸಲು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ</span>
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline" style="font-size:0.8rem; padding:5px 12px;" onclick="retakeCropPhoto()">
+            <span>🔄</span> <span data-i18n="btn_retake_photo">ಮರುತೆಗೆಯಿರಿ</span>
+          </button>
+        </div>
+
+        <!-- QUICK CROP TYPE PICKER -->
+        <div style="margin:12px 0 10px;">
+          <label style="font-weight:700; font-size:0.85rem; color:var(--text-secondary); display:block; margin-bottom:4px;" data-i18n="lbl_select_crop">
+            ಬೆಳೆ ಆಯ್ಕೆಮಾಡಿ (Select Crop):
+          </label>
+          <div class="crop-pill-group">
+            <button type="button" class="crop-pill active" onclick="selectCropType('Tomato', this)">🍅 <span data-i18n="crop_tomato">ಟೊಮೆಟೊ</span></button>
+            <button type="button" class="crop-pill" onclick="selectCropType('Paddy', this)">🌾 <span data-i18n="crop_paddy">ಭತ್ತ</span></button>
+            <button type="button" class="crop-pill" onclick="selectCropType('Ragi', this)">🌾 <span data-i18n="crop_ragi">ರಾಗಿ</span></button>
+            <button type="button" class="crop-pill" onclick="selectCropType('Chilli', this)">🌶️ <span data-i18n="crop_chilli">ಮೆಣಸಿನಕಾಯಿ</span></button>
+            <button type="button" class="crop-pill" onclick="selectCropType('Cotton', this)">🌿 <span data-i18n="crop_cotton">ಹತ್ತಿ</span></button>
+            <button type="button" class="crop-pill" onclick="selectCropType('Maize', this)">🌽 <span data-i18n="crop_maize">ಜೋಳ</span></button>
+            <button type="button" class="crop-pill" onclick="selectCropType('Potato', this)">🥔 <span data-i18n="crop_potato">ಆಲೂಗಡ್ಡೆ</span></button>
+            <button type="button" class="crop-pill" onclick="selectCropType('Arecanut', this)">🌴 <span data-i18n="crop_arecanut">ಅಡಿಕೆ</span></button>
+          </div>
+          <input type="hidden" id="crop-diag-name" value="Tomato">
+        </div>
+
+        <!-- ADDITIONAL SYMPTOMS / VOICE NOTE -->
+        <div id="crop-symptoms-wrap" style="margin-bottom:14px;">
+          <label style="font-weight:700; font-size:0.85rem; color:var(--text-secondary);" data-i18n="lbl_crop_symptoms">
+            ರೋಗದ ಲಕ್ಷಣಗಳು ಅಥವಾ ಗಮನಿಸಿದ ವಿವರ (ಐಚ್ಛಿಕ):
+          </label>
+          <div class="input-with-voice" style="margin-top:6px;">
+            <textarea id="crop-diag-symptoms" rows="2" style="width:100%; padding-right:48px;" placeholder="ಎಲೆಗಳು ಹಳದಿಯಾಗುತ್ತಿವೆ ಮತ್ತು ಸುರುಳಿಯಾಗುತ್ತಿವೆ..." data-i18n-ph="crop_symptoms_ph"></textarea>
+            <button type="button" onclick="startFieldVoice('crop-diag-symptoms', 'general')" class="input-mic-btn" style="top:8px; right:8px;" title="ಮಾತನಾಡಿ">🎙️</button>
+          </div>
+        </div>
+
+        <!-- MAIN CTA BUTTON -->
+        <button class="btn btn-emerald" id="btn-submit-crop-diag" onclick="submitCropDiagnostic()" style="width:100%; padding:0.95rem; font-size:1.05rem; font-weight:800; box-shadow:0 4px 14px rgba(16,185,129,0.3); display:flex; align-items:center; justify-content:center; gap:8px;">
+          <span>⚡</span> <span data-i18n="btn_analyze_crop">ಎಲೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ರೋಗ ಪತ್ತೆಹಚ್ಚಿ</span>
         </button>
 
+        <!-- DIAGNOSIS RESULT BOX -->
         <div id="crop-diagnostic-result" style="margin-top:1.8rem;"></div>
+
       </div>
     </section>
 

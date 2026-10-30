@@ -150,11 +150,37 @@ const I18N_DICTIONARY = {
     lbl_price: "ಮಾರಾಟ ಬೆಲೆ (₹ ಪ್ರತಿ ಕ್ವಿಂಟಾಲ್):",
     lbl_costs: "ಒಟ್ಟು ಉತ್ಪಾದನಾ ವೆಚ್ಚ (ಬೀಜ, ಗೊಬ್ಬರ, ಕೂಲಿ ₹):",
     btn_run_comparison: "📊 ಹೋಲಿಕೆ ಲೆಕ್ಕಾಚಾರ ಮಾಡಿ",
-    crop_heading: "ಬೆಳೆ ರೋಗ ತಪಾಸಣೆ",
+    crop_heading: "📷 ಬೆಳೆ ರೋಗ ಕ್ಯಾಮೆರಾ ತಪಾಸಣೆ",
+    crop_subheading: "ಎಲೆಯ ಸ್ಪಷ್ಟ ಫೋಟೋ ತೆಗೆಯಿರಿ ಅಥವಾ ಅಪ್‌ಲೋಡ್ ಮಾಡಿ, ತಕ್ಷಣ ರೋಗ ಪತ್ತೆ ಮತ್ತು ಕೃಷಿ ವಿವಿ ಪರಿಹಾರ ಪಡೆಯಿರಿ.",
+    crop_tab_camera: "ಲೈವ್ ಕ್ಯಾಮೆರಾ",
+    crop_tab_upload: "ಫೋಟೋ ಅಪ್‌ಲೋಡ್",
+    crop_tab_text: "ಧ್ವನಿ / ವಿವರಣೆ",
+    cam_status_idle: "ಕ್ಯಾಮೆರಾ ಸಿದ್ಧವಾಗಿದೆ",
+    cam_status_active: "ಲೈವ್ ಕ್ಯಾಮೆರಾ ಸಕ್ರಿಯವಾಗಿದೆ",
+    cam_prompt_title: "ಕ್ಯಾಮೆರಾ ಆನ್ ಮಾಡಲು ಕೆಳಗೆ ಕ್ಲಿಕ್ ಮಾಡಿ",
+    cam_prompt_sub: "ರೋಗಪೀಡಿತ ಎಲೆಯನ್ನು ಚೌಕಟ್ಟಿನಲ್ಲಿಟ್ಟು ಸ್ಪಷ್ಟ ಫೋಟೋ ತೆಗೆದುಕೊಳ್ಳಿ",
+    btn_start_cam: "ಕ್ಯಾಮೆರಾ ಪ್ರಾರಂಭಿಸಿ",
+    btn_capture_cam: "ಫೋಟೋ ಸೆರೆಹಿಡಿಯಿರಿ",
+    btn_switch_cam: "ಕ್ಯಾಮೆರಾ ಬದಲಾಯಿಸಿ",
+    btn_stop_cam: "ಕ್ಯಾಮೆರಾ ಮುಚ್ಚಿ",
+    upload_drop_title: "ಫೋಟೋ ಆಯ್ಕೆಮಾಡಲು ಇಲ್ಲಿ ಕ್ಲಿಕ್ ಮಾಡಿ",
+    upload_drop_sub: "ಅಥವಾ ನಿಮ್ಮ ಗ್ಯಾಲರಿಯಿಂದ ಎಲೆಯ ಚಿತ್ರವನ್ನು ಎಳೆದು ಹಾಕಿ (JPG, PNG)",
+    lbl_leaf_ready: "✓ ಎಲೆ ಫೋಟೋ ಸೆರೆಹಿಡಿಯಲಾಗಿದೆ",
+    lbl_ready_to_analyze: "ವಿಶ್ಲೇಷಣೆ ನಡೆಸಲು ಕೆಳಗಿನ ಬಟನ್ ಒತ್ತಿ",
+    btn_retake_photo: "ಮರುತೆಗೆಯಿರಿ",
+    lbl_select_crop: "ಬೆಳೆ ಆಯ್ಕೆಮಾಡಿ (Select Crop):",
+    crop_tomato: "ಟೊಮೆಟೊ",
+    crop_paddy: "ಭತ್ತ",
+    crop_ragi: "ರಾಗಿ",
+    crop_chilli: "ಮೆಣಸಿನಕಾಯಿ",
+    crop_cotton: "ಹತ್ತಿ",
+    crop_maize: "ಜೋಳ",
+    crop_potato: "ಆಲೂಗಡ್ಡೆ",
+    crop_arecanut: "ಅಡಿಕೆ",
     lbl_crop_name: "ಬೆಳೆಯ ಹೆಸರು:",
-    lbl_crop_symptoms: "ಕಂಡುಬಂದ ರೋಗ ಲಕ್ಷಣಗಳನ್ನು ವಿವರಿಸಿ:",
-    crop_symptoms_ph: "ಉದಾ: ಎಲೆಗಳು ಹಳದಿಯಾಗುತ್ತಿವೆ ಮತ್ತು ಸುರುಳಿಯಾಗುತ್ತಿವೆ...",
-    btn_analyze_crop: "ರೋಗ ಪರೀಕ್ಷಿಸಿ",
+    lbl_crop_symptoms: "ರೋಗದ ಲಕ್ಷಣಗಳು ಅಥವಾ ಗಮನಿಸಿದ ವಿವರ (ಐಚ್ಛಿಕ):",
+    crop_symptoms_ph: "ಉದಾ: ಎಲೆಗಳು ಹಳದಿಯಾಗುತ್ತಿವೆ, ಕಂದು ಮಚ್ಚೆಗಳು ಅಥವಾ ಸುರುಟಿಕೊಂಡಿವೆ...",
+    btn_analyze_crop: "ಎಲೆ ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ರೋಗ ಪತ್ತೆಹಚ್ಚಿ",
     soil_heading: "ಮಣ್ಣು ಆರೋಗ್ಯ ಪರೀಕ್ಷೆ",
     lbl_soil_ph: "pH ಮಟ್ಟ (ಆಮ್ಲತೆ/ಕ್ಷಾರತೆ):",
     lbl_soil_ec: "ವಿದ್ಯುತ್ ವಾಹಕತೆ (EC dS/m):",
@@ -364,11 +390,37 @@ const I18N_DICTIONARY = {
     lbl_price: "Selling Price (₹ per Quintal):",
     lbl_costs: "Total Variable Costs (Seeds, Fertilizer, Labour ₹):",
     btn_run_comparison: "📊 Run Comparison",
-    crop_heading: "Crop Health Diagnosis",
+    crop_heading: "📷 AI Crop Disease Camera Scanner",
+    crop_subheading: "Capture or upload a clear leaf photo for instant AI diagnosis and university-verified treatment.",
+    crop_tab_camera: "Live Camera",
+    crop_tab_upload: "Upload Photo",
+    crop_tab_text: "Symptoms / Voice",
+    cam_status_idle: "Camera Ready",
+    cam_status_active: "Live Camera Active",
+    cam_prompt_title: "Click below to start camera",
+    cam_prompt_sub: "Align affected leaf within the frame and capture clear photo",
+    btn_start_cam: "Start Camera",
+    btn_capture_cam: "Capture Leaf Photo",
+    btn_switch_cam: "Switch Camera",
+    btn_stop_cam: "Close Camera",
+    upload_drop_title: "Click to select photo or drag here",
+    upload_drop_sub: "Upload an image from your device gallery (JPG, PNG)",
+    lbl_leaf_ready: "✓ Leaf Photo Captured",
+    lbl_ready_to_analyze: "Ready for AI diagnosis",
+    btn_retake_photo: "Retake",
+    lbl_select_crop: "Select Crop:",
+    crop_tomato: "Tomato",
+    crop_paddy: "Paddy",
+    crop_ragi: "Ragi",
+    crop_chilli: "Chilli",
+    crop_cotton: "Cotton",
+    crop_maize: "Maize",
+    crop_potato: "Potato",
+    crop_arecanut: "Arecanut",
     lbl_crop_name: "Crop Name:",
-    lbl_crop_symptoms: "Describe Observed Symptoms:",
-    crop_symptoms_ph: "e.g. Leaves turning yellow and curling upwards with concentric spots...",
-    btn_analyze_crop: "Analyze Health",
+    lbl_crop_symptoms: "Observed Symptoms or Notes (Optional):",
+    crop_symptoms_ph: "e.g. Leaves turning yellow, brown spots or upward curling...",
+    btn_analyze_crop: "Scan Leaf & Detect Disease",
     soil_heading: "Soil Health Evaluation",
     lbl_soil_ph: "pH Level:",
     lbl_soil_ec: "Electrical Conductivity (EC dS/m):",
@@ -560,6 +612,10 @@ function showTab(tabName) {
       else nav.classList.remove('active');
     }
   });
+
+  if (tabName !== 'crop') {
+    if (typeof stopCropCamera === 'function') stopCropCamera();
+  }
 
   if (tabName === 'schemes') loadSchemeRecommendations();
   if (tabName === 'tracking') loadApplicationsTracking();
@@ -2270,46 +2326,383 @@ async function runFinancialComparison() {
   }
 }
 
+// ============================================================================
+// AI CROP DISEASE CAMERA & COMPUTER VISION SUBSYSTEM
+// ============================================================================
+let cropVideoStream = null;
+let cropCameraFacingMode = 'environment';
+let capturedCropImageData = null;
+let lastCropDiagnosisAudioText = null;
+
+function switchCropInputMode(mode) {
+  const tabCam = document.getElementById('tab-mode-camera');
+  const tabUpload = document.getElementById('tab-mode-upload');
+  const tabText = document.getElementById('tab-mode-text');
+  
+  const camWrap = document.getElementById('crop-camera-mode-wrap');
+  const uploadWrap = document.getElementById('crop-upload-mode-wrap');
+  
+  if (tabCam) tabCam.classList.toggle('active', mode === 'camera');
+  if (tabUpload) tabUpload.classList.toggle('active', mode === 'upload');
+  if (tabText) tabText.classList.toggle('active', mode === 'text');
+
+  if (mode === 'camera') {
+    if (camWrap) camWrap.style.display = 'block';
+    if (uploadWrap) uploadWrap.style.display = 'none';
+  } else if (mode === 'upload') {
+    stopCropCamera();
+    if (camWrap) camWrap.style.display = 'none';
+    if (uploadWrap) uploadWrap.style.display = 'block';
+  } else if (mode === 'text') {
+    stopCropCamera();
+    if (camWrap) camWrap.style.display = 'none';
+    if (uploadWrap) uploadWrap.style.display = 'none';
+    const sympInput = document.getElementById('crop-diag-symptoms');
+    if (sympInput) sympInput.focus();
+  }
+}
+
+async function startCropCamera() {
+  const video = document.getElementById('crop-video-stream');
+  const placeholder = document.getElementById('cam-placeholder');
+  const laser = document.getElementById('cam-scan-laser');
+  const indicator = document.getElementById('cam-status-indicator');
+  const statusText = document.getElementById('cam-status-text');
+  
+  const btnStart = document.getElementById('btn-start-camera');
+  const btnCapture = document.getElementById('btn-capture-photo');
+  const btnSwitch = document.getElementById('btn-switch-camera');
+  const btnStop = document.getElementById('btn-stop-camera');
+
+  try {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert(activeLanguage === 'en' ? 
+        'Camera API is not supported in this browser. Please use the Upload Photo option.' : 
+        'ನಿಮ್ಮ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಕ್ಯಾಮೆರಾ ಬೆಂಬಲವಿಲ್ಲ. ದಯವಿಟ್ಟು ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಆಯ್ಕೆ ಬಳಸಿ.');
+      return;
+    }
+
+    if (cropVideoStream) {
+      cropVideoStream.getTracks().forEach(t => t.stop());
+    }
+
+    const constraints = {
+      video: {
+        facingMode: cropCameraFacingMode,
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      },
+      audio: false
+    };
+
+    cropVideoStream = await navigator.mediaDevices.getUserMedia(constraints);
+    if (video) {
+      video.srcObject = cropVideoStream;
+      video.style.display = 'block';
+      if (cropCameraFacingMode === 'user') {
+        video.classList.add('mirrored');
+      } else {
+        video.classList.remove('mirrored');
+      }
+      await video.play();
+    }
+
+    if (placeholder) placeholder.style.display = 'none';
+    if (laser) laser.style.display = 'block';
+    if (indicator) indicator.classList.add('active');
+    if (statusText) statusText.textContent = activeLanguage === 'en' ? 'Live Camera Active' : 'ಲೈವ್ ಕ್ಯಾಮೆರಾ ಸಕ್ರಿಯವಾಗಿದೆ';
+
+    if (btnStart) btnStart.style.display = 'none';
+    if (btnCapture) btnCapture.style.display = 'inline-flex';
+    if (btnSwitch) btnSwitch.style.display = 'inline-flex';
+    if (btnStop) btnStop.style.display = 'inline-flex';
+
+  } catch (err) {
+    console.warn("Camera access failed or denied:", err);
+    alert(activeLanguage === 'en' ? 
+      'Could not access camera. Please allow camera permissions in your browser or use the Upload Photo option.' : 
+      'ಕ್ಯಾಮೆರಾ ಅನುಮತಿ ಸಿಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಅನುಮತಿ ನೀಡಿ ಅಥವಾ ಫೋಟೋ ಅಪ್‌ಲೋಡ್ ಬಳಸಿ.');
+    if (statusText) statusText.textContent = activeLanguage === 'en' ? 'Camera Access Denied' : 'ಕ್ಯಾಮೆರಾ ಅನುಮತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ';
+  }
+}
+
+function stopCropCamera() {
+  if (cropVideoStream) {
+    cropVideoStream.getTracks().forEach(t => t.stop());
+    cropVideoStream = null;
+  }
+  const video = document.getElementById('crop-video-stream');
+  const placeholder = document.getElementById('cam-placeholder');
+  const laser = document.getElementById('cam-scan-laser');
+  const indicator = document.getElementById('cam-status-indicator');
+  const statusText = document.getElementById('cam-status-text');
+
+  const btnStart = document.getElementById('btn-start-camera');
+  const btnCapture = document.getElementById('btn-capture-photo');
+  const btnSwitch = document.getElementById('btn-switch-camera');
+  const btnStop = document.getElementById('btn-stop-camera');
+
+  if (video) {
+    video.pause();
+    video.srcObject = null;
+    video.style.display = 'none';
+  }
+  if (placeholder) placeholder.style.display = 'flex';
+  if (laser) laser.style.display = 'none';
+  if (indicator) indicator.classList.remove('active');
+  if (statusText) statusText.textContent = activeLanguage === 'en' ? 'Camera Ready' : 'ಕ್ಯಾಮೆರಾ ಸಿದ್ಧವಾಗಿದೆ';
+
+  if (btnStart) btnStart.style.display = 'inline-flex';
+  if (btnCapture) btnCapture.style.display = 'none';
+  if (btnSwitch) btnSwitch.style.display = 'none';
+  if (btnStop) btnStop.style.display = 'none';
+}
+
+async function switchCropCamera() {
+  cropCameraFacingMode = (cropCameraFacingMode === 'environment') ? 'user' : 'environment';
+  await startCropCamera();
+}
+
+function captureCropPhoto() {
+  const video = document.getElementById('crop-video-stream');
+  const canvas = document.getElementById('crop-canvas-capture');
+  if (!video || !canvas) return;
+
+  const w = video.videoWidth || 640;
+  const h = video.videoHeight || 480;
+  canvas.width = w;
+  canvas.height = h;
+
+  const ctx = canvas.getContext('2d');
+  if (cropCameraFacingMode === 'user') {
+    ctx.translate(w, 0);
+    ctx.scale(-1, 1);
+  }
+  ctx.drawImage(video, 0, 0, w, h);
+
+  const dataUrl = canvas.toDataURL('image/jpeg', 0.88);
+  setCapturedCropImage(dataUrl, `${w}x${h}`);
+
+  // Shutter flash effect
+  const card = document.getElementById('crop-camera-box');
+  if (card) {
+    card.style.filter = 'brightness(2)';
+    setTimeout(() => { card.style.filter = 'none'; }, 150);
+  }
+
+  // Turn off camera stream once captured
+  stopCropCamera();
+}
+
+function onCropFileSelected(event) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    setCapturedCropImage(e.target.result, 'Uploaded Image');
+  };
+  reader.readAsDataURL(file);
+}
+
+function setCapturedCropImage(dataUrl, dimsLabel) {
+  capturedCropImageData = dataUrl;
+  const previewBox = document.getElementById('crop-preview-box');
+  const previewThumb = document.getElementById('crop-preview-thumb');
+  const badge = document.getElementById('crop-img-dims-badge');
+
+  if (previewThumb) previewThumb.src = dataUrl;
+  if (badge) badge.textContent = dimsLabel || 'HD';
+  if (previewBox) {
+    previewBox.style.display = 'flex';
+    previewBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function retakeCropPhoto() {
+  capturedCropImageData = null;
+  const previewBox = document.getElementById('crop-preview-box');
+  if (previewBox) previewBox.style.display = 'none';
+  const fileInput = document.getElementById('crop-file-input');
+  if (fileInput) fileInput.value = '';
+
+  // Switch back to camera and start
+  switchCropInputMode('camera');
+  startCropCamera();
+}
+
+function selectCropType(cropName, btnElement) {
+  const hiddenInput = document.getElementById('crop-diag-name');
+  if (hiddenInput) hiddenInput.value = cropName;
+
+  document.querySelectorAll('.crop-pill').forEach(btn => btn.classList.remove('active'));
+  if (btnElement) btnElement.classList.add('active');
+}
+
+function playCropDiagnosisAudio() {
+  if (lastCropDiagnosisAudioText) {
+    speakText(lastCropDiagnosisAudioText);
+  }
+}
+
 async function submitCropDiagnostic() {
-  const crop = document.getElementById('crop-diag-name').value;
-  const symp = document.getElementById('crop-diag-symptoms').value;
+  const crop = (document.getElementById('crop-diag-name') && document.getElementById('crop-diag-name').value) || 'Tomato';
+  const symp = (document.getElementById('crop-diag-symptoms') && document.getElementById('crop-diag-symptoms').value) || '';
   const box = document.getElementById('crop-diagnostic-result');
   if (!box) return;
 
-  const formData = new FormData();
-  formData.append('crop_name', crop);
-  formData.append('symptoms', symp);
+  if (!capturedCropImageData && !symp.trim()) {
+    alert(activeLanguage === 'en' ? 
+      'Please capture/upload an image of the plant leaf, or describe the symptoms.' : 
+      'ದಯವಿಟ್ಟು ಎಲೆಯ ಫೋಟೋ ತೆಗೆಯಿರಿ ಅಥವಾ ರೋಗದ ಲಕ್ಷಣಗಳನ್ನು ವಿವರಿಸಿ.');
+    return;
+  }
 
-  box.innerHTML = activeLanguage === 'en' ? 
-    '<p style="color:var(--text-muted);">Analyzing symptoms against agricultural benchmarks...</p>' : 
-    '<p style="color:var(--text-muted);">ರೋಗ ಲಕ್ಷಣಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...</p>';
-
-  const res = await fetch('/api/crop/analyze', { method: 'POST', body: formData });
-  const data = await res.json();
-  if (!data.success) return;
-
-  const d = data.data;
-  const obsLabel = activeLanguage === 'en' ? 'Diagnostic Observations:' : 'ದೃಷ್ಟಿಗೋಚರ ಅವಲೋಕನಗಳು:';
-  const causeLabel = activeLanguage === 'en' ? 'Possible Hypotheses:' : 'ಸಾಧ್ಯವಿರುವ ಕಾರಣಗಳು:';
-  const actionLabel = activeLanguage === 'en' ? 'Recommended Precautionary Actions:' : 'ಮುಂಜಾಗ್ರತಾ ಕ್ರಮಗಳು:';
-
+  // Scanning animation in result container
   box.innerHTML = `
-    <div style="background:#fffbeb; border:1.5px solid #fde68a; padding:1.4rem; border-radius:var(--radius-md);">
-      <h4 style="color:#92400e; font-size:1.1rem; font-weight:700;">${obsLabel}</h4>
-      <ul style="padding-left:1.2rem; color:#78350f; font-size:0.92rem; margin-bottom:12px;">
-        ${d.observations.map(o => `<li>${o}</li>`).join('')}
-      </ul>
-      <h4 style="color:#92400e; font-size:1.05rem; font-weight:700;">${causeLabel}</h4>
-      <ul style="padding-left:1.2rem; color:#78350f; font-size:0.92rem; margin-bottom:12px;">
-        ${d.hypotheses.map(h => `<li><strong>${h.cause}</strong> (${h.likelihood}): ${h.evidence}</li>`).join('')}
-      </ul>
-      <h4 style="color:#92400e; font-size:1.05rem; font-weight:700;">${actionLabel}</h4>
-      <ul style="padding-left:1.2rem; color:#78350f; font-size:0.92rem;">
-        ${d.cautious_actions.map(a => `<li>${a}</li>`).join('')}
-      </ul>
+    <div style="background:#f8fafc; border:2px dashed #10b981; border-radius:var(--radius-lg); padding:2rem; text-align:center;">
+      <div style="font-size:2.4rem; animation:pulseDot 1s infinite;">🔬</div>
+      <h4 style="color:var(--primary); font-size:1.15rem; font-weight:800; margin:8px 0 4px;">
+        ${activeLanguage === 'en' ? 'Scanning Leaf & Analyzing Pathogen...' : 'ಎಲೆಯನ್ನು ಸ್ಕ್ಯಾನ್ ಮಾಡಿ ರೋಗ ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ...'}
+      </h4>
+      <p style="color:var(--text-muted); font-size:0.85rem; margin:0;">
+        ${activeLanguage === 'en' ? 'Cross-verifying symptoms against UAS Karnataka Agricultural Benchmarks' : 'ಕರ್ನಾಟಕ ಕೃಷಿ ವಿಶ್ವವಿದ್ಯಾನಿಲಯದ ತಪಾಸಣಾ ಮಾರ್ಗಸೂಚಿಯೊಂದಿಗೆ ಹೋಲಿಸಲಾಗುತ್ತಿದೆ'}
+      </p>
     </div>
   `;
+
+  try {
+    const payload = {
+      crop_name: crop,
+      symptoms: symp,
+      image_data: capturedCropImageData || '',
+      growth_stage: 'Vegetative',
+      language: activeLanguage
+    };
+
+    const res = await fetch('/api/crop/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const result = await res.json();
+    if (!result.success || !result.data) {
+      box.innerHTML = `<div class="alert alert-danger">${result.error || 'Failed to analyze crop'}</div>`;
+      return;
+    }
+
+    const d = result.data;
+    const isEn = (activeLanguage === 'en');
+
+    // Save audio script for TTS
+    lastCropDiagnosisAudioText = isEn ? d.audio_summary_en : d.audio_summary_kn;
+
+    const diseaseTitle = isEn ? d.disease_name_en : d.disease_name_kn;
+    const severityLabel = isEn ? d.severity_en : d.severity_kn;
+    const observations = isEn ? d.observations_en : d.observations_kn;
+    const chemical = isEn ? d.chemical_en : d.chemical_kn;
+    const organic = isEn ? d.organic_en : d.organic_kn;
+    const preventive = isEn ? d.preventive_en : d.preventive_kn;
+
+    box.innerHTML = `
+      <div class="diagnosis-result-card">
+        <!-- Diagnosis Header -->
+        <div class="diagnosis-header">
+          <div>
+            <div class="diagnosis-badge-wrap">
+              <span class="severity-pill ${d.severity_class}">
+                ${d.severity_class === 'danger' ? '🔴' : (d.severity_class === 'warning' ? '🟠' : '🟢')} ${severityLabel}
+              </span>
+              <span class="confidence-chip">
+                🎯 ${d.confidence_display} ${isEn ? 'AI Confidence' : 'ನಿಖರತೆ'}
+              </span>
+              ${d.has_image ? `<span style="background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:700; padding:3px 8px; border-radius:var(--radius-full);">📸 ${isEn ? 'Visual Scan' : 'ಕ್ಯಾಮೆರಾ ಸ್ಕ್ಯಾನ್'}</span>` : ''}
+            </div>
+            <h3 style="color:var(--primary); font-size:1.45rem; font-weight:800; margin:8px 0 2px;">
+              ${diseaseTitle}
+            </h3>
+            <span style="font-size:0.82rem; color:var(--text-muted); font-style:italic;">
+              ${d.scientific_name} &bull; ${d.pathogen_type}
+            </span>
+          </div>
+
+          <!-- Listen Audio Button -->
+          <button type="button" class="listen-audio-btn" onclick="playCropDiagnosisAudio()" title="${isEn ? 'Listen to spoken diagnosis' : 'ಧ್ವನಿ ಮೂಲಕ ಸಲಹೆ ಆಲಿಸಿ'}">
+            <span>🔊</span>
+            <span>${isEn ? 'Listen to Advisory' : 'ಸಲಹೆ ಆಲಿಸಿ'}</span>
+          </button>
+        </div>
+
+        <div class="diagnosis-body">
+          <!-- Visual Observations -->
+          <div style="background:#f8fafc; border-left:4px solid #10b981; padding:12px 16px; border-radius:0 var(--radius-sm) var(--radius-sm) 0; margin-bottom:14px;">
+            <strong style="color:var(--primary); font-size:0.92rem; display:block; margin-bottom:6px;">
+              🔍 ${isEn ? 'Visual Observations on Foliage:' : 'ಎಲೆಯಲ್ಲಿ ಕಂಡುಬಂದ ದೃಷ್ಟಿಗೋಚರ ಲಕ್ಷಣಗಳು:'}
+            </strong>
+            <ul style="margin:0; padding-left:1.2rem; font-size:0.88rem; color:var(--text-secondary);">
+              ${observations.map(obs => `<li>${obs}</li>`).join('')}
+            </ul>
+          </div>
+
+          <!-- 3-Column Advisory Grid -->
+          <div class="advisory-grid">
+            <!-- 1. Chemical Control -->
+            <div class="advisory-card chemical">
+              <h5>
+                <span>💊</span> ${isEn ? 'Chemical Treatment (UAS Recommended):' : 'ರಾಸಾಯನಿಕ ಹತೋಟಿ (ಶಿಫಾರಸು ಮಾಡಿದ ಪ್ರಮಾಣ):'}
+              </h5>
+              <ul class="advisory-list">
+                ${chemical.map(c => `<li>${c}</li>`).join('')}
+              </ul>
+            </div>
+
+            <!-- 2. Organic / Biological -->
+            <div class="advisory-card organic">
+              <h5>
+                <span>🌿</span> ${isEn ? 'Organic & Bio-Control Solution:' : 'ಸಾವಯವ ಮತ್ತು ಜೈವಿಕ ಪರಿಹಾರ:'}
+              </h5>
+              <ul class="advisory-list">
+                ${organic.map(o => `<li>${o}</li>`).join('')}
+              </ul>
+            </div>
+
+            <!-- 3. Preventive Measures -->
+            <div class="advisory-card preventive">
+              <h5>
+                <span>🛡️</span> ${isEn ? 'Preventive Field Actions:' : 'ಮುಂಜಾಗ್ರತಾ ಕ್ರಮಗಳು:'}
+              </h5>
+              <ul class="advisory-list">
+                ${preventive.map(p => `<li>${p}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <!-- Helpline & Authority Footnote -->
+          <div style="margin-top:16px; padding-top:12px; border-top:1px solid var(--border-subtle); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:0.8rem; color:var(--text-muted);">
+            <div>
+              <span>🏛️ <strong>${d.source_authority}</strong></span>
+            </div>
+            <div>
+              <span>📞 ${d.helpline}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+  } catch (err) {
+    console.error("Diagnosis error:", err);
+    box.innerHTML = `
+      <div class="alert alert-danger">
+        ${activeLanguage === 'en' ? 'Error analyzing crop. Please try again.' : 'ಬೆಳೆ ಪರಿಶೀಲಿಸುವಲ್ಲಿ ದೋಷ ಉಂಟಾಗಿದೆ. ದಯವಿಟ್ಟು ಪುನಃ ಪ್ರಯತ್ನಿಸಿ.'}
+      </div>
+    `;
+  }
 }
+
 
 async function submitSoilInterpretation() {
   const ph = parseFloat(document.getElementById('soil-ph').value);
