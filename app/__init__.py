@@ -53,9 +53,13 @@ def create_app(config_name=None):
 
     # Serve Frontend SPA
     @app.route('/')
+    def serve_root():
+        return send_from_directory(app.static_folder, 'app.html')
+
     @app.route('/saas')
-    def serve_index():
-        return send_from_directory(app.static_folder, 'index.html')
+    def redirect_saas():
+        from flask import redirect
+        return redirect('/app', code=301)
 
     @app.route('/login')
     def serve_login():

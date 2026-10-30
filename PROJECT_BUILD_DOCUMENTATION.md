@@ -84,7 +84,7 @@ RaitaSaathiAI/
 │   │       └── app.js                  # 2,200+ lines SPA core, pure i18n dictionaries, Chart.js logic
 │   ├── admin.html                      # District Agriculture Officer Administration Portal
 │   ├── app.html                        # Main Farmer Single Page Application (8 tabbed views)
-│   └── index.html                      # Glassmorphism Landing Page with interactive workflow steps
+│   └── login.html                      # OTP & Phone / Aadhaar Farmer Authentication Portal
 │
 ├── scripts/                            # Operational & Hackathon Tooling
 │   ├── generate_pitch_deck.py          # Generates modern 16:9 PowerPoint pitch deck (.pptx)
@@ -174,8 +174,6 @@ Key endpoints:
 
 ### Step 5: Frontend Single Page Application (`frontend/`)
 The frontend was designed with an uncompromising focus on usability, speed, and linguistic clarity:
-- **`frontend/index.html` (Landing Page):**
-  - Welcomes users with an accessible hero section, Kannada voice invitation button, interactive value cards, and a 3-step workflow diagram.
 - **`frontend/app.html` (Farmer Web App):**
   - Contains 8 full-featured tab views that switch instantly without network latency:
     1. **Dashboard:** Displays personalized greeting, verification badge, district indicator, quick action buttons, and active application summary.
