@@ -20,14 +20,14 @@
     </a>
 
     <ul class="nav-links">
-      <li><a onclick="showTab('dashboard')" id="nav-dashboard" class="active"><span class="nav-icon">🏠</span> <span data-i18n="nav_dashboard">ಮುಖಪುಟ</span></a></li>
-      <li><a onclick="showTab('schemes')" id="nav-schemes"><span class="nav-icon">📜</span> <span data-i18n="nav_schemes">ಯೋಜನೆಗಳು</span></a></li>
-      <li><a onclick="showTab('tracking')" id="nav-tracking"><span class="nav-icon">📤</span> <span data-i18n="nav_tracking">ಅರ್ಜಿ ಟ್ರ್ಯಾಕಿಂಗ್</span></a></li>
-      <li><a onclick="showTab('profile')" id="nav-profile"><span class="nav-icon">👤</span> <span data-i18n="nav_profile">ನನ್ನ ಪ್ರೊಫೈಲ್</span></a></li>
-      <li><a onclick="showTab('assistant')" id="nav-assistant"><span class="nav-icon">🎤</span> <span data-i18n="nav_assistant">ಧ್ವನಿ ಸಹಾಯಕ</span></a></li>
-      <li><a onclick="showTab('calculator')" id="nav-calculator"><span class="nav-icon">⚖️</span> <span data-i18n="nav_calculator">ಬಜೆಟ್ ಲ್ಯಾಬ್</span></a></li>
-      <li><a onclick="showTab('crop')" id="nav-crop"><span class="nav-icon">🔬</span> <span data-i18n="nav_crop">ಬೆಳೆ ರೋಗ</span></a></li>
-      <li><a onclick="showTab('soil')" id="nav-soil"><span class="nav-icon">🧪</span> <span data-i18n="nav_soil">ಮಣ್ಣು ಪರೀಕ್ಷೆ</span></a></li>
+      <li><a onclick="showTab('dashboard')" id="nav-dashboard" class="active" title="ಮುಖಪುಟ"><span class="nav-icon">🏠</span> <span data-i18n="nav_dashboard">ಮುಖಪುಟ</span></a></li>
+      <li><a onclick="showTab('schemes')" id="nav-schemes" title="ಯೋಜನೆಗಳು"><span class="nav-icon">📜</span> <span data-i18n="nav_schemes">ಯೋಜನೆಗಳು</span></a></li>
+      <li><a onclick="showTab('tracking')" id="nav-tracking" title="ಟ್ರ್ಯಾಕಿಂಗ್"><span class="nav-icon">📤</span> <span data-i18n="nav_tracking">ಟ್ರ್ಯಾಕಿಂಗ್</span></a></li>
+      <li><a onclick="showTab('profile')" id="nav-profile" title="ಪ್ರೊಫೈಲ್"><span class="nav-icon">👤</span> <span data-i18n="nav_profile">ಪ್ರೊಫೈಲ್</span></a></li>
+      <li><a onclick="showTab('assistant')" id="nav-assistant" title="ಧ್ವನಿ ಸಹಾಯಕ"><span class="nav-icon">🎤</span> <span data-i18n="nav_assistant">ಧ್ವನಿ</span></a></li>
+      <li><a onclick="showTab('calculator')" id="nav-calculator" title="ಬಜೆಟ್ ಲ್ಯಾಬ್"><span class="nav-icon">⚖️</span> <span data-i18n="nav_calculator">ಬಜೆಟ್</span></a></li>
+      <li><a onclick="showTab('crop')" id="nav-crop" title="ಬೆಳೆ ರೋಗ"><span class="nav-icon">🔬</span> <span data-i18n="nav_crop">ಬೆಳೆ</span></a></li>
+      <li><a onclick="showTab('soil')" id="nav-soil" title="ಮಣ್ಣು ಪರೀಕ್ಷೆ"><span class="nav-icon">🧪</span> <span data-i18n="nav_soil">ಮಣ್ಣು</span></a></li>
     </ul>
 
     <!-- Top Navbar Right Actions: Location, Clean 2-Language Switcher, Notifications, Admin Portal -->
@@ -35,11 +35,9 @@
     <div class="navbar-actions">
       
       <!-- Karnataka District Selector -->
-      <div style="display:inline-flex; align-items:center; gap:5px; background:#ffffff; border:1.5px solid #d1fae5; border-radius:var(--radius-full); padding:2px 10px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
-        <span style="font-size:0.85rem;">📍</span>
-        <span id="nav-state-label" style="font-size:0.78rem; font-weight:800; color:var(--emerald);" data-i18n="state_karnataka">ಕರ್ನಾಟಕ</span>
-        <span style="color:#cbd5e1; font-size:0.75rem;">|</span>
-        <select id="nav-select-district" onchange="onDistrictSelectChange(this.value, 'nav')" title="ಜಿಲ್ಲೆ" style="padding:1px 4px; font-size:0.78rem; border:none; background:transparent; font-weight:700; color:var(--primary); cursor:pointer; outline:none;">
+      <div style="display:inline-flex; align-items:center; gap:4px; background:#ffffff; border:1.5px solid #d1fae5; border-radius:var(--radius-full); padding:2px 8px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-size:0.82rem;">📍</span>
+        <select id="nav-select-district" onchange="onDistrictSelectChange(this.value, 'nav')" title="ಜಿಲ್ಲೆ" style="padding:1px 2px; font-size:0.78rem; border:none; background:transparent; font-weight:700; color:var(--primary); cursor:pointer; outline:none;">
         </select>
       </div>
 
