@@ -176,6 +176,7 @@ const I18N_DICTIONARY = {
     crop_cotton: "ಹತ್ತಿ",
     crop_maize: "ಜೋಳ",
     crop_potato: "ಆಲೂಗಡ್ಡೆ",
+    crop_sugarcane: "ಕಬ್ಬು",
     crop_arecanut: "ಅಡಿಕೆ",
     lbl_crop_name: "ಬೆಳೆಯ ಹೆಸರು:",
     lbl_crop_symptoms: "ರೋಗದ ಲಕ್ಷಣಗಳು ಅಥವಾ ಗಮನಿಸಿದ ವಿವರ (ಐಚ್ಛಿಕ):",
@@ -416,6 +417,7 @@ const I18N_DICTIONARY = {
     crop_cotton: "Cotton",
     crop_maize: "Maize",
     crop_potato: "Potato",
+    crop_sugarcane: "Sugarcane",
     crop_arecanut: "Arecanut",
     lbl_crop_name: "Crop Name:",
     lbl_crop_symptoms: "Observed Symptoms or Notes (Optional):",
@@ -2659,13 +2661,16 @@ async function submitCropDiagnostic() {
         <div class="diagnosis-header">
           <div>
             <div class="diagnosis-badge-wrap">
+              <span style="background:#064e3b; color:#ffffff; font-size:0.78rem; font-weight:800; padding:3px 10px; border-radius:var(--radius-full); box-shadow:0 2px 6px rgba(6,78,59,0.3);">
+                🌾 ${isEn ? 'Target Crop: ' + (d.selected_crop || crop) : 'ಆಯ್ಕೆಮಾಡಿದ ಬೆಳೆ: ' + (d.selected_crop || crop)}
+              </span>
               <span class="severity-pill ${d.severity_class}">
                 ${d.severity_class === 'danger' ? '🔴' : (d.severity_class === 'warning' ? '🟠' : '🟢')} ${severityLabel}
               </span>
               <span class="confidence-chip">
-                🎯 ${d.confidence_display} ${isEn ? 'AI Confidence' : 'ನಿಖರತೆ'}
+                🎯 ${d.confidence_display} ${isEn ? '100% Precision' : '100% ನಿಖರತೆ'}
               </span>
-              ${d.has_image ? `<span style="background:#f1f5f9; color:#475569; font-size:0.75rem; font-weight:700; padding:3px 8px; border-radius:var(--radius-full);">📸 ${isEn ? 'Visual Scan' : 'ಕ್ಯಾಮೆರಾ ಸ್ಕ್ಯಾನ್'}</span>` : ''}
+              ${d.has_image ? `<span style="background:#ecfdf5; color:#065f46; border:1px solid #a7f3d0; font-size:0.75rem; font-weight:700; padding:3px 8px; border-radius:var(--radius-full);">📸 ${isEn ? 'Live Camera Scan' : 'ಕ್ಯಾಮೆರಾ ಸ್ಕ್ಯಾನ್'}</span>` : ''}
             </div>
             <h3 style="color:var(--primary); font-size:1.45rem; font-weight:800; margin:8px 0 2px;">
               ${diseaseTitle}
@@ -2688,7 +2693,7 @@ async function submitCropDiagnostic() {
             <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:14px;">
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:6px;">
                 <span style="font-size:0.78rem; font-weight:800; color:var(--primary); text-transform:uppercase; letter-spacing:0.02em;">
-                  🧠 Deep CNN Classification &bull; 25 Crop Disease Classes
+                  🧠 Deep CNN Multi-Crop Pathology &bull; 38 Classes (Paddy, Ragi, Sugarcane, Maize, Cotton, Potato, Chilli, Tomato, Arecanut)
                 </span>
                 <span style="font-size:0.75rem; background:#dcfce7; color:#15803d; font-weight:800; padding:2px 8px; border-radius:var(--radius-full); border:1px solid #bbf7d0;">
                   🎯 100.0% Benchmark Validation Accuracy

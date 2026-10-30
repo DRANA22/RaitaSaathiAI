@@ -1,8 +1,19 @@
 {
   "model_architecture": "CropDiseaseCNN-4Block",
-  "num_classes": 25,
+  "num_classes": 38,
   "input_resolution": "64x64",
-  "test_accuracy": 99.5,
+  "test_accuracy": 92.54,
+  "crops_supported": [
+    "Paddy",
+    "Ragi",
+    "Sugarcane",
+    "Maize",
+    "Cotton",
+    "Potato",
+    "Chilli",
+    "Tomato",
+    "Arecanut"
+  ],
   "classes": [
     {
       "id": "Tomato___Early_Blight",
@@ -206,6 +217,31 @@
       "halo_rgb": null
     },
     {
+      "id": "Paddy___Sheath_Blight",
+      "crop": "Paddy",
+      "crop_kn": "ಭತ್ತ",
+      "name_en": "Paddy Sheath Blight",
+      "name_kn": "ಭತ್ತದ ಹಾಳೆ ರೋಗ",
+      "scientific": "Rhizoctonia solani",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
+      "base_rgb": [
+        55,
+        140,
+        55
+      ],
+      "spot_type": "snake_skin_sheath_blight",
+      "spot_rgb": [
+        85,
+        95,
+        80
+      ],
+      "halo_rgb": [
+        145,
+        95,
+        45
+      ]
+    },
+    {
       "id": "Paddy___Healthy",
       "crop": "Paddy",
       "crop_kn": "ಭತ್ತ",
@@ -269,6 +305,31 @@
       "halo_rgb": null
     },
     {
+      "id": "Ragi___Brown_Spot",
+      "crop": "Ragi",
+      "crop_kn": "ರಾಗಿ",
+      "name_en": "Ragi Brown Leaf Spot",
+      "name_kn": "ರಾಗಿ ಕಂದು ಎಲೆ ಚುಕ್ಕೆ ರೋಗ",
+      "scientific": "Bipolaris nodulosa",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
+      "base_rgb": [
+        50,
+        125,
+        40
+      ],
+      "spot_type": "ragi_brown_dots",
+      "spot_rgb": [
+        95,
+        55,
+        30
+      ],
+      "halo_rgb": [
+        185,
+        160,
+        50
+      ]
+    },
+    {
       "id": "Ragi___Healthy",
       "crop": "Ragi",
       "crop_kn": "ರಾಗಿ",
@@ -286,88 +347,180 @@
       "halo_rgb": null
     },
     {
-      "id": "Chilli___Leaf_Curl_Murda",
-      "crop": "Chilli",
-      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
-      "name_en": "Chilli Leaf Curl & Murda Complex",
-      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ಮುರಡ ರೋಗ / ನುಸಿ ಪೀಡೆ",
-      "scientific": "Polyphagotarsonemus latus / Scirtothrips dorsalis",
-      "pathogen": "ನುಸಿ ಮತ್ತು ಕೀಟ ಬಾಧೆ (Mite / Thrips)",
+      "id": "Sugarcane___Red_Rot",
+      "crop": "Sugarcane",
+      "crop_kn": "ಕಬ್ಬು",
+      "name_en": "Sugarcane Red Rot",
+      "name_kn": "ಕಬ್ಬಿನ ಕೆಂಪು ಕೊಳೆ ರೋಗ",
+      "scientific": "Colletotrichum falcatum",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
       "base_rgb": [
-        165,
-        180,
+        65,
+        120,
         45
       ],
-      "spot_type": "downward_cupped_margins",
+      "spot_type": "sugarcane_red_stripe",
       "spot_rgb": [
-        230,
-        220,
-        70
+        185,
+        35,
+        25
       ],
-      "halo_rgb": null
+      "halo_rgb": [
+        245,
+        240,
+        230
+      ]
     },
     {
-      "id": "Chilli___Anthracnose_Fruit_Rot",
-      "crop": "Chilli",
-      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
-      "name_en": "Chilli Anthracnose & Dieback",
-      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ಹಣ್ಣು ಕೊಳೆ ಮತ್ತು ತುದಿಯೊಣಗು ರೋಗ",
-      "scientific": "Colletotrichum capsici",
+      "id": "Sugarcane___Smut",
+      "crop": "Sugarcane",
+      "crop_kn": "ಕಬ್ಬು",
+      "name_en": "Sugarcane Smut",
+      "name_kn": "ಕಬ್ಬಿನ ಕಾಡಿಗೆ ರೋಗ",
+      "scientific": "Sporisorium scitamineum",
       "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
       "base_rgb": [
         45,
-        120,
+        105,
         40
       ],
-      "spot_type": "sunken_black_necrotic",
+      "spot_type": "sugarcane_black_whip",
       "spot_rgb": [
         20,
-        15,
-        15
+        20,
+        20
       ],
       "halo_rgb": [
-        195,
-        110,
+        120,
+        120,
         120
       ]
     },
     {
-      "id": "Chilli___Bacterial_Spot",
-      "crop": "Chilli",
-      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
-      "name_en": "Chilli Bacterial Leaf Spot",
-      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ದುಂಡಾಣು ಎಲೆ ಚುಕ್ಕೆ ರೋಗ",
-      "scientific": "Xanthomonas vesicatoria",
-      "pathogen": "ದುಂಡಾಣು (Bacterial)",
+      "id": "Sugarcane___Yellow_Leaf",
+      "crop": "Sugarcane",
+      "crop_kn": "ಕಬ್ಬು",
+      "name_en": "Sugarcane Yellow Leaf Disease (SCYLV)",
+      "name_kn": "ಕಬ್ಬಿನ ಹಳದಿ ಎಲೆ ರೋಗ",
+      "scientific": "Sugarcane yellow leaf virus",
+      "pathogen": "ವೈರಸ್ (Luteovirus / Aphid vector)",
       "base_rgb": [
-        40,
-        130,
+        180,
+        195,
+        45
+      ],
+      "spot_type": "sugarcane_midrib_yellowing",
+      "spot_rgb": [
+        245,
+        225,
         40
       ],
-      "spot_type": "circular_scabs",
+      "halo_rgb": null
+    },
+    {
+      "id": "Sugarcane___Healthy",
+      "crop": "Sugarcane",
+      "crop_kn": "ಕಬ್ಬು",
+      "name_en": "Sugarcane Healthy Cane Foliage",
+      "name_kn": "ಕಬ್ಬಿನ ಆರೋಗ್ಯಕರ ಎಲೆ",
+      "scientific": "Saccharum officinarum",
+      "pathogen": "None (ಆರೋಗ್ಯಕರ)",
+      "base_rgb": [
+        30,
+        175,
+        40
+      ],
+      "spot_type": "clean_foliage",
+      "spot_rgb": null,
+      "halo_rgb": null
+    },
+    {
+      "id": "Maize___Common_Rust",
+      "crop": "Maize",
+      "crop_kn": "ಜೋಳ",
+      "name_en": "Maize Common Rust",
+      "name_kn": "ಮುಸುಕಿನ ಜೋಳದ ತುಕ್ಕು ರೋಗ",
+      "scientific": "Puccinia sorghi",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
+      "base_rgb": [
+        65,
+        140,
+        45
+      ],
+      "spot_type": "orange_cinnamon_pustules",
       "spot_rgb": [
-        35,
-        25,
-        20
+        220,
+        95,
+        25
       ],
       "halo_rgb": [
-        215,
-        190,
-        35
+        180,
+        70,
+        15
       ]
     },
     {
-      "id": "Chilli___Healthy",
-      "crop": "Chilli",
-      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
-      "name_en": "Chilli Healthy Leaf",
-      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ಆರೋಗ್ಯಕರ ಎಲೆ",
-      "scientific": "Capsicum annuum",
+      "id": "Maize___Northern_Leaf_Blight",
+      "crop": "Maize",
+      "crop_kn": "ಜೋಳ",
+      "name_en": "Maize Northern Leaf Blight (NCLB)",
+      "name_kn": "ಮುಸುಕಿನ ಜೋಳದ ಎಲೆ ಕರಗು ರೋಗ",
+      "scientific": "Exserohilum turcicum",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
+      "base_rgb": [
+        60,
+        135,
+        45
+      ],
+      "spot_type": "cigar_shaped_tan_stripes",
+      "spot_rgb": [
+        180,
+        160,
+        110
+      ],
+      "halo_rgb": [
+        120,
+        95,
+        55
+      ]
+    },
+    {
+      "id": "Maize___Fall_Armyworm",
+      "crop": "Maize",
+      "crop_kn": "ಜೋಳ",
+      "name_en": "Maize Fall Armyworm Damage",
+      "name_kn": "ಮುಸುಕಿನ ಜೋಳದ ಸೈನಿಕ ಹುಳು ಬಾಧೆ",
+      "scientific": "Spodoptera frugiperda",
+      "pathogen": "ಕೀಟ ಪೀಡೆ (Lepidopteran Pest)",
+      "base_rgb": [
+        55,
+        130,
+        50
+      ],
+      "spot_type": "ragged_leaf_holes",
+      "spot_rgb": [
+        80,
+        65,
+        45
+      ],
+      "halo_rgb": [
+        160,
+        145,
+        100
+      ]
+    },
+    {
+      "id": "Maize___Healthy",
+      "crop": "Maize",
+      "crop_kn": "ಜೋಳ",
+      "name_en": "Maize Healthy Leaf",
+      "name_kn": "ಮುಸುಕಿನ ಜೋಳದ ಆರೋಗ್ಯಕರ ಎಲೆ",
+      "scientific": "Zea mays",
       "pathogen": "None (ಆರೋಗ್ಯಕರ)",
       "base_rgb": [
-        20,
-        155,
-        35
+        35,
+        170,
+        40
       ],
       "spot_type": "clean_foliage",
       "spot_rgb": null,
@@ -458,56 +611,6 @@
       "halo_rgb": null
     },
     {
-      "id": "Maize___Common_Rust",
-      "crop": "Maize",
-      "crop_kn": "ಜೋಳ",
-      "name_en": "Maize Common Rust",
-      "name_kn": "ಮುಸುಕಿನ ಜೋಳದ ತುಕ್ಕು ರೋಗ",
-      "scientific": "Puccinia sorghi",
-      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
-      "base_rgb": [
-        65,
-        140,
-        45
-      ],
-      "spot_type": "orange_cinnamon_pustules",
-      "spot_rgb": [
-        220,
-        95,
-        25
-      ],
-      "halo_rgb": [
-        180,
-        70,
-        15
-      ]
-    },
-    {
-      "id": "Maize___Northern_Leaf_Blight",
-      "crop": "Maize",
-      "crop_kn": "ಜೋಳ",
-      "name_en": "Maize Northern Leaf Blight (NCLB)",
-      "name_kn": "ಮುಸುಕಿನ ಜೋಳದ ಎಲೆ ಕರಗು ರೋಗ",
-      "scientific": "Exserohilum turcicum",
-      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
-      "base_rgb": [
-        60,
-        135,
-        45
-      ],
-      "spot_type": "cigar_shaped_tan_stripes",
-      "spot_rgb": [
-        180,
-        160,
-        110
-      ],
-      "halo_rgb": [
-        120,
-        95,
-        55
-      ]
-    },
-    {
       "id": "Potato___Early_Blight",
       "crop": "Potato",
       "crop_kn": "ಆಲೂಗಡ್ಡೆ",
@@ -556,6 +659,203 @@
         175,
         160
       ]
+    },
+    {
+      "id": "Potato___Healthy",
+      "crop": "Potato",
+      "crop_kn": "ಆಲೂಗಡ್ಡೆ",
+      "name_en": "Potato Healthy Foliage",
+      "name_kn": "ಆಲೂಗಡ್ಡೆ ಆರೋಗ್ಯಕರ ಎಲೆ",
+      "scientific": "Solanum tuberosum",
+      "pathogen": "None (ಆರೋಗ್ಯಕರ)",
+      "base_rgb": [
+        30,
+        165,
+        35
+      ],
+      "spot_type": "clean_foliage",
+      "spot_rgb": null,
+      "halo_rgb": null
+    },
+    {
+      "id": "Chilli___Leaf_Curl_Murda",
+      "crop": "Chilli",
+      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
+      "name_en": "Chilli Leaf Curl & Murda Complex",
+      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ಮುರಡ ರೋಗ / ನುಸಿ ಪೀಡೆ",
+      "scientific": "Polyphagotarsonemus latus / Scirtothrips dorsalis",
+      "pathogen": "ನುಸಿ ಮತ್ತು ಕೀಟ ಬಾಧೆ (Mite / Thrips)",
+      "base_rgb": [
+        165,
+        180,
+        45
+      ],
+      "spot_type": "downward_cupped_margins",
+      "spot_rgb": [
+        230,
+        220,
+        70
+      ],
+      "halo_rgb": null
+    },
+    {
+      "id": "Chilli___Anthracnose_Fruit_Rot",
+      "crop": "Chilli",
+      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
+      "name_en": "Chilli Anthracnose & Dieback",
+      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ಹಣ್ಣು ಕೊಳೆ ಮತ್ತು ತುದಿಯೊಣಗು ರೋಗ",
+      "scientific": "Colletotrichum capsici",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
+      "base_rgb": [
+        45,
+        120,
+        40
+      ],
+      "spot_type": "sunken_black_necrotic",
+      "spot_rgb": [
+        20,
+        15,
+        15
+      ],
+      "halo_rgb": [
+        195,
+        110,
+        120
+      ]
+    },
+    {
+      "id": "Chilli___Bacterial_Spot",
+      "crop": "Chilli",
+      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
+      "name_en": "Chilli Bacterial Leaf Spot",
+      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ದುಂಡಾಣು ಎಲೆ ಚುಕ್ಕೆ ರೋಗ",
+      "scientific": "Xanthomonas vesicatoria",
+      "pathogen": "ದುಂಡಾಣು (Bacterial)",
+      "base_rgb": [
+        40,
+        130,
+        40
+      ],
+      "spot_type": "circular_scabs",
+      "spot_rgb": [
+        35,
+        25,
+        20
+      ],
+      "halo_rgb": [
+        215,
+        190,
+        35
+      ]
+    },
+    {
+      "id": "Chilli___Powdery_Mildew",
+      "crop": "Chilli",
+      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
+      "name_en": "Chilli Powdery Mildew",
+      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ಬೂದಿ ರೋಗ",
+      "scientific": "Leveillula taurica",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Fungal)",
+      "base_rgb": [
+        65,
+        135,
+        55
+      ],
+      "spot_type": "chilli_white_powdery",
+      "spot_rgb": [
+        235,
+        235,
+        240
+      ],
+      "halo_rgb": [
+        190,
+        200,
+        110
+      ]
+    },
+    {
+      "id": "Chilli___Healthy",
+      "crop": "Chilli",
+      "crop_kn": "ಮೆಣಸಿನಕಾಯಿ",
+      "name_en": "Chilli Healthy Leaf",
+      "name_kn": "ಮೆಣಸಿನಕಾಯಿ ಆರೋಗ್ಯಕರ ಎಲೆ",
+      "scientific": "Capsicum annuum",
+      "pathogen": "None (ಆರೋಗ್ಯಕರ)",
+      "base_rgb": [
+        20,
+        155,
+        35
+      ],
+      "spot_type": "clean_foliage",
+      "spot_rgb": null,
+      "halo_rgb": null
+    },
+    {
+      "id": "Arecanut___Koleroga_Fruit_Rot",
+      "crop": "Arecanut",
+      "crop_kn": "ಅಡಿಕೆ",
+      "name_en": "Arecanut Koleroga / Mahali Rot",
+      "name_kn": "ಅಡಿಕೆ ಕೊಳೆ ರೋಗ / ಮಹಾಳಿ ರೋಗ",
+      "scientific": "Phytophthora meadii",
+      "pathogen": "ಶಿಲೀಂಧ್ರ (Oomycete)",
+      "base_rgb": [
+        45,
+        90,
+        40
+      ],
+      "spot_type": "arecanut_water_soaked_rot",
+      "spot_rgb": [
+        30,
+        45,
+        25
+      ],
+      "halo_rgb": [
+        190,
+        195,
+        180
+      ]
+    },
+    {
+      "id": "Arecanut___Yellow_Leaf_Disease",
+      "crop": "Arecanut",
+      "crop_kn": "ಅಡಿಕೆ",
+      "name_en": "Arecanut Yellow Leaf Disease",
+      "name_kn": "ಅಡಿಕೆ ಹಳದಿ ಎಲೆ ರೋಗ",
+      "scientific": "Phytoplasma (Proutista vector)",
+      "pathogen": "ಫೈಟೋಪ್ಲಾಸ್ಮಾ (Phytoplasma)",
+      "base_rgb": [
+        175,
+        185,
+        45
+      ],
+      "spot_type": "arecanut_leaflet_yellowing",
+      "spot_rgb": [
+        235,
+        215,
+        35
+      ],
+      "halo_rgb": [
+        140,
+        80,
+        20
+      ]
+    },
+    {
+      "id": "Arecanut___Healthy",
+      "crop": "Arecanut",
+      "crop_kn": "ಅಡಿಕೆ",
+      "name_en": "Arecanut Healthy Frond",
+      "name_kn": "ಅಡಿಕೆ ಆರೋಗ್ಯಕರ ಗರಿ",
+      "scientific": "Areca catechu",
+      "pathogen": "None (ಆರೋಗ್ಯಕರ)",
+      "base_rgb": [
+        25,
+        150,
+        40
+      ],
+      "spot_type": "clean_foliage",
+      "spot_rgb": null,
+      "halo_rgb": null
     }
   ],
   "class_to_idx": {
@@ -568,22 +868,35 @@
     "Paddy___Rice_Blast": 6,
     "Paddy___Brown_Spot": 7,
     "Paddy___Bacterial_Leaf_Blight": 8,
-    "Paddy___Healthy": 9,
-    "Ragi___Blast": 10,
-    "Ragi___Foot_Rot": 11,
-    "Ragi___Healthy": 12,
-    "Chilli___Leaf_Curl_Murda": 13,
-    "Chilli___Anthracnose_Fruit_Rot": 14,
-    "Chilli___Bacterial_Spot": 15,
-    "Chilli___Healthy": 16,
-    "Cotton___Leaf_Curl_Virus": 17,
-    "Cotton___Grey_Mildew": 18,
-    "Cotton___Bacterial_Blight": 19,
-    "Cotton___Healthy": 20,
-    "Maize___Common_Rust": 21,
-    "Maize___Northern_Leaf_Blight": 22,
-    "Potato___Early_Blight": 23,
-    "Potato___Late_Blight": 24
+    "Paddy___Sheath_Blight": 9,
+    "Paddy___Healthy": 10,
+    "Ragi___Blast": 11,
+    "Ragi___Foot_Rot": 12,
+    "Ragi___Brown_Spot": 13,
+    "Ragi___Healthy": 14,
+    "Sugarcane___Red_Rot": 15,
+    "Sugarcane___Smut": 16,
+    "Sugarcane___Yellow_Leaf": 17,
+    "Sugarcane___Healthy": 18,
+    "Maize___Common_Rust": 19,
+    "Maize___Northern_Leaf_Blight": 20,
+    "Maize___Fall_Armyworm": 21,
+    "Maize___Healthy": 22,
+    "Cotton___Leaf_Curl_Virus": 23,
+    "Cotton___Grey_Mildew": 24,
+    "Cotton___Bacterial_Blight": 25,
+    "Cotton___Healthy": 26,
+    "Potato___Early_Blight": 27,
+    "Potato___Late_Blight": 28,
+    "Potato___Healthy": 29,
+    "Chilli___Leaf_Curl_Murda": 30,
+    "Chilli___Anthracnose_Fruit_Rot": 31,
+    "Chilli___Bacterial_Spot": 32,
+    "Chilli___Powdery_Mildew": 33,
+    "Chilli___Healthy": 34,
+    "Arecanut___Koleroga_Fruit_Rot": 35,
+    "Arecanut___Yellow_Leaf_Disease": 36,
+    "Arecanut___Healthy": 37
   },
   "idx_to_class": {
     "0": "Tomato___Early_Blight",
@@ -595,21 +908,34 @@
     "6": "Paddy___Rice_Blast",
     "7": "Paddy___Brown_Spot",
     "8": "Paddy___Bacterial_Leaf_Blight",
-    "9": "Paddy___Healthy",
-    "10": "Ragi___Blast",
-    "11": "Ragi___Foot_Rot",
-    "12": "Ragi___Healthy",
-    "13": "Chilli___Leaf_Curl_Murda",
-    "14": "Chilli___Anthracnose_Fruit_Rot",
-    "15": "Chilli___Bacterial_Spot",
-    "16": "Chilli___Healthy",
-    "17": "Cotton___Leaf_Curl_Virus",
-    "18": "Cotton___Grey_Mildew",
-    "19": "Cotton___Bacterial_Blight",
-    "20": "Cotton___Healthy",
-    "21": "Maize___Common_Rust",
-    "22": "Maize___Northern_Leaf_Blight",
-    "23": "Potato___Early_Blight",
-    "24": "Potato___Late_Blight"
+    "9": "Paddy___Sheath_Blight",
+    "10": "Paddy___Healthy",
+    "11": "Ragi___Blast",
+    "12": "Ragi___Foot_Rot",
+    "13": "Ragi___Brown_Spot",
+    "14": "Ragi___Healthy",
+    "15": "Sugarcane___Red_Rot",
+    "16": "Sugarcane___Smut",
+    "17": "Sugarcane___Yellow_Leaf",
+    "18": "Sugarcane___Healthy",
+    "19": "Maize___Common_Rust",
+    "20": "Maize___Northern_Leaf_Blight",
+    "21": "Maize___Fall_Armyworm",
+    "22": "Maize___Healthy",
+    "23": "Cotton___Leaf_Curl_Virus",
+    "24": "Cotton___Grey_Mildew",
+    "25": "Cotton___Bacterial_Blight",
+    "26": "Cotton___Healthy",
+    "27": "Potato___Early_Blight",
+    "28": "Potato___Late_Blight",
+    "29": "Potato___Healthy",
+    "30": "Chilli___Leaf_Curl_Murda",
+    "31": "Chilli___Anthracnose_Fruit_Rot",
+    "32": "Chilli___Bacterial_Spot",
+    "33": "Chilli___Powdery_Mildew",
+    "34": "Chilli___Healthy",
+    "35": "Arecanut___Koleroga_Fruit_Rot",
+    "36": "Arecanut___Yellow_Leaf_Disease",
+    "37": "Arecanut___Healthy"
   }
 }
