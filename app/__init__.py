@@ -53,6 +53,7 @@ def create_app(config_name=None):
 
     # Serve Frontend SPA
     @app.route('/')
+    @app.route('/saas')
     def serve_index():
         return send_from_directory(app.static_folder, 'index.html')
 
@@ -74,4 +75,3 @@ def create_app(config_name=None):
 
 
     return app
-
