@@ -31,21 +31,22 @@
     </ul>
 
     <!-- Top Navbar Right Actions: Location, Clean 2-Language Switcher, Notifications, Admin Portal -->
-    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+    <!-- Top Navbar Right Actions: Location, Clean 2-Language Switcher, Notifications, Logout -->
+    <div class="navbar-actions">
       
       <!-- Karnataka District Selector -->
-      <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.95); border:1.5px solid #d1fae5; border-radius:var(--radius-full); padding:3px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
-        <span style="font-size:0.9rem;">📍</span>
-        <span id="nav-state-label" style="font-size:0.8rem; font-weight:800; color:var(--emerald);" data-i18n="state_karnataka">ಕರ್ನಾಟಕ</span>
-        <span style="color:#d1d5db;">|</span>
-        <select id="nav-select-district" onchange="onDistrictSelectChange(this.value, 'nav')" title="ಜಿಲ್ಲೆ" style="padding:3px 8px; font-size:0.8rem; border:1px solid #e5e7eb; border-radius:10px; background:#ffffff; font-weight:700; color:var(--primary); cursor:pointer; outline:none;">
+      <div style="display:inline-flex; align-items:center; gap:5px; background:#ffffff; border:1.5px solid #d1fae5; border-radius:var(--radius-full); padding:2px 10px; box-shadow:0 1px 2px rgba(0,0,0,0.03);">
+        <span style="font-size:0.85rem;">📍</span>
+        <span id="nav-state-label" style="font-size:0.78rem; font-weight:800; color:var(--emerald);" data-i18n="state_karnataka">ಕರ್ನಾಟಕ</span>
+        <span style="color:#cbd5e1; font-size:0.75rem;">|</span>
+        <select id="nav-select-district" onchange="onDistrictSelectChange(this.value, 'nav')" title="ಜಿಲ್ಲೆ" style="padding:1px 4px; font-size:0.78rem; border:none; background:transparent; font-weight:700; color:var(--primary); cursor:pointer; outline:none;">
         </select>
       </div>
 
-      <!-- Clean Language Switcher: Kannada & English ONLY (No Hindi, Zero Clutter) -->
-      <div style="display:flex; background:#f1f5f9; border-radius:var(--radius-full); padding:2px; border:1.5px solid #cbd5e1; box-shadow:0 1px 2px rgba(0,0,0,0.04);">
-        <button type="button" onclick="setLanguage('kn')" id="lang-kn" class="btn" style="padding:4px 14px; font-size:0.8rem; border-radius:var(--radius-full); background:#ffffff; font-weight:800; color:var(--primary); box-shadow:0 1px 3px rgba(0,0,0,0.1); cursor:pointer; transition:all 0.2s;">ಕನ್ನಡ</button>
-        <button type="button" onclick="setLanguage('en')" id="lang-en" class="btn" style="padding:4px 14px; font-size:0.8rem; border-radius:var(--radius-full); background:transparent; font-weight:600; color:#64748b; cursor:pointer; transition:all 0.2s;">English</button>
+      <!-- Clean Language Switcher: Kannada & English ONLY -->
+      <div style="display:inline-flex; background:#f1f5f9; border-radius:var(--radius-full); padding:2px; border:1px solid #cbd5e1;">
+        <button type="button" onclick="setLanguage('kn')" id="lang-kn" class="btn" style="padding:3px 10px; font-size:0.76rem; border-radius:var(--radius-full); background:#ffffff; font-weight:800; color:var(--primary); box-shadow:0 1px 2px rgba(0,0,0,0.08); cursor:pointer; transition:all 0.15s;">ಕನ್ನಡ</button>
+        <button type="button" onclick="setLanguage('en')" id="lang-en" class="btn" style="padding:3px 10px; font-size:0.76rem; border-radius:var(--radius-full); background:transparent; font-weight:700; color:#64748b; cursor:pointer; transition:all 0.15s;">English</button>
       </div>
 
       <!-- Notification Bell -->
@@ -66,7 +67,7 @@
       </div>
 
       <!-- Farmer Logout -->
-      <button onclick="farmerLogout()" class="btn" style="padding:6px 16px; font-size:0.84rem; border-radius:var(--radius-full); font-weight:800; background:#fef2f2; color:#991b1b; border:1px solid #fecaca; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Logout">
+      <button onclick="farmerLogout()" class="btn" style="padding:5px 14px; font-size:0.8rem; border-radius:var(--radius-full); font-weight:800; background:#fef2f2; color:#991b1b; border:1px solid #fecaca; cursor:pointer; display:inline-flex; align-items:center; gap:5px; box-shadow:0 1px 2px rgba(0,0,0,0.04); white-space:nowrap;" title="Logout">
         <span data-i18n="nav_logout">🚪 ನಿರ್ಗಮಿಸಿ</span>
       </button>
     </div>
