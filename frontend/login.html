@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaitaSaathiAI — Portal Login & Verification</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    body {
+      background: radial-gradient(circle at 10% 20%, #f0fdf4 0%, #f8fafc 90%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .auth-container {
+      max-width: 960px;
+      margin: 2.5rem auto 4rem;
+      padding: 0 1.25rem;
+      flex: 1;
+      width: 100%;
+    }
+
+    .portal-hero {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
+    }
+
+    .role-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2.4rem 2rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+      border: 2px solid transparent;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .role-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 30px -10px rgba(6, 78, 59, 0.12);
+      border-color: #10b981;
+    }
+
+    .role-card.farmer-card {
+      border-top: 6px solid #10b981;
+    }
+
+    .role-card.officer-card {
+      border-top: 6px solid #064e3b;
+    }
+
+    .role-icon-box {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .farmer-icon {
+      background: #ecfdf5;
+      color: #059669;
+    }
+
+    .officer-icon {
+      background: #f0fdf4;
+      color: #064e3b;
+    }
+
+    .officer-note-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fecaca;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 5px 12px;
+      border-radius: 9999px;
+      margin-top: 8px;
+      margin-bottom: 14px;
+      letter-spacing: 0.2px;
+    }
+
+    .form-box {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 520px;
+      margin: 0 auto;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e2e8f0;
+    }
+
+    .input-field-group {
+      position: relative;
+      margin-bottom: 1.4rem;
+    }
+
+    .input-field-group label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 6px;
+    }
+
+    .input-field-group input {
+      width: 100%;
+      padding: 12px 48px 12px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.2s;
+      background: #f8fafc;
+    }
+
+    .input-field-group input:focus {
+      border-color: #10b981;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+    }
+
+    .input-field-mic {
+      position: absolute;
+      right: 10px;
+      top: 36px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: #ecfdf5;
+      color: #059669;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+
+    .input-field-mic:hover {
+      background: #10b981;
+      color: #ffffff;
+      transform: scale(1.1);
+    }
+
+    .input-field-mic.listening {
+      background: #ef4444;
+      color: #ffffff;
+      animation: mic-listening-pulse 1s infinite alternate;
+    }
+
+    @keyframes mic-listening-pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+      100% { transform: scale(1.18); box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #475569;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin-bottom: 1.4rem;
+      padding: 0;
+      transition: color 0.2s;
+    }
+
+    .back-btn:hover {
+      color: #064e3b;
+    }
+
+    .demo-hint-box {
+      background: #f0fdf4;
+      border: 1px dashed #86efac;
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.82rem;
+      color: #166534;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .demo-prefill-btn {
+      background: #dcfce7;
+      border: 1px solid #86efac;
+      color: #15803d;
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    
+    .demo-prefill-btn:hover {
+      background: #bbf7d0;
+    }
+
+    .lang-switcher-pill {
+      display: flex;
+      background: #f1f5f9;
+      border-radius: 9999px;
+      padding: 3px;
+      border: 1.5px solid #cbd5e1;
+    }
+
+    .lang-btn {
+      border: none;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      background: transparent;
+      color: #64748b;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+
+    .lang-btn.active {
+      background: #ffffff;
+      color: #064e3b;
+      font-weight: 800;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Glassmorphism Navigation Bar -->
+  <header class="navbar" style="padding: 0.8rem 1.8rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.06);">
+    <a href="/" class="brand" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+      <div class="brand-icon" style="font-size:1.6rem;">🌱</div>
+      <span style="font-size:1.25rem; font-weight:800; color:#064e3b;">RaitaSaathiAI</span>
+      <span class="brand-badge" id="brand-badge-text" style="background:#ecfdf5; color:#059669; font-weight:800; padding:2px 8px; border-radius:6px; font-size:0.75rem;">ರೈತಸಾಥಿ AI</span>
+    </a>
+
+    <!-- Clean Language Switcher (Kannada | English ONLY, NO brackets) -->
+    <div class="lang-switcher-pill">
+      <button type="button" onclick="switchLanguage('kn')" id="btn-lang-kn" class="lang-btn active">ಕನ್ನಡ</button>
+      <button type="button" onclick="switchLanguage('en')" id="btn-lang-en" class="lang-btn">English</button>
+    </div>
+  </header>
+
+  <main class="auth-container">
+
+    <!-- ====================================================================
+         VIEW 1: GATEWAY (ROLE SELECTION)
+         ==================================================================== -->
+    <div id="view-gateway">
+      <div class="portal-hero">
+        <h1 id="gateway-title" style="font-size:2.2rem; font-weight:800; color:#064e3b; margin-bottom:8px;">
+          ನಿಮ್ಮ ಪೋರ್ಟಲ್ ಆಯ್ಕೆಮಾಡಿ
+        </h1>
+        <p id="gateway-subtitle" style="font-size:1.05rem; color:#64748b; max-width:540px; margin:0 auto;">
+          ಕೃಷಿ ಮಾಹಿತಿ, ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು ಮತ್ತು ಆಡಳಿತ ಸೇವೆಗಳನ್ನು ಪಡೆಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ
+        </p>
+      </div>
+
+      <div class="role-grid">
+        <!-- Farmer Portal Card -->
+        <div class="role-card farmer-card">
+          <div>
+            <div class="role-icon-box farmer-icon">👨‍🌾</div>
+            <div style="font-size:0.8rem; font-weight:800; color:#059669; text-transform:uppercase; letter-spacing:0.5px;" id="lbl-farmer-badge">
+              ರೈತ ಸೇವೆಗಳು
+            </div>
+            <h2 style="font-size:1.6rem; font-weight:800; color:#0f172a; margin:6px 0 10px;" id="lbl-farmer-card-title">
+              ರೈತರ ಲಾಗಿನ್
+            </h2>
+            <p style="color:#64748b; font-size:0.95rem; line-height:1.5; margin-bottom:1.5rem;" id="lbl-farmer-card-desc">
+              ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಮಾಹಿತಿ, ತ್ವರಿತ ಅರ್ಜಿ ಸಲ್ಲಿಕೆ, ಬೆಳೆ ರೋಗ ಪತ್ತೆ, ಬಜೆಟ್ ಲ್ಯಾಬ್ ಮತ್ತು ಧ್ವನಿ ಸಹಾಯಕ ಸೇವೆಗಳು.
+            </p>
+          </div>
+          <div>
+            <button onclick="showView('farmer-login')" class="btn btn-emerald" style="width:100%; padding:14px; font-size:1.05rem; font-weight:800; border-radius:12px; justify-content:center;">
+              <span id="btn-farmer-card-action">ರೈತರ ಲಾಗಿನ್ ಮುಂದುವರಿಯಿರಿ →</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Officials Portal Card -->
+        <div class="role-card officer-card">
+          <div>
+            <div class="role-icon-box officer-icon">🏛️</div>
+            <div style="font-size:0.8rem; font-weight:800; color:#064e3b; text-transform:uppercase; letter-spacing:0.5px;" id="lbl-officer-badge">
+              ಇಲಾಖಾ ಆಡಳಿತ
+            </div>
+            <h2 style="font-size:1.6rem; font-weight:800; color:#0f172a; margin:6px 0 4px;" id="lbl-officer-card-title">
+              ಅಧಿಕಾರಿಗಳ ಲಾಗಿನ್
+            </h2>
+
+            <!-- Mandatory Note: Government officials only -->
+            <div>
+              <span class="officer-note-pill" id="lbl-officer-card-note">
+                🔒 ಸರ್ಕಾರಿ ಅಧಿಕಾರಿಗಳಿಗೆ ಮಾತ್ರ
+              </span>
+            </div>
+
+            <p style="color:#64748b; font-size:0.95rem; line-height:1.5; margin-bottom:1.5rem;" id="lbl-officer-card-desc">
+              ಜಿಲ್ಲಾ ಕೃಷಿ ಇಲಾಖೆ ಅಧಿಕಾರಿಗಳ ಪರಿಶೀಲನಾ ವಿಭಾಗ. ಅರ್ಜಿಗಳ ಪರಿಶೀಲನೆ, ಡಿಬಿಟಿ ಅನುಮೋದನೆ ಮತ್ತು ರೈತರಿಗೆ ಅಧಿಕೃತ ಪ್ರಕಟಣೆ.
+            </p>
+          </div>
+          <div>
+            <button onclick="showView('officer-login')" class="btn btn-primary" style="width:100%; padding:14px; font-size:1.05rem; font-weight:800; border-radius:12px; justify-content:center; background:#064e3b;">
+              <span id="btn-officer-card-action">ಅಧಿಕಾರಿಗಳ ಲಾಗಿನ್ →</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 2: FARMER LOGIN (Only Asks Phone Number)
+         ==================================================================== -->
+    <div id="view-farmer-login" style="display:none;">
+      <div class="form-box">
+        <button type="button" class="back-btn" onclick="showView('gateway')">
+          <span id="btn-back-to-gateway">← ಪೋರ್ಟಲ್ ಆಯ್ಕೆಗೆ ಹಿಂತಿರುಗಿ</span>
+        </button>
+
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:1.4rem;">
+          <div style="width:48px; height:48px; border-radius:12px; background:#ecfdf5; display:flex; align-items:center; justify-content:center; font-size:1.6rem;">👨‍🌾</div>
+          <div>
+            <h2 style="font-size:1.45rem; font-weight:800; color:#064e3b; margin:0;" id="f-login-title">
+              ರೈತರ ಲಾಗಿನ್
+            </h2>
+            <p style="font-size:0.86rem; color:#64748b; margin:2px 0 0;" id="f-login-sub">
+              ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ
+            </p>
+          </div>
+        </div>
+
+        <!-- Phone number input step -->
+        <div id="f-login-step-phone">
+          <div class="input-field-group">
+            <label for="farmer-phone-input" id="lbl-f-phone">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label>
+            <input type="tel" id="farmer-phone-input" placeholder="9845012345" maxlength="10">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('farmer-phone-input', 'number')" title="ಧ್ವನಿ ಮೂಲಕ ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <button type="button" onclick="sendFarmerLoginOtp()" id="btn-f-send-otp" class="btn btn-emerald" style="width:100%; padding:12px; font-weight:800; font-size:1rem; border-radius:10px; justify-content:center;">
+            OTP ಕಳುಹಿಸಿ
+          </button>
+
+          <!-- Quick Test Demo Prefill -->
+          <div class="demo-hint-box">
+            <span id="lbl-f-demo-hint">ಪರೀಕ್ಷಾ ರೈತ: ರಮೇಶ್ ಗೌಡ (9845012345)</span>
+            <button type="button" class="demo-prefill-btn" onclick="prefillFarmerPhone('9845012345')">ತುಂಬಿಸಿ</button>
+          </div>
+        </div>
+
+        <!-- OTP verification step -->
+        <div id="f-login-step-otp" style="display:none; margin-top:1.2rem;">
+          <div style="background:#ecfdf5; border:1px solid #a7f3d0; border-radius:10px; padding:10px 14px; margin-bottom:1.2rem; font-size:0.88rem; color:#065f46;" id="f-otp-notice">
+            ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗೆ 4-ಅಂಕಿಯ OTP ಕಳುಹಿಸಲಾಗಿದೆ.
+          </div>
+
+          <div class="input-field-group">
+            <label for="farmer-otp-input" id="lbl-f-otp">ದೃಢೀಕರಣ ಕೋಡ್ (OTP)</label>
+            <input type="text" id="farmer-otp-input" placeholder="2026" maxlength="4" style="letter-spacing:6px; font-size:1.3rem; text-align:center; font-weight:800;">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('farmer-otp-input', 'number')" title="ಧ್ವನಿ ಮೂಲಕ ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <button type="button" onclick="verifyFarmerLoginOtp()" id="btn-f-verify-otp" class="btn btn-emerald" style="width:100%; padding:12px; font-weight:800; font-size:1rem; border-radius:10px; justify-content:center;">
+            ದೃಢೀಕರಿಸಿ & ಮುಖಪುಟ ಪ್ರವೇಶಿಸಿ
+          </button>
+
+          <button type="button" onclick="backToFarmerPhoneStep()" style="width:100%; background:none; border:none; color:#64748b; font-size:0.85rem; font-weight:700; margin-top:10px; cursor:pointer;" id="btn-f-change-phone">
+            ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಬದಲಾಯಿಸಿ
+          </button>
+        </div>
+
+        <!-- Link to New Farmer Registration -->
+        <div style="text-align:center; margin-top:1.8rem; padding-top:1.4rem; border-top:1px solid #f1f5f9; font-size:0.92rem; color:#475569;">
+          <span id="lbl-f-no-account">ಖಾತೆ ಇಲ್ಲವೇ?</span> 
+          <a href="javascript:void(0)" onclick="showView('farmer-register')" style="color:#059669; font-weight:800; text-decoration:none;" id="lnk-f-goto-register">
+            ಹೊಸ ರೈತರ ನೋಂದಣಿ
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 3: NEW FARMER REGISTRATION (Name as per Aadhaar & Aadhaar Number)
+         ==================================================================== -->
+    <div id="view-farmer-register" style="display:none;">
+      <div class="form-box">
+        <button type="button" class="back-btn" onclick="showView('farmer-login')">
+          <span id="btn-back-to-f-login">← ರೈತರ ಲಾಗಿನ್‌ಗೆ ಹಿಂತಿರುಗಿ</span>
+        </button>
+
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:1.4rem;">
+          <div style="width:48px; height:48px; border-radius:12px; background:#eff6ff; display:flex; align-items:center; justify-content:center; font-size:1.6rem;">📝</div>
+          <div>
+            <h2 style="font-size:1.45rem; font-weight:800; color:#1e3a8a; margin:0;" id="f-reg-title">
+              ಹೊಸ ರೈತರ ನೋಂದಣಿ
+            </h2>
+            <p style="font-size:0.86rem; color:#64748b; margin:2px 0 0;" id="f-reg-sub">
+              ಇ-ಕೆವೈಸಿ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಆಧಾರ್ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ
+            </p>
+          </div>
+        </div>
+
+        <!-- Registration Credentials Form -->
+        <div id="f-reg-step-inputs">
+          <!-- 1. Name as per Aadhaar (Voice & Type) -->
+          <div class="input-field-group">
+            <label for="reg-name-input" id="lbl-reg-name">ಆಧಾರ್ ಪ್ರಕಾರ ಹೆಸರು</label>
+            <input type="text" id="reg-name-input" placeholder="ರಮೇಶ್ ಗೌಡ / Ramesh Gowda">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('reg-name-input', 'text')" title="ಧ್ವನಿ ಮೂಲಕ ಹೆಸರು ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <!-- 2. Aadhaar Number (Voice & Type) -->
+          <div class="input-field-group">
+            <label for="reg-aadhaar-input" id="lbl-reg-aadhaar">ಆಧಾರ್ ಸಂಖ್ಯೆ (12 ಅಂಕಿಗಳು)</label>
+            <input type="text" id="reg-aadhaar-input" placeholder="5489 1234 8421" maxlength="14">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('reg-aadhaar-input', 'number')" title="ಧ್ವನಿ ಮೂಲಕ ಆಧಾರ್ ಸಂಖ್ಯೆ ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <!-- 3. Aadhaar-Linked Mobile Number (Voice & Type) -->
+          <div class="input-field-group">
+            <label for="reg-phone-input" id="lbl-reg-phone">ಆಧಾರ್ ಲಿಂಕ್ ಆದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label>
+            <input type="tel" id="reg-phone-input" placeholder="9845012345" maxlength="10">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('reg-phone-input', 'number')" title="ಧ್ವನಿ ಮೂಲಕ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <div style="margin-bottom:1.4rem; display:flex; align-items:flex-start; gap:8px;">
+            <input type="checkbox" id="reg-consent-chk" checked style="margin-top:3px; cursor:pointer;">
+            <label for="reg-consent-chk" style="font-size:0.8rem; color:#64748b; line-height:1.4; cursor:pointer;" id="lbl-reg-consent">
+              ಯೋಜನೆಗಳ ಅರ್ಹತೆಗಾಗಿ ಯುಐಡಿಎಐ ಅನುಮೋದಿತ ಆಧಾರ್ ಇ-ಕೆವೈಸಿ ಸಿಮ್ಯುಲೇಶನ್ ನಡೆಸಲು ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೇನೆ.
+            </label>
+          </div>
+
+          <button type="button" onclick="sendAadhaarRegistrationOtp()" id="btn-reg-send-otp" class="btn btn-emerald" style="width:100%; padding:12px; font-weight:800; font-size:1rem; border-radius:10px; justify-content:center;">
+            ಆಧಾರ್ OTP ಪಡೆಯಿರಿ
+          </button>
+        </div>
+
+        <!-- Registration OTP Verification Step -->
+        <div id="f-reg-step-otp" style="display:none; margin-top:1.2rem;">
+          <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 14px; margin-bottom:1.2rem; font-size:0.88rem; color:#1e40af;" id="reg-otp-notice">
+            ನಿಮ್ಮ ಆಧಾರ್ ಲಿಂಕ್ ಆದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗೆ 4-ಅಂಕಿಯ OTP ಕಳುಹಿಸಲಾಗಿದೆ.
+          </div>
+
+          <div class="input-field-group">
+            <label for="reg-otp-input" id="lbl-reg-otp">ದೃಢೀಕರಣ ಕೋಡ್ (OTP)</label>
+            <input type="text" id="reg-otp-input" placeholder="2026" maxlength="4" style="letter-spacing:6px; font-size:1.3rem; text-align:center; font-weight:800;">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('reg-otp-input', 'number')" title="ಧ್ವನಿ ಮೂಲಕ ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <button type="button" onclick="verifyAadhaarRegistrationOtp()" id="btn-reg-verify-otp" class="btn btn-emerald" style="width:100%; padding:12px; font-weight:800; font-size:1rem; border-radius:10px; justify-content:center;">
+            ದೃಢೀಕರಿಸಿ & ಪ್ರೊಫೈಲ್ ರಚಿಸಿ
+          </button>
+        </div>
+
+        <!-- Already registered link -->
+        <div style="text-align:center; margin-top:1.8rem; padding-top:1.4rem; border-top:1px solid #f1f5f9; font-size:0.92rem; color:#475569;">
+          <span id="lbl-reg-already">ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?</span> 
+          <a href="javascript:void(0)" onclick="showView('farmer-login')" style="color:#059669; font-weight:800; text-decoration:none;" id="lnk-reg-goto-login">
+            ರೈತರ ಲಾಗಿನ್
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ====================================================================
+         VIEW 4: OFFICIALS LOGIN (Government Officials Only)
+         ==================================================================== -->
+    <div id="view-officer-login" style="display:none;">
+      <div class="form-box" style="border-top:6px solid #064e3b;">
+        <button type="button" class="back-btn" onclick="showView('gateway')">
+          <span id="btn-back-to-gateway-2">← ಪೋರ್ಟಲ್ ಆಯ್ಕೆಗೆ ಹಿಂತಿರುಗಿ</span>
+        </button>
+
+        <div style="display:flex; align-items:center; gap:12px; margin-bottom:0.8rem;">
+          <div style="width:48px; height:48px; border-radius:12px; background:#f0fdf4; display:flex; align-items:center; justify-content:center; font-size:1.6rem;">🏛️</div>
+          <div>
+            <h2 style="font-size:1.45rem; font-weight:800; color:#064e3b; margin:0;" id="officer-login-title">
+              ಅಧಿಕಾರಿಗಳ ಲಾಗಿನ್
+            </h2>
+            <div style="margin-top:4px;">
+              <span class="officer-note-pill" style="margin:0;" id="lbl-officer-mandatory-note">
+                🔒 ಸರ್ಕಾರಿ ಅಧಿಕಾರಿಗಳಿಗೆ ಮಾತ್ರ
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size:0.88rem; color:#64748b; line-height:1.4; margin-bottom:1.2rem;" id="officer-login-sub">
+          ಯಾವುದೇ ಹೊಸ ನೋಂದಣಿ ಅಗತ್ಯವಿಲ್ಲ. ಕೃಷಿ ಇಲಾಖೆಯ ಅಧಿಕೃತ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ನೋಂದಾಯಿಸಲಾದ ಪ್ರೊಫೈಲ್ ಮೂಲಕ ಲಾಗಿನ್ ಮಾಡಿ.
+        </p>
+
+        <!-- Officer Phone Step -->
+        <div id="officer-step-phone">
+          <div class="input-field-group">
+            <label for="officer-phone-input" id="lbl-officer-phone">ಅಧಿಕೃತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ</label>
+            <input type="tel" id="officer-phone-input" placeholder="9845012345" maxlength="10">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('officer-phone-input', 'number')" title="ಧ್ವನಿ ಮೂಲಕ ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <button type="button" onclick="sendOfficerLoginOtp()" id="btn-officer-send-otp" class="btn btn-primary" style="width:100%; padding:12px; font-weight:800; font-size:1rem; border-radius:10px; justify-content:center; background:#064e3b;">
+            ಅಧಿಕೃತ OTP ಪಡೆಯಿರಿ
+          </button>
+
+          <!-- Pre-configured Officer Example (Dr. Lalit Singh Rathod, Dharwad) -->
+          <div style="background:#f8fafc; border:1px solid #cbd5e1; border-radius:10px; padding:12px; margin-top:1.2rem;">
+            <div style="font-size:0.75rem; font-weight:800; color:#64748b; text-transform:uppercase; margin-bottom:4px;" id="lbl-officer-sample-title">
+              ಸಕ್ರಿಯ ಅಧಿಕೃತ ಅಧಿಕಾರಿ ವಿವರ:
+            </div>
+            <div style="font-size:0.92rem; font-weight:800; color:#064e3b;" id="lbl-officer-sample-name">
+              ಡಾ. ಲಲಿತ್ ಸಿಂಗ್ ರಾಥೋಡ್
+            </div>
+            <div style="font-size:0.82rem; color:#475569;" id="lbl-officer-sample-desig">
+              ಕೃಷಿ ಅಧಿಕಾರಿ, ಧಾರವಾಡ ಜಿಲ್ಲೆ
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+              <span style="font-size:0.8rem; color:#64748b; font-family:monospace;">ಮೊಬೈಲ್: 9845012345</span>
+              <button type="button" class="demo-prefill-btn" onclick="prefillOfficerPhone('9845012345')">ತುಂಬಿಸಿ</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Officer OTP Step -->
+        <div id="officer-step-otp" style="display:none; margin-top:1.2rem;">
+          <div style="background:#f0fdf4; border:1px solid #a7f3d0; border-radius:10px; padding:10px 14px; margin-bottom:1.2rem; font-size:0.88rem; color:#065f46;" id="officer-otp-notice">
+            ಅಧಿಕೃತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಗೆ OTP ಕಳುಹಿಸಲಾಗಿದೆ. ಪ್ರದರ್ಶನ ಕೋಡ್ '2026' ಬಳಸಿ.
+          </div>
+
+          <div class="input-field-group">
+            <label for="officer-otp-input" id="lbl-officer-otp">ದೃಢೀಕರಣ ಕೋಡ್ (OTP)</label>
+            <input type="text" id="officer-otp-input" placeholder="2026" maxlength="4" style="letter-spacing:6px; font-size:1.3rem; text-align:center; font-weight:800;">
+            <button type="button" class="input-field-mic" onclick="startSpeechRecognition('officer-otp-input', 'number')" title="ಧ್ವನಿ ಮೂಲಕ ಹೇಳಿ">🎙️</button>
+          </div>
+
+          <button type="button" onclick="verifyOfficerLoginOtp()" id="btn-officer-verify-otp" class="btn btn-primary" style="width:100%; padding:12px; font-weight:800; font-size:1rem; border-radius:10px; justify-content:center; background:#064e3b;">
+            ದೃಢೀಕರಿಸಿ & ಅಡ್ಮಿನ್ ಪೋರ್ಟಲ್ ಪ್ರವೇಶಿಸಿ
+          </button>
+
+          <button type="button" onclick="backToOfficerPhoneStep()" style="width:100%; background:none; border:none; color:#64748b; font-size:0.85rem; font-weight:700; margin-top:10px; cursor:pointer;" id="btn-officer-change-phone">
+            ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಬದಲಾಯಿಸಿ
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer style="text-align:center; padding:1.5rem; color:#64748b; font-size:0.85rem; border-top:1px solid #e2e8f0; background:#ffffff;">
+    <p>🌱 RaitaSaathiAI &bull; ಕರ್ನಾಟಕ ಸರ್ಕಾರದ ಕೃಷಿ ಇಲಾಖೆ ಬೆಂಬಲಿತ ಪೋರ್ಟಲ್</p>
+  </footer>
+
+  <!-- ====================================================================
+       INTERACTIVE SCRIPT (Pure Translations, Multi-Perspective Flows)
+       ==================================================================== -->
+  <script>
+    let activeLanguage = localStorage.getItem('raitasaathi_lang') || 'kn';
+    let currentRegTxnId = null;
+
+    // Multilingual Dictionary: Strictly pure Kannada and pure English (NO bracket clutter)
+    const DICTIONARY = {
+      kn: {
+        brand_badge: "ರೈತಸಾಥಿ AI",
+        gateway_title: "ನಿಮ್ಮ ಪೋರ್ಟಲ್ ಆಯ್ಕೆಮಾಡಿ",
+        gateway_subtitle: "ಕೃಷಿ ಮಾಹಿತಿ, ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು ಮತ್ತು ಆಡಳಿತ ಸೇವೆಗಳನ್ನು ಪಡೆಯಲು ನಿಮ್ಮ ಪಾತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+        lbl_farmer_badge: "ರೈತ ಸೇವೆಗಳು",
+        lbl_farmer_card_title: "ರೈತರ ಲಾಗಿನ್",
+        lbl_farmer_card_desc: "ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಮಾಹಿತಿ, ತ್ವರಿತ ಅರ್ಜಿ ಸಲ್ಲಿಕೆ, ಬೆಳೆ ರೋಗ ಪತ್ತೆ, ಬಜೆಟ್ ಲ್ಯಾಬ್ ಮತ್ತು ಧ್ವನಿ ಸಹಾಯಕ ಸೇವೆಗಳು.",
+        btn_farmer_card_action: "ರೈತರ ಲಾಗಿನ್ ಮುಂದುವರಿಯಿರಿ →",
+        lbl_officer_badge: "ಇಲಾಖಾ ಆಡಳಿತ",
+        lbl_officer_card_title: "ಅಧಿಕಾರಿಗಳ ಲಾಗಿನ್",
+        lbl_officer_card_note: "🔒 ಸರ್ಕಾರಿ ಅಧಿಕಾರಿಗಳಿಗೆ ಮಾತ್ರ",
+        lbl_officer_card_desc: "ಜಿಲ್ಲಾ ಕೃಷಿ ಇಲಾಖೆ ಅಧಿಕಾರಿಗಳ ಪರಿಶೀಲನಾ ವಿಭಾಗ. ಅರ್ಜಿಗಳ ಪರಿಶೀಲನೆ, ಡಿಬಿಟಿ ಅನುಮೋದನೆ ಮತ್ತು ರೈತರಿಗೆ ಅಧಿಕೃತ ಪ್ರಕಟಣೆ.",
+        btn_officer_card_action: "ಅಧಿಕಾರಿಗಳ ಲಾಗಿನ್ →",
+        btn_back_to_gateway: "← ಪೋರ್ಟಲ್ ಆಯ್ಕೆಗೆ ಹಿಂತಿರುಗಿ",
+        btn_back_to_gateway_2: "← ಪೋರ್ಟಲ್ ಆಯ್ಕೆಗೆ ಹಿಂತಿರುಗಿ",
+        btn_back_to_f_login: "← ರೈತರ ಲಾಗಿನ್‌ಗೆ ಹಿಂತಿರುಗಿ",
+        f_login_title: "ರೈತರ ಲಾಗಿನ್",
+        f_login_sub: "ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ",
+        lbl_f_phone: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+        btn_f_send_otp: "OTP ಕಳುಹಿಸಿ",
+        lbl_f_demo_hint: "ಪರೀಕ್ಷಾ ರೈತ: ರಮೇಶ್ ಗೌಡ (9845012345)",
+        lbl_f_otp: "ದೃಢೀಕರಣ ಕೋಡ್ (OTP)",
+        btn_f_verify_otp: "ದೃಢೀಕರಿಸಿ & ಮುಖಪುಟ ಪ್ರವೇಶಿಸಿ",
+        btn_f_change_phone: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಬದಲಾಯಿಸಿ",
+        lbl_f_no_account: "ಖಾತೆ ಇಲ್ಲವೇ?",
+        lnk_f_goto_register: "ಹೊಸ ರೈತರ ನೋಂದಣಿ",
+        f_reg_title: "ಹೊಸ ರೈತರ ನೋಂದಣಿ",
+        f_reg_sub: "ಇ-ಕೆವೈಸಿ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಆಧಾರ್ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ",
+        lbl_reg_name: "ಆಧಾರ್ ಪ್ರಕಾರ ಹೆಸರು",
+        lbl_reg_aadhaar: "ಆಧಾರ್ ಸಂಖ್ಯೆ (12 ಅಂಕಿಗಳು)",
+        lbl_reg_phone: "ಆಧಾರ್ ಲಿಂಕ್ ಆದ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+        lbl_reg_consent: "ಯೋಜನೆಗಳ ಅರ್ಹತೆಗಾಗಿ ಯುಐಡಿಎಐ ಅನುಮೋದಿತ ಆಧಾರ್ ಇ-ಕೆವೈಸಿ ಸಿಮ್ಯುಲೇಶನ್ ನಡೆಸಲು ಒಪ್ಪಿಗೆ ನೀಡುತ್ತೇನೆ.",
+        btn_reg_send_otp: "ಆಧಾರ್ OTP ಪಡೆಯಿರಿ",
+        lbl_reg_otp: "ದೃಢೀಕರಣ ಕೋಡ್ (OTP)",
+        btn_reg_verify_otp: "ದೃಢೀಕರಿಸಿ & ಪ್ರೊಫೈಲ್ ರಚಿಸಿ",
+        lbl_reg_already: "ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?",
+        lnk_reg_goto_login: "ರೈತರ ಲಾಗಿನ್",
+        officer_login_title: "ಅಧಿಕಾರಿಗಳ ಲಾಗಿನ್",
+        lbl_officer_mandatory_note: "🔒 ಸರ್ಕಾರಿ ಅಧಿಕಾರಿಗಳಿಗೆ ಮಾತ್ರ",
+        officer_login_sub: "ಯಾವುದೇ ಹೊಸ ನೋಂದಣಿ ಅಗತ್ಯವಿಲ್ಲ. ಕೃಷಿ ಇಲಾಖೆಯ ಅಧಿಕೃತ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ನೋಂದಾಯಿಸಲಾದ ಪ್ರೊಫೈಲ್ ಮೂಲಕ ಲಾಗಿನ್ ಮಾಡಿ.",
+        lbl_officer_phone: "ಅಧಿಕೃತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆ",
+        btn_officer_send_otp: "ಅಧಿಕೃತ OTP ಪಡೆಯಿರಿ",
+        lbl_officer_sample_title: "ಸಕ್ರಿಯ ಅಧಿಕೃತ ಅಧಿಕಾರಿ ವಿವರ:",
+        lbl_officer_sample_name: "ಡಾ. ಲಲಿತ್ ಸಿಂಗ್ ರಾಥೋಡ್",
+        lbl_officer_sample_desig: "ಕೃಷಿ ಅಧಿಕಾರಿ, ಧಾರವಾಡ ಜಿಲ್ಲೆ",
+        lbl_officer_otp: "ದೃಢೀಕರಣ ಕೋಡ್ (OTP)",
+        btn_officer_verify_otp: "ದೃಢೀಕರಿಸಿ & ಅಡ್ಮಿನ್ ಪೋರ್ಟಲ್ ಪ್ರವೇಶಿಸಿ",
+        btn_officer_change_phone: "ಮೊಬೈಲ್ ಸಂಖ್ಯೆ ಬದಲಾಯಿಸಿ"
+      },
+      en: {
+        brand_badge: "RaitaSaathi AI",
+        gateway_title: "Choose Your Portal",
+        gateway_subtitle: "Select your role to access agricultural intelligence, scheme benefits, or administrative workflows",
+        lbl_farmer_badge: "Farmer Services",
+        lbl_farmer_card_title: "Farmer Login",
+        lbl_farmer_card_desc: "Access government schemes, fast digital applications, crop disease diagnostics, budget lab and voice assistant.",
+        btn_farmer_card_action: "Continue as Farmer →",
+        lbl_officer_badge: "Official Department Access",
+        lbl_officer_card_title: "Officials Login",
+        lbl_officer_card_note: "🔒 Government officials only",
+        lbl_officer_card_desc: "District Agriculture Department verification desk. Application scrutiny, DBT sanctions and official broadcast announcements.",
+        btn_officer_card_action: "Officials Login →",
+        btn_back_to_gateway: "← Back to Portal Selection",
+        btn_back_to_gateway_2: "← Back to Portal Selection",
+        btn_back_to_f_login: "← Back to Farmer Login",
+        f_login_title: "Farmer Login",
+        f_login_sub: "Enter your registered mobile phone number",
+        lbl_f_phone: "Mobile Phone Number",
+        btn_f_send_otp: "Send OTP",
+        lbl_f_demo_hint: "Demo Farmer: Ramesh Gowda (9845012345)",
+        lbl_f_otp: "Verification Code (OTP)",
+        btn_f_verify_otp: "Verify & Enter Dashboard",
+        btn_f_change_phone: "Change Mobile Number",
+        lbl_f_no_account: "Don't have an account?",
+        lnk_f_goto_register: "Register as New Farmer",
+        f_reg_title: "New Farmer Registration",
+        f_reg_sub: "Enter Aadhaar credentials for e-KYC identity verification",
+        lbl_reg_name: "Name (as per Aadhaar)",
+        lbl_reg_aadhaar: "Aadhaar Number (12 digits)",
+        lbl_reg_phone: "Aadhaar-Linked Mobile Number",
+        lbl_reg_consent: "I authorize RaitaSaathiAI to simulate UIDAI e-KYC verification for government scheme benefits.",
+        btn_reg_send_otp: "Send Aadhaar OTP",
+        lbl_reg_otp: "Verification Code (OTP)",
+        btn_reg_verify_otp: "Verify & Create Profile",
+        lbl_reg_already: "Already have an account?",
+        lnk_reg_goto_login: "Farmer Login",
+        officer_login_title: "Officials Login",
+        lbl_officer_mandatory_note: "🔒 Government officials only",
+        officer_login_sub: "No registration required. Pre-configured official profiles provided by the Department of Agriculture.",
+        lbl_officer_phone: "Official Mobile Number",
+        btn_officer_send_otp: "Request Official OTP",
+        lbl_officer_sample_title: "Active Official Officer:",
+        lbl_officer_sample_name: "Dr. Lalit Singh Rathod",
+        lbl_officer_sample_desig: "Agriculture Officer, Dharwad District",
+        lbl_officer_otp: "Verification Code (OTP)",
+        btn_officer_verify_otp: "Verify & Enter Admin Portal",
+        btn_officer_change_phone: "Change Mobile Number"
+      }
+    };
+
+    function switchLanguage(lang) {
+      activeLanguage = lang;
+      localStorage.setItem('raitasaathi_lang', lang);
+      document.documentElement.lang = lang;
+
+      document.getElementById('btn-lang-kn').classList.toggle('active', lang === 'kn');
+      document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+
+      const dict = DICTIONARY[lang];
+      for (const [id, text] of Object.entries(dict)) {
+        const el = document.getElementById(id);
+        if (el) {
+          el.innerText = text;
+        }
+      }
+    }
+
+    function showView(viewName) {
+      document.getElementById('view-gateway').style.display = 'none';
+      document.getElementById('view-farmer-login').style.display = 'none';
+      document.getElementById('view-farmer-register').style.display = 'none';
+      document.getElementById('view-officer-login').style.display = 'none';
+
+      if (viewName === 'gateway') {
+        document.getElementById('view-gateway').style.display = 'block';
+      } else if (viewName === 'farmer-login') {
+        document.getElementById('view-farmer-login').style.display = 'block';
+      } else if (viewName === 'farmer-register') {
+        document.getElementById('view-farmer-register').style.display = 'block';
+      } else if (viewName === 'officer-login') {
+        document.getElementById('view-officer-login').style.display = 'block';
+      }
+    }
+
+    // Prefill helpers
+    function prefillFarmerPhone(num) {
+      document.getElementById('farmer-phone-input').value = num;
+    }
+
+    function prefillOfficerPhone(num) {
+      document.getElementById('officer-phone-input').value = num;
+    }
+
+    // =========================================================================
+    // VOICE RECOGNITION HELPER (Voice feature for fields)
+    // =========================================================================
+    function startSpeechRecognition(inputId, mode) {
+      window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      if (!window.SpeechRecognition) {
+        alert(activeLanguage === 'en' ? 
+          'Speech recognition is not supported in this browser. Please type or use quick fill.' : 
+          'ಈ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಧ್ವನಿ ಗುರುತಿಸುವಿಕೆ ಲಭ್ಯವಿಲ್ಲ. ದಯವಿಟ್ಟು ಟೈಪ್ ಮಾಡಿ.');
+        return;
+      }
+
+      const inputEl = document.getElementById(inputId);
+      const micBtn = inputEl.parentElement.querySelector('.input-field-mic');
+
+      const recognition = new window.SpeechRecognition();
+      recognition.lang = activeLanguage === 'en' ? 'en-IN' : 'kn-IN';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onstart = () => {
+        if (micBtn) {
+          micBtn.classList.add('listening');
+          micBtn.title = activeLanguage === 'en' ? 'Listening... Speak now' : 'ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ... ಮಾತನಾಡಿ';
+        }
+      };
+
+      recognition.onresult = (event) => {
+        let transcript = event.results[0][0].transcript.trim();
+        if (mode === 'number') {
+          // Normalize spoken Kannada or English numbers
+          const kannadaDigitMap = {
+            'ಸೊನ್ನೆ': '0', 'ಒಂದು': '1', 'ಎರಡು': '2', 'ಮೂರು': '3', 'ನಾಲ್ಕು': '4',
+            'ಐದು': '5', 'ಆರು': '6', 'ಏಳು': '7', 'ಎಂಟು': '8', 'ಒಂಬತ್ತು': '9',
+            'zero': '0', 'one': '1', 'two': '2', 'three': '3', 'four': '4',
+            'five': '5', 'six': '6', 'seven': '7', 'eight': '8', 'nine': '9'
+          };
+          for (const [w, d] of Object.entries(kannadaDigitMap)) {
+            const re = new RegExp(w, 'gi');
+            transcript = transcript.replace(re, d);
+          }
+          transcript = transcript.replace(/\D/g, '');
+        }
+        inputEl.value = transcript;
+        inputEl.dispatchEvent(new Event('input', { bubbles: true }));
+        inputEl.dispatchEvent(new Event('change', { bubbles: true }));
+
+        if (micBtn) {
+          micBtn.classList.remove('listening');
+          micBtn.innerText = '✓';
+          setTimeout(() => { micBtn.innerText = '🎙️'; }, 1500);
+        }
+      };
+
+      recognition.onerror = (e) => {
+        if (micBtn) micBtn.classList.remove('listening');
+        if (e.error === 'not-allowed') {
+          alert(activeLanguage === 'en' ? 
+            'Microphone access is blocked. Please allow mic in your browser settings.' : 
+            'ಮೈಕ್ರೊಫೋನ್ ಅನುಮತಿ ನಿರಾಕರಿಸಲಾಗಿದೆ. ದಯವಿಟ್ಟು ಬ್ರೌಸರ್ ಸೆಟ್ಟಿಂಗ್ಸ್‌ನಲ್ಲಿ ಅನುಮತಿ ನೀಡಿ.');
+        } else if (e.error === 'no-speech') {
+          alert(activeLanguage === 'en' ? 
+            'No voice detected. Please speak closer to your microphone.' : 
+            'ಯಾವುದೇ ಧ್ವನಿ ಕೇಳಿಸಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಮೈಕ್ರೊಫೋನ್ ಬಳಿ ಸ್ಪಷ್ಟವಾಗಿ ಮಾತನಾಡಿ.');
+        }
+      };
+
+      recognition.onend = () => {
+        if (micBtn) micBtn.classList.remove('listening');
+      };
+
+      try {
+        recognition.start();
+      } catch (e) {
+        if (micBtn) micBtn.classList.remove('listening');
+      }
+    }
+
+    // =========================================================================
+    // 1. FARMER LOGIN LOGIC
+    // =========================================================================
+    async function sendFarmerLoginOtp() {
+      const phone = document.getElementById('farmer-phone-input').value.trim();
+      if (!phone || phone.length < 10) {
+        alert(activeLanguage === 'en' ? 'Please enter a valid 10-digit mobile number.' : 'ದಯವಿಟ್ಟು 10-ಅಂಕಿಯ ಮಾನ್ಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/auth/farmer/request-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone_number: phone })
+        });
+        const json = await res.json();
+        if (json.success) {
+          const msg = activeLanguage === 'en' ? json.data.message_en : json.data.message_kn;
+          document.getElementById('f-otp-notice').innerText = msg;
+          document.getElementById('farmer-otp-input').value = json.data.demo_otp || '2026';
+          document.getElementById('f-login-step-phone').style.display = 'none';
+          document.getElementById('f-login-step-otp').style.display = 'block';
+        } else {
+          alert(json.error || 'Failed to send OTP');
+        }
+      } catch (e) {
+        alert('Error connecting to server.');
+      }
+    }
+
+    function backToFarmerPhoneStep() {
+      document.getElementById('f-login-step-otp').style.display = 'none';
+      document.getElementById('f-login-step-phone').style.display = 'block';
+    }
+
+    async function verifyFarmerLoginOtp() {
+      const phone = document.getElementById('farmer-phone-input').value.trim();
+      const otp = document.getElementById('farmer-otp-input').value.trim();
+
+      if (!otp) {
+        alert(activeLanguage === 'en' ? 'Please enter the verification OTP.' : 'ದಯವಿಟ್ಟು ಪರಿಶೀಲನಾ OTP ನಮೂದಿಸಿ.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/auth/farmer/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone_number: phone, otp: otp })
+        });
+        const json = await res.json();
+        if (json.success) {
+          if (json.data && json.data.user && json.data.user.full_name) {
+            localStorage.setItem('raitasaathi_farmer_name', json.data.user.full_name);
+          }
+          window.location.href = '/app';
+        } else {
+          alert(json.error || 'Invalid OTP');
+        }
+      } catch (e) {
+        alert('Authentication failed.');
+      }
+    }
+
+    // =========================================================================
+    // 2. NEW FARMER REGISTRATION (Name as per Aadhaar & Aadhaar Number)
+    // =========================================================================
+    async function sendAadhaarRegistrationOtp() {
+      const name = document.getElementById('reg-name-input').value.trim();
+      const aadhaar = document.getElementById('reg-aadhaar-input').value.trim().replace(/\s/g, '');
+      const phone = document.getElementById('reg-phone-input').value.trim();
+
+      if (!name) {
+        alert(activeLanguage === 'en' ? 'Please enter your name as per Aadhaar.' : 'ದಯವಿಟ್ಟು ನಿಮ್ಮ ಆಧಾರ್ ಪ್ರಕಾರ ಹೆಸರನ್ನು ನಮೂದಿಸಿ.');
+        return;
+      }
+      if (!aadhaar || aadhaar.length < 12) {
+        alert(activeLanguage === 'en' ? 'Please enter a valid 12-digit Aadhaar number.' : 'ದಯವಿಟ್ಟು 12-ಅಂಕಿಯ ಮಾನ್ಯ ಆಧಾರ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.');
+        return;
+      }
+      if (!phone || phone.length < 10) {
+        alert(activeLanguage === 'en' ? 'Please enter your 10-digit mobile number.' : 'ದಯವಿಟ್ಟು 10-ಅಂಕಿಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/identity/generate-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name: name,
+            aadhaar_number: aadhaar,
+            mobile_number: phone,
+            consent: true,
+            preferred_language: activeLanguage
+          })
+        });
+        const json = await res.json();
+        if (json.success) {
+          currentRegTxnId = json.data.transaction_id;
+          const msg = activeLanguage === 'en' ? json.data.message_en : json.data.message_kn;
+          document.getElementById('reg-otp-notice').innerText = `${msg} (${json.data.masked_mobile})`;
+          document.getElementById('reg-otp-input').value = json.data.demo_hint_otp || '2026';
+          document.getElementById('f-reg-step-inputs').style.display = 'none';
+          document.getElementById('f-reg-step-otp').style.display = 'block';
+        } else {
+          alert(json.error || 'Failed to initiate Aadhaar e-KYC.');
+        }
+      } catch (e) {
+        alert('Error connecting to Aadhaar e-KYC sandbox.');
+      }
+    }
+
+    async function verifyAadhaarRegistrationOtp() {
+      const otp = document.getElementById('reg-otp-input').value.trim();
+      const phone = document.getElementById('reg-phone-input').value.trim();
+
+      if (!otp) {
+        alert(activeLanguage === 'en' ? 'Please enter the Aadhaar OTP.' : 'ದಯವಿಟ್ಟು ಆಧಾರ್ OTP ನಮೂದಿಸಿ.');
+        return;
+      }
+
+      try {
+        // Step 1: Verify OTP
+        const res1 = await fetch('/api/identity/verify-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ transaction_id: currentRegTxnId, otp: otp })
+        });
+        const json1 = await res1.json();
+        if (!json1.success) {
+          alert(json1.error || 'Invalid Aadhaar OTP.');
+          return;
+        }
+
+        // Step 2: Complete profile creation
+        const res2 = await fetch('/api/identity/complete-registration', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            transaction_id: currentRegTxnId,
+            district: 'Mandya',
+            taluk: 'Pandavapura',
+            village: 'Chikka Byadarahalli',
+            preferred_language: activeLanguage
+          })
+        });
+        const json2 = await res2.json();
+
+        if (json2.success) {
+          alert(activeLanguage === 'en' 
+            ? '✓ Aadhaar e-KYC verified & farmer profile created successfully! Directing to Farmer Login...'
+            : '✓ ಆಧಾರ್ ಇ-ಕೆವೈಸಿ ದೃಢೀಕರಣಗೊಂಡಿದೆ & ರೈತ ಪ್ರೊಫೈಲ್ ರಚಿಸಲಾಗಿದೆ! ರೈತರ ಲಾಗಿನ್‌ಗೆ ಮರುನಿರ್ದೇಶಿಸಲಾಗುತ್ತಿದೆ...');
+
+          // Reset and prefill Farmer Login with newly registered phone
+          document.getElementById('farmer-phone-input').value = phone;
+          backToFarmerPhoneStep();
+          showView('farmer-login');
+        } else {
+          alert(json2.error || 'Registration completion failed.');
+        }
+      } catch (e) {
+        alert('Aadhaar verification error.');
+      }
+    }
+
+    // =========================================================================
+    // 3. OFFICIALS LOGIN LOGIC (Dr. Lalit Singh Rathod - Dharwad)
+    // =========================================================================
+    async function sendOfficerLoginOtp() {
+      const phone = document.getElementById('officer-phone-input').value.trim();
+      if (!phone || phone.length < 10) {
+        alert(activeLanguage === 'en' ? 'Please enter a valid 10-digit registered officer mobile number.' : 'ದಯವಿಟ್ಟು 10-ಅಂಕಿಯ ಮಾನ್ಯ ಅಧಿಕೃತ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/request-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone_number: phone })
+        });
+        const json = await res.json();
+        if (json.success) {
+          const msg = activeLanguage === 'en' ? json.data.message_en : json.data.message_kn;
+          document.getElementById('officer-otp-notice').innerText = msg;
+          document.getElementById('officer-otp-input').value = json.data.demo_otp || '2026';
+          document.getElementById('officer-step-phone').style.display = 'none';
+          document.getElementById('officer-step-otp').style.display = 'block';
+        } else {
+          alert(json.error || 'Officer verification failed.');
+        }
+      } catch (e) {
+        alert('Error connecting to officials portal.');
+      }
+    }
+
+    function backToOfficerPhoneStep() {
+      document.getElementById('officer-step-otp').style.display = 'none';
+      document.getElementById('officer-step-phone').style.display = 'block';
+    }
+
+    async function verifyOfficerLoginOtp() {
+      const phone = document.getElementById('officer-phone-input').value.trim();
+      const otp = document.getElementById('officer-otp-input').value.trim();
+
+      if (!otp) {
+        alert(activeLanguage === 'en' ? 'Please enter the official OTP.' : 'ದಯವಿಟ್ಟು ಅಧಿಕೃತ OTP ನಮೂದಿಸಿ.');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/admin/phone-login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone_number: phone, otp: otp })
+        });
+        const json = await res.json();
+        if (json.success) {
+          window.location.href = '/admin';
+        } else {
+          alert(json.error || 'Official login failed.');
+        }
+      } catch (e) {
+        alert('Official authentication failed.');
+      }
+    }
+
+    // URL parameter auto-routing (e.g. /login?role=officer or /login?role=farmer)
+    window.addEventListener('DOMContentLoaded', () => {
+      switchLanguage(activeLanguage);
+      const urlParams = new URLSearchParams(window.location.search);
+      const role = urlParams.get('role');
+      if (role === 'officer') {
+        showView('officer-login');
+      } else if (role === 'farmer') {
+        showView('farmer-login');
+      } else if (role === 'register') {
+        showView('farmer-register');
+      }
+    });
+  </script>
+</body>
+</html>
+

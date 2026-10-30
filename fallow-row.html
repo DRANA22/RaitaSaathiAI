@@ -1,0 +1,2486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fallow Row — Heirloom Seed House &amp; Living Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Martian+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   FALLOW ROW — DESIGN SYSTEM & ENGINE TOKENS
+   ========================================================================== */
+:root {
+  /* Palette */
+  --c-cream: #e7e2d8;
+  --c-ink: #171717;
+  --c-red: #ef493c;
+  --c-deep-red: #b92725;
+  --c-paper: #fffdf8;
+  --c-loam: #241a12;
+  --c-hairline: rgba(23, 23, 23, 0.16);
+  --c-hairline-subtle: rgba(23, 23, 23, 0.08);
+  --c-muted: rgba(23, 23, 23, 0.56);
+  --c-muted-inv: rgba(231, 226, 216, 0.55);
+  --c-hairline-inv: rgba(231, 226, 216, 0.18);
+
+  /* Typography */
+  --font-display: 'Anton', -apple-system, sans-serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'Martian Mono', monospace;
+
+  /* Easing curves */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-stage: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* Stage 1: Hero vars */
+  --hero-type-y: 0px;
+  --hero-type-scale: 1;
+  --hero-type-alpha: 1;
+
+  /* Stage 2: Manifesto vars */
+  --manifesto-wipe: 0%;
+  --manifesto-scale: 1;
+
+  /* Stage 3: Card rail vars */
+  --rail-x: 0px;
+  --rail-meter: 0%;
+
+  /* Stage 4: Artifact vars */
+  --packet-alpha: 0;
+  --packet-enter: 38px;
+  --packet-scale: 0.78;
+  --packet-cut: 0;
+  --packet-meter: 0%;
+  --packet-copy-x: 0px;
+
+  /* Stage 5: Season band vars */
+  --season-y: -4%;
+  --season-scale: 1.10;
+}
+
+/* Reset & Basics */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background-color: var(--c-cream);
+  color: var(--c-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  overflow-x: hidden;
+  position: relative;
+  background-color: var(--c-cream);
+}
+
+::selection {
+  background: var(--c-red);
+  color: var(--c-paper);
+}
+
+/* Mono utility */
+.mono-label {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.3;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+/* Per-atom reveal system */
+.word-span {
+  display: inline-block;
+  transform: translateY(0.42em);
+  opacity: 0;
+  transition: transform 0.65s var(--ease-out), opacity 0.65s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+  white-space: pre-wrap;
+}
+
+.rev-in .word-span,
+.rev-in.word-span {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+[data-rev] {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+  transition-delay: var(--d, 0ms);
+}
+
+[data-rev].rev-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   TOP BAR / RUNNING HEADER
+   ========================================================================== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 48px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  background: rgba(231, 226, 216, 0.94);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--c-hairline);
+  color: var(--c-ink);
+  transition: background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.top-bar.is-dark {
+  background: rgba(36, 26, 18, 0.94);
+  border-bottom: 1px solid var(--c-hairline-inv);
+  color: var(--c-cream);
+}
+
+.top-bar-brand {
+  font-family: var(--font-display);
+  font-size: 20px;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.top-bar-brand .mark-red {
+  color: var(--c-red);
+}
+
+.top-bar-meta {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+
+.top-bar-nav {
+  display: flex;
+  gap: 20px;
+  list-style: none;
+}
+
+.top-bar-nav a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s;
+}
+
+.top-bar-nav a:hover {
+  color: var(--c-red);
+}
+
+/* Global scroll scrub progress line */
+.scroll-meter-global {
+  position: fixed;
+  top: 48px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  z-index: 1000;
+  background: transparent;
+}
+
+.scroll-meter-global-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--c-red);
+  transition: width 0.08s linear;
+}
+
+/* ==========================================================================
+   PINNED STAGE SCAFFOLD
+   ========================================================================== */
+.stage {
+  position: relative;
+  width: 100%;
+}
+
+.stage-inner {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100svh;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   STAGE 1: POSTER HERO (280svh, Dark Loam ground)
+   ========================================================================== */
+#stage-hero {
+  height: 280svh;
+  background: var(--c-loam);
+}
+
+#stage-hero .stage-inner {
+  background: var(--c-loam);
+  color: var(--c-cream);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 80px 32px 32px;
+}
+
+.hero-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  margin: auto 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: translateY(var(--hero-type-y)) scale(var(--hero-type-scale));
+  opacity: var(--hero-type-alpha);
+  will-change: transform, opacity;
+  transform-origin: center center;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.86;
+  letter-spacing: -0.025em;
+  color: var(--c-cream);
+  white-space: nowrap;
+  /* Chars-aware clamp for 'OPEN-POLLINATED & HEIRLOOM SEEDS' (33 chars) */
+  font-size: min(clamp(26px, 4.4vw, 68px), calc(92vw / (33 * 0.44)));
+  margin-bottom: 0.15em;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  line-height: 0.84;
+  letter-spacing: -0.04em;
+  color: var(--c-red);
+  white-space: nowrap;
+  /* Chars-aware clamp for 'FALLOW ROW' (10 chars) */
+  font-size: min(clamp(72px, 17.5vw, 240px), calc(92vw / (10 * 0.44)));
+  text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+}
+
+.hero-subtag {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--c-muted-inv);
+}
+
+.hero-subtag .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--c-red);
+  display: inline-block;
+}
+
+.hero-bottom-bar {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid var(--c-hairline-inv);
+  padding-top: 16px;
+  color: var(--c-muted-inv);
+  opacity: var(--hero-type-alpha);
+  transition: opacity 0.2s;
+}
+
+.hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-meta-item span.val {
+  color: var(--c-cream);
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   STAGE 2: MANIFESTO CLIP-WIPE (260svh, Cream ground)
+   ========================================================================== */
+#stage-manifesto {
+  height: 260svh;
+  background: var(--c-cream);
+}
+
+#stage-manifesto .stage-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 64px 32px;
+  background: var(--c-cream);
+}
+
+.manifesto-header {
+  position: absolute;
+  top: 72px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--c-hairline);
+  padding-bottom: 12px;
+}
+
+.manifesto-wrap {
+  position: relative;
+  max-width: 16ch;
+  width: 100%;
+  margin: 0 auto;
+  transform: scale(var(--manifesto-scale));
+  transform-origin: center center;
+  will-change: transform;
+}
+
+.manifesto-sentence {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5.6vw, 78px);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+  word-break: normal;
+}
+
+.manifesto-base {
+  color: rgba(23, 23, 23, 0.34);
+  user-select: none;
+}
+
+.manifesto-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--c-ink);
+  pointer-events: none;
+  clip-path: inset(calc(100% - var(--manifesto-wipe)) 0 0);
+  will-change: clip-path;
+}
+
+.manifesto-footer {
+  position: absolute;
+  bottom: 40px;
+  left: 32px;
+  right: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--c-hairline);
+  padding-top: 14px;
+}
+
+.manifesto-foot-note {
+  max-width: 48ch;
+  font-size: 13.5px;
+  color: var(--c-muted);
+  line-height: 1.45;
+}
+
+/* ==========================================================================
+   STAGE 3: HORIZONTAL CARD RAIL (340svh, Cream ground)
+   ========================================================================== */
+#stage-rail {
+  height: 340svh;
+  background: var(--c-cream);
+}
+
+#stage-rail .stage-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 72px 0 32px;
+  background: var(--c-cream);
+}
+
+.rail-top {
+  padding: 0 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--c-hairline);
+  padding-bottom: 14px;
+}
+
+.rail-title {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.rail-track-outer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: auto 0;
+  padding: 24px 0;
+}
+
+.rail-track {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 24px;
+  padding-left: 32px;
+  padding-right: 32px;
+  transform: translateX(var(--rail-x));
+  will-change: transform;
+}
+
+.variety-card {
+  flex: 0 0 clamp(230px, 26vw, 330px);
+  background: var(--c-paper);
+  border: 1.5px solid var(--c-ink);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: transform 0.25s var(--ease-out);
+}
+
+.variety-card:hover {
+  transform: translateY(-4px);
+}
+
+.card-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1.5px solid var(--c-ink);
+  background: var(--c-paper);
+}
+
+.card-plate-wrap {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  position: relative;
+  background: #f4efe6;
+  border-bottom: 1.5px solid var(--c-ink);
+  overflow: hidden;
+}
+
+.card-plate-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.card-body {
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--c-paper);
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+}
+
+.card-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 4px;
+  border-top: 1px solid var(--c-hairline);
+  padding-top: 6px;
+}
+
+.card-price {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--c-red);
+  letter-spacing: 0.18em;
+}
+
+.rail-footer-bar {
+  padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rail-meter-track {
+  width: 100%;
+  height: 2px;
+  background: var(--c-hairline);
+  position: relative;
+}
+
+.rail-meter-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: var(--rail-meter);
+  background: var(--c-red);
+  will-change: width;
+}
+
+.rail-meter-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--c-muted);
+}
+
+/* ==========================================================================
+   STAGE 4: THE PRINTED ARTIFACT (420svh, Dark Loam ground)
+   ========================================================================== */
+#stage-artifact {
+  height: 420svh;
+  background: var(--c-loam);
+}
+
+#stage-artifact .stage-inner {
+  background: var(--c-loam);
+  color: var(--c-cream);
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 48px;
+  align-items: center;
+  padding: 72px 48px 36px;
+  overflow: hidden;
+}
+
+.artifact-copy-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 520px;
+  transform: translateX(var(--packet-copy-x));
+  will-change: transform;
+}
+
+.artifact-step-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--c-red);
+}
+
+.artifact-title {
+  font-family: var(--font-display);
+  font-size: clamp(38px, 4.8vw, 68px);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  color: var(--c-cream);
+}
+
+.artifact-desc {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--c-muted-inv);
+}
+
+.artifact-cues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border-top: 1px solid var(--c-hairline-inv);
+  padding-top: 16px;
+}
+
+.artifact-cue {
+  display: grid;
+  grid-template-columns: 24px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  color: var(--c-muted-inv);
+  transition: all 0.25s var(--ease-out);
+}
+
+.artifact-cue.is-active {
+  border-color: var(--c-red);
+  color: var(--c-cream);
+  background: rgba(239, 73, 60, 0.08);
+}
+
+.artifact-cue.is-past {
+  color: var(--c-cream);
+  border-color: rgba(231, 226, 216, 0.22);
+}
+
+.cue-num {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--c-red);
+  letter-spacing: 0.1em;
+}
+
+.cue-status {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-muted-inv);
+}
+
+.artifact-cue.is-active .cue-status {
+  color: var(--c-red);
+}
+
+.artifact-cue.is-past .cue-status {
+  color: #79c388;
+}
+
+/* Right col: The physical paper packet */
+.artifact-stage-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.packet-holder {
+  width: min(340px, 86%);
+  aspect-ratio: 3 / 4;
+  background: var(--c-paper);
+  border: 1.5px solid var(--c-ink);
+  color: var(--c-ink);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.4);
+  transform: translateY(var(--packet-enter)) scale(var(--packet-scale));
+  opacity: var(--packet-alpha);
+  will-change: transform, opacity;
+  overflow: hidden;
+}
+
+/* Header on the packet */
+.packet-header {
+  border-bottom: 1.5px solid var(--c-ink);
+  padding: 10px 14px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #fbf8f0;
+}
+
+.packet-house-brand {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.packet-variety-title {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 0.88;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+  margin-top: 4px;
+}
+
+.packet-latin-name {
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--c-muted);
+}
+
+/* Specimen Plate on the packet */
+.packet-plate-box {
+  flex: 1;
+  position: relative;
+  background: #f4efe6;
+  border-bottom: 1.5px solid var(--c-ink);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.packet-plate-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.packet-stamp-watermark {
+  position: absolute;
+  bottom: 8px;
+  right: 10px;
+  border: 1px dashed var(--c-ink);
+  padding: 3px 6px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--c-ink);
+  background: rgba(255, 253, 248, 0.85);
+}
+
+/* Footer values: filled dynamically on index change */
+.packet-footer {
+  padding: 10px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: #fbf8f0;
+}
+
+.packet-val-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px dotted rgba(23, 23, 23, 0.22);
+  padding-bottom: 2px;
+}
+
+.packet-val-row:last-child {
+  border-bottom: none;
+}
+
+.packet-print-val {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--c-red);
+}
+
+/* Perforation tear across the packet */
+.packet-perforation {
+  position: absolute;
+  top: 110px;
+  left: -4px;
+  right: -4px;
+  height: 0;
+  border-top: 2px dashed var(--c-ink);
+  transform: translateY(calc(var(--packet-cut) * 20px));
+  opacity: var(--packet-cut);
+  z-index: 5;
+  pointer-events: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6px;
+}
+
+.packet-perforation::before,
+.packet-perforation::after {
+  content: '✂';
+  font-size: 11px;
+  color: var(--c-ink);
+  transform: translateY(-8px);
+}
+
+.packet-live-status {
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  background: rgba(23, 23, 23, 0.5);
+  border: 1px solid var(--c-hairline-inv);
+  color: var(--c-cream);
+}
+
+.packet-live-status .indicator-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--c-red);
+  border-radius: 50%;
+  animation: pulse-dot 1.8s infinite ease-in-out;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 0.3; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.3); }
+}
+
+/* ==========================================================================
+   STAGE 5: PARALLAX SEASON BAND (300svh, Cream ground)
+   ========================================================================== */
+#stage-season {
+  height: 300svh;
+  background: var(--c-cream);
+}
+
+#stage-season .stage-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 80px 32px 48px;
+  background: var(--c-cream);
+}
+
+.season-canvas-wrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.season-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transform: translateY(var(--season-y)) scale(var(--season-scale));
+  will-change: transform;
+}
+
+.season-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.season-headline-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1.5px solid var(--c-ink);
+  padding-bottom: 24px;
+}
+
+.season-headline {
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6.2vw, 92px);
+  line-height: 0.86;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+}
+
+.season-chapters-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.season-chapter {
+  border-top: 2px solid var(--c-ink);
+  padding-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  opacity: 0.3;
+  transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+}
+
+.season-chapter.is-active {
+  opacity: 1;
+  border-top-color: var(--c-red);
+  transform: translateY(-4px);
+}
+
+.chapter-badge {
+  color: var(--c-red);
+}
+
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  line-height: 0.9;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+}
+
+.chapter-body {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--c-muted);
+}
+
+/* ==========================================================================
+   POST-PIN BAND 1: RULED PRICE LEDGER TABLE
+   ========================================================================== */
+.band-ledger {
+  background: var(--c-cream);
+  padding: 120px 32px 96px;
+  border-top: 1.5px solid var(--c-ink);
+  position: relative;
+  z-index: 10;
+}
+
+.band-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.band-title-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 40px;
+  border-bottom: 1.5px solid var(--c-ink);
+  padding-bottom: 16px;
+}
+
+.band-title {
+  font-family: var(--font-display);
+  font-size: clamp(34px, 4.8vw, 64px);
+  line-height: 0.88;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.ledger-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1.5px solid var(--c-ink);
+  background: var(--c-paper);
+}
+
+.ledger-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.ledger-table th {
+  background: #f4efe6;
+  border-bottom: 1.5px solid var(--c-ink);
+  border-right: 1px solid var(--c-hairline);
+  padding: 12px 16px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+}
+
+.ledger-table th:last-child {
+  border-right: none;
+}
+
+.ledger-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--c-hairline);
+  border-right: 1px solid var(--c-hairline);
+  font-size: 14px;
+}
+
+.ledger-table td:last-child {
+  border-right: none;
+}
+
+.ledger-table tr:last-child td {
+  border-bottom: none;
+}
+
+.ledger-table tr:hover td {
+  background: #faf6ee;
+}
+
+.ledger-variety-name {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+.ledger-price {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--c-red);
+  letter-spacing: 0.16em;
+}
+
+.stock-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border: 1px solid var(--c-ink);
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  background: var(--c-paper);
+}
+
+.stock-tag.low {
+  border-color: var(--c-red);
+  color: var(--c-red);
+}
+
+/* ==========================================================================
+   POST-PIN BAND 2: FAQ NATIVE DETAILS
+   ========================================================================== */
+.band-faq {
+  background: var(--c-cream);
+  padding: 96px 32px 120px;
+  border-top: 1.5px solid var(--c-ink);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1.5px solid var(--c-ink);
+  margin-top: 32px;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--c-hairline);
+  transition: background 0.2s;
+}
+
+.faq-item[open] {
+  background: rgba(255, 253, 248, 0.6);
+  border-bottom: 1.5px solid var(--c-ink);
+}
+
+.faq-summary {
+  list-style: none;
+  padding: 22px 16px;
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 16px;
+  user-select: none;
+}
+
+.faq-summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-index {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--c-red);
+  letter-spacing: 0.14em;
+}
+
+.faq-q-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 32px);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  text-transform: uppercase;
+  color: var(--c-ink);
+}
+
+.faq-marker {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  color: var(--c-ink);
+  transition: transform 0.25s var(--ease-out);
+  width: 20px;
+  text-align: center;
+}
+
+.faq-item[open] .faq-marker {
+  transform: rotate(45deg);
+  color: var(--c-red);
+}
+
+.faq-answer {
+  padding: 0 16px 24px 64px;
+  max-width: 74ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--c-muted);
+}
+
+.faq-answer p + p {
+  margin-top: 12px;
+}
+
+/* ==========================================================================
+   POST-PIN BAND 3: DARK FOOTER (#241a12)
+   ========================================================================== */
+.site-footer {
+  background: var(--c-loam);
+  color: var(--c-cream);
+  padding: 96px 32px 48px;
+  border-top: 1.5px solid var(--c-ink);
+  position: relative;
+  z-index: 10;
+}
+
+.footer-top-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  border-bottom: 1px solid var(--c-hairline-inv);
+  padding-bottom: 64px;
+  margin-bottom: 48px;
+}
+
+.footer-brand-lockup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 48px;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+}
+
+.footer-logo .mark-red {
+  color: var(--c-red);
+}
+
+.footer-mission {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--c-muted-inv);
+  max-width: 38ch;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-col-title {
+  color: var(--c-red);
+  margin-bottom: 4px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--c-muted-inv);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: var(--c-cream);
+}
+
+.footer-bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--c-muted-inv);
+}
+
+.edition-stamp {
+  border: 1px solid var(--c-hairline-inv);
+  padding: 4px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.edition-stamp .stamp-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--c-red);
+}
+
+/* ==========================================================================
+   PREFERS-REDUCED-MOTION OVERRIDES (MANDATORY SAFE FALLBACK)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .stage {
+    height: auto !important;
+  }
+  .stage-inner {
+    position: static !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+  .word-span,
+  [data-rev] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .manifesto-fill {
+    clip-path: none !important;
+    opacity: 1 !important;
+  }
+  .manifesto-base {
+    display: none !important;
+  }
+  .rail-track {
+    flex-wrap: wrap !important;
+    transform: none !important;
+    justify-content: center !important;
+  }
+  .rail-meter-fill {
+    width: 100% !important;
+  }
+  .packet-holder {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .season-chapter {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .season-canvas {
+    transform: none !important;
+  }
+}
+
+/* ==========================================================================
+   RESPONSIVE ADJUSTMENTS
+   ========================================================================== */
+@media (max-width: 960px) {
+  #stage-artifact .stage-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 64px 24px 32px;
+    overflow-y: auto;
+  }
+  .artifact-copy-col {
+    max-width: 100%;
+  }
+  .season-chapters-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .footer-top-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .top-bar-meta {
+    display: none;
+  }
+  .hero-bottom-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .faq-summary {
+    grid-template-columns: 28px 1fr auto;
+    padding: 16px 8px;
+  }
+  .faq-answer {
+    padding-left: 36px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Global Running Header -->
+<header class="top-bar" id="top-bar">
+  <a href="#stage-hero" class="top-bar-brand">
+    <span>FALLOW</span><span class="mark-red">ROW</span>
+  </a>
+  <div class="top-bar-meta">
+    <span class="mono-label">ISSUE 26.B</span>
+    <span class="mono-label">CATALOGUE DEPOSIT</span>
+    <span class="mono-label">51°45'N 01°15'W</span>
+  </div>
+  <nav>
+    <ul class="top-bar-nav mono-label">
+      <li><a href="#stage-rail">VARIETIES</a></li>
+      <li><a href="#stage-artifact">THE PACKET</a></li>
+      <li><a href="#stage-ledger">LEDGER</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Global Scroll Progress Meter -->
+<div class="scroll-meter-global">
+  <div class="scroll-meter-global-fill" id="global-meter"></div>
+</div>
+
+<!-- ==========================================================================
+     STAGE 1: POSTER HERO (280svh, Dark Loam Ground)
+     ========================================================================== -->
+<section class="stage" id="stage-hero">
+  <div class="stage-inner">
+    <canvas class="hero-canvas" id="canvas-hero"></canvas>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow split-words">OPEN-POLLINATED &amp; HEIRLOOM SEEDS</div>
+      <div class="hero-title">FALLOW ROW</div>
+      <div class="hero-subtag mono-label" data-rev style="--d:120ms;">
+        <span>EST. 1894</span>
+        <span class="dot"></span>
+        <span>TESTED LIVING SEED</span>
+        <span class="dot"></span>
+        <span>COLD PACKETED</span>
+      </div>
+    </div>
+
+    <div class="hero-bottom-bar mono-label">
+      <div class="hero-meta-item" data-rev style="--d:180ms;">
+        <span>LATITUDE &amp; SOIL</span>
+        <span class="val">COTSWOLD BRASH &bull; 170M</span>
+      </div>
+      <div class="hero-meta-item" data-rev style="--d:240ms;">
+        <span>CURRENT DEPOSIT</span>
+        <span class="val">LOT FR-2026-B &bull; 84 ACCESSIONS</span>
+      </div>
+      <div class="hero-meta-item" data-rev style="--d:300ms;">
+        <span>METHOD</span>
+        <span class="val">HAND-CURED &bull; VIABILITY ASSAYED</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     STAGE 2: MANIFESTO CLIP-WIPE (260svh, Cream Ground)
+     ========================================================================== */
+-->
+<section class="stage" id="stage-manifesto">
+  <div class="stage-inner">
+    <div class="manifesto-header mono-label" data-rev style="--d:60ms;">
+      <span>SECTION 01 / PRINCIPLE</span>
+      <span>TRUE-TO-TYPE FOUNDATION</span>
+      <span>RULED INK #171717</span>
+    </div>
+
+    <div class="manifesto-wrap">
+      <!-- Base sentence in 34-percent ink -->
+      <p class="manifesto-sentence manifesto-base" id="manifesto-text-base">
+        A SEED HOUSE IS NOT A STOREHOUSE OF COMMODITIES BUT A RUNNING THREAD OF UNBROKEN LIVING BREATH.
+      </p>
+      <!-- Overlaid sentence in full ink, clipped from bottom up -->
+      <p class="manifesto-sentence manifesto-fill" id="manifesto-text-fill" aria-hidden="true">
+        A SEED HOUSE IS NOT A STOREHOUSE OF COMMODITIES BUT A RUNNING THREAD OF UNBROKEN LIVING BREATH.
+      </p>
+    </div>
+
+    <div class="manifesto-footer">
+      <div class="manifesto-foot-note" data-rev style="--d:140ms;">
+        Every variety in this catalogue has been grown out on our open ground for at least seven generations. We do not sell treated, pelleted, or F1 hybrid seed.
+      </div>
+      <div class="mono-label" data-rev style="--d:200ms;" style="color:var(--c-red);">
+        REF. PROOF DEPOSIT &bull; 1894–2026
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     STAGE 3: HORIZONTAL CARD RAIL (340svh, Cream Ground)
+     ========================================================================== -->
+<section class="stage" id="stage-rail">
+  <div class="stage-inner">
+    <div class="rail-top">
+      <div>
+        <span class="mono-label" style="color:var(--c-red);" data-rev style="--d:40ms;">SECTION 02 / SELECTED ACCESSIONS</span>
+        <h2 class="rail-title split-words" style="margin-top:6px;">SIX COLD-SEASON SOWINGS</h2>
+      </div>
+      <div class="mono-label" style="color:var(--c-muted);" data-rev style="--d:100ms;">
+        SCROLL VERTICAL &rarr; RAIL TRAVERSES HORIZONTAL
+      </div>
+    </div>
+
+    <div class="rail-track-outer">
+      <div class="rail-track" id="rail-track">
+
+        <!-- Card 1 -->
+        <article class="variety-card" data-rev style="--d:40ms;">
+          <div class="card-header-bar mono-label">
+            <span>NO. 01</span>
+            <span>SOLANACEAE</span>
+          </div>
+          <div class="card-plate-wrap">
+            <canvas class="card-plate-canvas" data-plate="tomato"></canvas>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">ROUGE DE MARMANDE</h3>
+            <p class="mono-label" style="color:var(--c-muted);">RIB-SHOULDERED FRENCH HEIRLOOM</p>
+            <div class="card-meta-row">
+              <span class="mono-label">GERM 94% &bull; 45 S</span>
+              <span class="card-price">&pound;4.20</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="variety-card" data-rev style="--d:90ms;">
+          <div class="card-header-bar mono-label">
+            <span>NO. 02</span>
+            <span>BRASSICACEAE</span>
+          </div>
+          <div class="card-plate-wrap">
+            <canvas class="card-plate-canvas" data-plate="kale"></canvas>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">NERO DI TOSCANA</h3>
+            <p class="mono-label" style="color:var(--c-muted);">STRAP-LEAVED DINOSAUR PALM KALE</p>
+            <div class="card-meta-row">
+              <span class="mono-label">GERM 98% &bull; 200 S</span>
+              <span class="card-price">&pound;3.80</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="variety-card" data-rev style="--d:140ms;">
+          <div class="card-header-bar mono-label">
+            <span>NO. 03</span>
+            <span>APIACEAE</span>
+          </div>
+          <div class="card-plate-wrap">
+            <canvas class="card-plate-canvas" data-plate="carrot"></canvas>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">AUTUMN KING 2</h3>
+            <p class="mono-label" style="color:var(--c-muted);">BLUNT STUMP FLACCOURT STORAGE</p>
+            <div class="card-meta-row">
+              <span class="mono-label">GERM 89% &bull; 400 S</span>
+              <span class="card-price">&pound;3.60</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="variety-card" data-rev style="--d:190ms;">
+          <div class="card-header-bar mono-label">
+            <span>NO. 04</span>
+            <span>ALLIACEAE</span>
+          </div>
+          <div class="card-plate-wrap">
+            <canvas class="card-plate-canvas" data-plate="leek"></canvas>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">BLEU DE SOLAISE</h3>
+            <p class="mono-label" style="color:var(--c-muted);">FROST-PURPLE HARD OVERWINTERER</p>
+            <div class="card-meta-row">
+              <span class="mono-label">GERM 92% &bull; 150 S</span>
+              <span class="card-price">&pound;4.00</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="variety-card" data-rev style="--d:240ms;">
+          <div class="card-header-bar mono-label">
+            <span>NO. 05</span>
+            <span>FABACEAE</span>
+          </div>
+          <div class="card-plate-wrap">
+            <canvas class="card-plate-canvas" data-plate="bean"></canvas>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">CHEROKEE TRAIL</h3>
+            <p class="mono-label" style="color:var(--c-muted);">POLE SNAP BEAN WITH JET-BLACK SEED</p>
+            <div class="card-meta-row">
+              <span class="mono-label">GERM 96% &bull; 50 S</span>
+              <span class="card-price">&pound;4.40</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="variety-card" data-rev style="--d:290ms;">
+          <div class="card-header-bar mono-label">
+            <span>NO. 06</span>
+            <span>CUCURBITACEAE</span>
+          </div>
+          <div class="card-plate-wrap">
+            <canvas class="card-plate-canvas" data-plate="squash"></canvas>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title">WALTHAM BUTTERNUT</h3>
+            <p class="mono-label" style="color:var(--c-muted);">CURING SQUASH FOR MARCH CELLAR</p>
+            <div class="card-meta-row">
+              <span class="mono-label">GERM 91% &bull; 25 S</span>
+              <span class="card-price">&pound;3.90</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+
+    <div class="rail-footer-bar">
+      <div class="rail-meter-track">
+        <div class="rail-meter-fill"></div>
+      </div>
+      <div class="rail-meter-labels mono-label">
+        <span>COLLECTION 01 / MARCH DEPOSIT</span>
+        <span>INDEX 01 &mdash; 06 OF 84 TOTAL ACCESSIONS</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     STAGE 4: THE PRINTED ARTIFACT (420svh, Dark Loam Ground)
+     ========================================================================== -->
+<section class="stage" id="stage-artifact">
+  <div class="stage-inner">
+
+    <!-- Copy column left -->
+    <div class="artifact-copy-col">
+      <div class="artifact-step-indicator mono-label" data-rev style="--d:30ms;">
+        <span>STAGE 03 / MECHANICAL PROOF</span>
+      </div>
+
+      <h2 class="artifact-title split-words">FROM GROUND TRIAL TO PRINTED PACKET</h2>
+
+      <p class="artifact-desc" data-rev style="--d:90ms;">
+        Every packet is printed on our flatbed cylinder press on 120gsm unbleached rag paper. As you descend, the trial record is verified, germination rates are certified, and the security perforation is opened across the face.
+      </p>
+
+      <!-- Live cues lit cumulatively by phase index -->
+      <div class="artifact-cues-list" id="artifact-cues-list">
+        <div class="artifact-cue is-past" data-cue="0">
+          <span class="cue-num">01</span>
+          <span class="mono-label">BLANK PACKET REGISTRATION</span>
+          <span class="cue-status">RESOLVED</span>
+        </div>
+        <div class="artifact-cue" data-cue="1">
+          <span class="cue-num">02</span>
+          <span class="mono-label">PETRI DISH VIABILITY ASSAY</span>
+          <span class="cue-status" id="cue-1-status">PENDING</span>
+        </div>
+        <div class="artifact-cue" data-cue="2">
+          <span class="cue-num">03</span>
+          <span class="mono-label">LOT ENROLMENT &amp; SOWING WINDOW</span>
+          <span class="cue-status" id="cue-2-status">HOLD</span>
+        </div>
+        <div class="artifact-cue" data-cue="3">
+          <span class="cue-num">04</span>
+          <span class="mono-label">SECURITY PERFORATION OPENED</span>
+          <span class="cue-status" id="cue-3-status">SEALED</span>
+        </div>
+      </div>
+
+      <div class="packet-live-status mono-label" data-rev style="--d:160ms;">
+        <span class="indicator-dot"></span>
+        <span id="packet-status-text">STATUS: ADVANCING MECHANICAL PROOF...</span>
+      </div>
+    </div>
+
+    <!-- Artifact column right -->
+    <div class="artifact-stage-wrap">
+      <div class="packet-holder" id="paper-packet">
+        <!-- Dashed perforation line across packet -->
+        <div class="packet-perforation" id="packet-perforation"></div>
+
+        <div class="packet-header">
+          <div class="packet-house-brand mono-label">
+            <span>FALLOW ROW SEED HOUSE</span>
+            <span style="color:var(--c-red);">EST. 1894</span>
+          </div>
+          <div class="packet-variety-title">NERO DI TOSCANA</div>
+          <div class="packet-latin-name">Brassica oleracea var. acephala</div>
+        </div>
+
+        <div class="packet-plate-box">
+          <canvas class="packet-plate-canvas" id="packet-canvas"></canvas>
+          <div class="packet-stamp-watermark">
+            PROVENANCE: TUSCANY 1845
+          </div>
+        </div>
+
+        <div class="packet-footer">
+          <div class="packet-val-row">
+            <span class="mono-label" style="color:var(--c-muted);">LOT NUMBER</span>
+            <span class="packet-print-val" id="packet-val-lot">--</span>
+          </div>
+          <div class="packet-val-row">
+            <span class="mono-label" style="color:var(--c-muted);">GERMINATION RESULT</span>
+            <span class="packet-print-val" id="packet-val-germ">PENDING</span>
+          </div>
+          <div class="packet-val-row">
+            <span class="mono-label" style="color:var(--c-muted);">SOWING WINDOW</span>
+            <span class="packet-print-val" id="packet-val-window">--</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ==========================================================================
+     STAGE 5: PARALLAX SEASON BAND (300svh, Cream Ground)
+     ========================================================================== -->
+<section class="stage" id="stage-season">
+  <div class="stage-inner">
+    <!-- Contour canvas parallaxing on --season-y and --season-scale -->
+    <div class="season-canvas-wrap">
+      <canvas class="season-canvas" id="canvas-season"></canvas>
+    </div>
+
+    <div class="season-content">
+      <div class="season-headline-box">
+        <div class="mono-label" style="color:var(--c-red);" data-rev style="--d:40ms;">
+          STAGE 04 / PHENOLOGY &amp; THE SEED CALENDAR
+        </div>
+        <h2 class="season-headline split-words">
+          THREE MOVEMENTS OF THE COTSWOLD YEAR
+        </h2>
+      </div>
+
+      <!-- Exactly ONE chapter is active based on floor(progress * 3) -->
+      <div class="season-chapters-row">
+        <div class="season-chapter is-active" id="season-ch-0">
+          <div class="chapter-badge mono-label">I. MARCH &mdash; APRIL</div>
+          <h3 class="chapter-title">COLD-FRAME GERMINATION</h3>
+          <p class="chapter-body">
+            First sowings under north glass. Brassicas, early peas, Welsh onions, and alliums. Seeds take the ambient night chill without bottom heat to ensure winter hardiness.
+          </p>
+        </div>
+
+        <div class="season-chapter" id="season-ch-1">
+          <div class="chapter-badge mono-label">II. JUNE &mdash; AUGUST</div>
+          <h3 class="chapter-title">ROGUEING &amp; POLLINATION</h3>
+          <p class="chapter-body">
+            Inspection rows are rogued of any plant not strictly true to type. Minimum isolation distances of 500 metres are maintained between cross-fertile varieties to preserve pure strain integrity.
+          </p>
+        </div>
+
+        <div class="season-chapter" id="season-ch-2">
+          <div class="chapter-badge mono-label">III. OCTOBER &mdash; DECEMBER</div>
+          <h3 class="chapter-title">THRESHING &amp; PAPER PACKETING</h3>
+          <p class="chapter-body">
+            Hand-harvested pods and umbels are cured in airy lofts, dry-winnowed on our box screens, subjected to petri assays, and counted into seed packets on the hand-fed cylinder press.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     POST-PIN BAND 1: RULED PRICE LEDGER TABLE
+     ========================================================================== -->
+<section class="band-ledger" id="stage-ledger">
+  <div class="band-inner">
+    <div class="band-title-bar">
+      <div>
+        <span class="mono-label" style="color:var(--c-red);" data-rev style="--d:40ms;">CANONICAL DEPOSIT RECORD</span>
+        <h2 class="band-title split-words" style="margin-top:6px;">2026 GENERAL ACCESSION LIST</h2>
+      </div>
+      <div class="mono-label" style="color:var(--c-muted);" data-rev style="--d:80ms;">
+        ALL PACKETS HAND-FILLED &bull; ZERO CHEMICAL TREATMENTS
+      </div>
+    </div>
+
+    <div class="ledger-table-wrap" data-rev style="--d:120ms;">
+      <table class="ledger-table">
+        <thead>
+          <tr>
+            <th>ACCESSION #</th>
+            <th>BOTANICAL VARIETY</th>
+            <th>FAMILY</th>
+            <th>SEED COUNT</th>
+            <th>MIN. VIABILITY</th>
+            <th>ISOLATION</th>
+            <th>PACKET PRICE</th>
+            <th>INVENTORY</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono-label">FR-TOM-014</td>
+            <td><div class="ledger-variety-name">Rouge de Marmande</div></td>
+            <td class="mono-label">Solanaceae</td>
+            <td class="mono-label">45 Seeds</td>
+            <td class="mono-label" style="color:var(--c-red);">94%</td>
+            <td class="mono-label">30m / Caged</td>
+            <td class="ledger-price">&pound;4.20</td>
+            <td><span class="stock-tag">IN CROFT</span></td>
+          </tr>
+          <tr>
+            <td class="mono-label">FR-KAL-002</td>
+            <td><div class="ledger-variety-name">Nero di Toscana</div></td>
+            <td class="mono-label">Brassicaceae</td>
+            <td class="mono-label">200 Seeds</td>
+            <td class="mono-label" style="color:var(--c-red);">98%</td>
+            <td class="mono-label">800m Open</td>
+            <td class="ledger-price">&pound;3.80</td>
+            <td><span class="stock-tag">IN CROFT</span></td>
+          </tr>
+          <tr>
+            <td class="mono-label">FR-CAR-088</td>
+            <td><div class="ledger-variety-name">Autumn King 2</div></td>
+            <td class="mono-label">Apiaceae</td>
+            <td class="mono-label">400 Seeds</td>
+            <td class="mono-label" style="color:var(--c-red);">89%</td>
+            <td class="mono-label">1000m Open</td>
+            <td class="ledger-price">&pound;3.60</td>
+            <td><span class="stock-tag">IN CROFT</span></td>
+          </tr>
+          <tr>
+            <td class="mono-label">FR-LEK-031</td>
+            <td><div class="ledger-variety-name">Bleu de Solaise</div></td>
+            <td class="mono-label">Alliaceae</td>
+            <td class="mono-label">150 Seeds</td>
+            <td class="mono-label" style="color:var(--c-red);">92%</td>
+            <td class="mono-label">800m Open</td>
+            <td class="ledger-price">&pound;4.00</td>
+            <td><span class="stock-tag low">LAST 40 PKTS</span></td>
+          </tr>
+          <tr>
+            <td class="mono-label">FR-BEN-019</td>
+            <td><div class="ledger-variety-name">Cherokee Trail of Tears</div></td>
+            <td class="mono-label">Fabaceae</td>
+            <td class="mono-label">50 Seeds</td>
+            <td class="mono-label" style="color:var(--c-red);">96%</td>
+            <td class="mono-label">40m Self</td>
+            <td class="ledger-price">&pound;4.40</td>
+            <td><span class="stock-tag">IN CROFT</span></td>
+          </tr>
+          <tr>
+            <td class="mono-label">FR-SQU-007</td>
+            <td><div class="ledger-variety-name">Waltham Butternut</div></td>
+            <td class="mono-label">Cucurbitaceae</td>
+            <td class="mono-label">25 Seeds</td>
+            <td class="mono-label" style="color:var(--c-red);">91%</td>
+            <td class="mono-label">1200m Hand</td>
+            <td class="ledger-price">&pound;3.90</td>
+            <td><span class="stock-tag">IN CROFT</span></td>
+          </tr>
+          <tr>
+            <td class="mono-label">FR-BEP-004</td>
+            <td><div class="ledger-variety-name">Bull's Blood Beetroot</div></td>
+            <td class="mono-label">Amaranthaceae</td>
+            <td class="mono-label">180 Seeds</td>
+            <td class="mono-label" style="color:var(--c-red);">93%</td>
+            <td class="mono-label">1500m Open</td>
+            <td class="ledger-price">&pound;3.50</td>
+            <td><span class="stock-tag">IN CROFT</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     POST-PIN BAND 2: FAQ OF NATIVE DETAILS
+     ========================================================================== -->
+<section class="band-faq">
+  <div class="band-inner">
+    <div>
+      <span class="mono-label" style="color:var(--c-red);" data-rev style="--d:30ms;">DOCUMENTED DISCIPLINE</span>
+      <h2 class="band-title split-words" style="margin-top:6px;">QUESTIONS OF STEWARDSHIP</h2>
+    </div>
+
+    <div class="faq-list">
+
+      <details class="faq-item" data-rev style="--d:60ms;">
+        <summary class="faq-summary">
+          <span class="faq-index">01</span>
+          <h3 class="faq-q-title">HOW ARE GERMINATION PERCENTAGES ASSAYED AND VERIFIED?</h3>
+          <span class="faq-marker">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>
+            Every harvest lot is stored in our humidity-regulated cold loft for fourteen days before testing. We draw five randomized samples of one hundred seeds each onto sterile unbleached paper pads at 20&deg;C.
+          </p>
+          <p>
+            Counts are recorded at 7, 14, and 21 days according to ISTA standards. The minimum percentage reported on your packet is the arithmetic mean of all five assay dishes, minus a statutory 2% safety deduction.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq-item" data-rev style="--d:110ms;">
+        <summary class="faq-summary">
+          <span class="faq-index">02</span>
+          <h3 class="faq-q-title">DO YOU EVER SELL F1 HYBRIDS OR PATENTED SEED LINES?</h3>
+          <span class="faq-marker">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>
+            Never. Not one variety in this catalogue is patented, proprietary, or hybrid. Every seed you receive can be grown to full maturity, saved by hand, and resown year after year with fidelity to type.
+          </p>
+          <p>
+            We believe that genetic heritage belongs in the hands of growers, not in legal filing cabinets.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq-item" data-rev style="--d:160ms;">
+        <summary class="faq-summary">
+          <span class="faq-index">03</span>
+          <h3 class="faq-q-title">HOW SHOULD SEEDS BE STORED ONCE DELIVERED?</h3>
+          <span class="faq-marker">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>
+            Our packets are made from 120gsm heavy rag paper rather than plastic foils to allow micro-respiration in cold storage. Keep the packets inside an airtight tin or glass jar alongside a dry sachet of rice or silica.
+          </p>
+          <p>
+            Store between 4&deg;C and 10&deg;C in a cool larder or cellar. Kept thus, our Brassicas and Alliums will maintain viability for up to five full seasons.
+          </p>
+        </div>
+      </details>
+
+      <details class="faq-item" data-rev style="--d:210ms;">
+        <summary class="faq-summary">
+          <span class="faq-index">04</span>
+          <h3 class="faq-q-title">WHAT HAPPENS WHEN A SPECIFIC LOT RUNS OUT?</h3>
+          <span class="faq-marker">+</span>
+        </summary>
+        <div class="faq-answer">
+          <p>
+            When a lot is exhausted, that variety is closed until the following year's curing is complete. We do not purchase commercial bulk seed from third-party wholesale brokers to backfill shortages.
+          </p>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================================
+     POST-PIN BAND 3: DARK FOOTER (#241a12)
+     ========================================================================== -->
+<footer class="site-footer">
+  <div class="band-inner">
+    <div class="footer-top-grid">
+
+      <div class="footer-brand-lockup">
+        <div class="footer-logo">
+          <span>FALLOW</span><span class="mark-red">ROW</span>
+        </div>
+        <p class="footer-mission">
+          An independent seed house and living biological archive established at Northleach, Gloucestershire. True-to-type seed since 1894.
+        </p>
+        <div class="edition-stamp mono-label">
+          <span class="stamp-dot"></span>
+          <span>AUTUMN DEPOSIT &bull; CATALOGUE ENTRY 2026.B</span>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title mono-label">CURATIONS</span>
+        <ul class="footer-links">
+          <li><a href="#stage-rail">Brassicas of Europe</a></li>
+          <li><a href="#stage-rail">Cold-Storage Roots</a></li>
+          <li><a href="#stage-rail">Appalachian Dry Beans</a></li>
+          <li><a href="#stage-rail">Cotswold Alliums</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title mono-label">PROTOCOL</span>
+        <ul class="footer-links">
+          <li><a href="#stage-manifesto">The Seed Oath</a></li>
+          <li><a href="#stage-artifact">Petri Viability Assays</a></li>
+          <li><a href="#stage-ledger">Open-Source Genetics</a></li>
+          <li><a href="#stage-ledger">Curing &amp; Packaging</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <span class="footer-col-title mono-label">DESK &amp; CROFT</span>
+        <ul class="footer-links">
+          <li><span class="mono-label" style="color:var(--c-muted-inv);">FALLOW ROW CROFT</span></li>
+          <li><span class="mono-label" style="color:var(--c-muted-inv);">NORTHLEACH, GL54 3EG</span></li>
+          <li><span class="mono-label" style="color:var(--c-muted-inv);">UNITED KINGDOM</span></li>
+          <li><span class="mono-label" style="color:var(--c-red);">DISPATCHES: TUESDAY ONLY</span></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom-bar mono-label">
+      <div>&copy; 1894&ndash;2026 FALLOW ROW SEED HOUSE LTD. ALL ACCESSIONS REGISTERED.</div>
+      <div>WARM PRINT REGISTER &bull; PURE INK &bull; PAPER GROUND</div>
+    </div>
+  </div>
+</footer>
+
+<!-- ==========================================================================
+     VANILLA JAVASCRIPT SCROLL ENGINE & PROCEDURAL CANVASES
+     ========================================================================== -->
+<script>
+(function() {
+  'use strict';
+
+  /* ------------------------------------------------------------------------
+     1. SPLIT TEXT INTO PER-WORD INLINE SPANS (MOTION ATOM BUDGET)
+     ------------------------------------------------------------------------ */
+  function splitWordsIn(el) {
+    const text = el.textContent.trim();
+    if (!text) return;
+    const words = text.split(/\s+/);
+    el.textContent = '';
+    const frag = document.createDocumentFragment();
+    words.forEach((word, i) => {
+      const span = document.createElement('span');
+      span.className = 'word-span';
+      span.textContent = word + (i < words.length - 1 ? ' ' : '');
+      span.style.setProperty('--d', (i * 38) + 'ms');
+      frag.appendChild(span);
+    });
+    el.appendChild(frag);
+  }
+
+  document.querySelectorAll('.split-words').forEach(splitWordsIn);
+
+  /* ------------------------------------------------------------------------
+     2. INTERSECTION OBSERVER FOR PER-WORD & PER-ROW REVEALS
+     ------------------------------------------------------------------------ */
+  const revObserver = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('rev-in');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('[data-rev], .split-words').forEach(el => {
+    revObserver.observe(el);
+  });
+
+  /* ------------------------------------------------------------------------
+     3. PROCEDURAL CANVASES (SOIL, SEED PLATES, CONTOURS)
+     ------------------------------------------------------------------------ */
+  function setupCanvasDpi(canvas) {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return { dpr: 1, w: 100, h: 100 };
+    canvas.width = Math.floor(rect.width * dpr);
+    canvas.height = Math.floor(rect.height * dpr);
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    return { ctx, width: rect.width, height: rect.height, dpr };
+  }
+
+  // Hero canvas: Drifting tilled-soil strokes
+  const heroCanvas = document.getElementById('canvas-hero');
+  let heroState = null;
+
+  function initHeroCanvas() {
+    if (!heroCanvas) return;
+    const { ctx, width, height } = setupCanvasDpi(heroCanvas);
+    const rows = 26;
+    const cols = 36;
+    const strokes = [];
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        strokes.push({
+          x: (c / cols) * width + (Math.random() - 0.5) * (width / cols * 0.8),
+          y: (r / rows) * height + (Math.random() - 0.5) * (height / rows * 0.8),
+          len: 12 + Math.random() * 24,
+          angle: -0.15 + (Math.random() - 0.5) * 0.25,
+          alpha: 0.05 + Math.random() * 0.14,
+          speed: 0.4 + Math.random() * 0.8,
+          phase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+    heroState = { ctx, width, height, strokes };
+  }
+
+  function drawHeroCanvas(time) {
+    if (!heroState) return;
+    const { ctx, width, height, strokes } = heroState;
+    ctx.clearRect(0, 0, width, height);
+
+    ctx.lineWidth = 1.5;
+    ctx.strokeStyle = '#ef493c';
+
+    const t = time * 0.001;
+    for (let i = 0; i < strokes.length; i++) {
+      const s = strokes[i];
+      const drift = Math.sin(t * s.speed + s.phase) * 6;
+      ctx.globalAlpha = s.alpha * (0.8 + Math.sin(t * 0.5 + s.phase) * 0.2);
+      ctx.beginPath();
+      const x1 = s.x + drift;
+      const y1 = s.y;
+      const x2 = x1 + Math.cos(s.angle) * s.len;
+      const y2 = y1 + Math.sin(s.angle) * s.len;
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  // Variety card botanical plate drawings
+  function drawPlate(canvas, type) {
+    const { ctx, width, height } = setupCanvasDpi(canvas);
+    ctx.clearRect(0, 0, width, height);
+
+    // Warm background tint with faint ruled guide lines
+    ctx.strokeStyle = 'rgba(23, 23, 23, 0.07)';
+    ctx.lineWidth = 1;
+    for (let y = 20; y < height; y += 28) {
+      ctx.beginPath();
+      ctx.moveTo(12, y);
+      ctx.lineTo(width - 12, y);
+      ctx.stroke();
+    }
+
+    const cx = width / 2;
+    const cy = height / 2;
+
+    ctx.strokeStyle = '#171717';
+    ctx.lineWidth = 1.5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    if (type === 'tomato') {
+      // Ribbed fruit drawing
+      ctx.beginPath();
+      ctx.arc(cx, cy + 10, 52, 0, Math.PI * 2);
+      ctx.stroke();
+      // Ribs
+      for (let a = 0; a < Math.PI * 2; a += Math.PI / 4) {
+        ctx.beginPath();
+        ctx.moveTo(cx, cy + 10);
+        ctx.quadraticCurveTo(cx + Math.cos(a) * 30, cy + 10 + Math.sin(a) * 30, cx + Math.cos(a) * 52, cy + 10 + Math.sin(a) * 52);
+        ctx.stroke();
+      }
+      // Calyx sepals in hot red
+      ctx.strokeStyle = '#ef493c';
+      ctx.lineWidth = 2;
+      for (let i = 0; i < 5; i++) {
+        const ang = (i * Math.PI * 2 / 5) - Math.PI / 2;
+        ctx.beginPath();
+        ctx.moveTo(cx, cy - 20);
+        ctx.lineTo(cx + Math.cos(ang) * 26, cy - 20 + Math.sin(ang) * 26);
+        ctx.stroke();
+      }
+    } else if (type === 'kale') {
+      // Feathered strap leaf
+      ctx.beginPath();
+      ctx.moveTo(cx, cy + 70);
+      ctx.quadraticCurveTo(cx - 10, cy, cx - 4, cy - 70);
+      ctx.stroke();
+      // Side crinkles
+      ctx.strokeStyle = '#ef493c';
+      ctx.lineWidth = 1.2;
+      for (let y = -50; y < 50; y += 14) {
+        ctx.beginPath();
+        ctx.moveTo(cx - 3, cy + y);
+        ctx.quadraticCurveTo(cx - 36, cy + y - 4, cx - 44, cy + y + 6);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(cx - 3, cy + y);
+        ctx.quadraticCurveTo(cx + 36, cy + y - 4, cx + 44, cy + y + 6);
+        ctx.stroke();
+      }
+    } else if (type === 'carrot') {
+      // Long root
+      ctx.beginPath();
+      ctx.moveTo(cx - 18, cy - 40);
+      ctx.lineTo(cx + 18, cy - 40);
+      ctx.lineTo(cx + 4, cy + 75);
+      ctx.lineTo(cx - 4, cy + 75);
+      ctx.closePath();
+      ctx.stroke();
+      // Horizontal lenticel marks in red
+      ctx.strokeStyle = '#ef493c';
+      ctx.lineWidth = 1.5;
+      for (let y = -25; y < 65; y += 15) {
+        ctx.beginPath();
+        ctx.moveTo(cx - 10, cy + y);
+        ctx.lineTo(cx + 8, cy + y);
+        ctx.stroke();
+      }
+      // Top foliage
+      ctx.strokeStyle = '#171717';
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 40);
+      ctx.lineTo(cx - 14, cy - 70);
+      ctx.moveTo(cx, cy - 40);
+      ctx.lineTo(cx + 14, cy - 72);
+      ctx.moveTo(cx, cy - 40);
+      ctx.lineTo(cx, cy - 76);
+      ctx.stroke();
+    } else if (type === 'leek') {
+      // Cylindrical shaft
+      ctx.beginPath();
+      ctx.rect(cx - 14, cy - 45, 28, 90);
+      ctx.stroke();
+      // Leaf fan out
+      ctx.strokeStyle = '#ef493c';
+      ctx.beginPath();
+      ctx.moveTo(cx - 14, cy - 45);
+      ctx.lineTo(cx - 45, cy - 80);
+      ctx.moveTo(cx + 14, cy - 45);
+      ctx.lineTo(cx + 45, cy - 80);
+      ctx.stroke();
+      // Roots
+      ctx.strokeStyle = '#171717';
+      for (let i = -10; i <= 10; i += 4) {
+        ctx.beginPath();
+        ctx.moveTo(cx + i, cy + 45);
+        ctx.lineTo(cx + i * 1.5, cy + 75 + Math.abs(i) * 2);
+        ctx.stroke();
+      }
+    } else if (type === 'bean') {
+      // Curved bean pod
+      ctx.beginPath();
+      ctx.moveTo(cx - 40, cy - 40);
+      ctx.quadraticCurveTo(cx + 45, cy - 10, cx - 15, cy + 70);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx - 40, cy - 40);
+      ctx.quadraticCurveTo(cx + 25, cy + 10, cx - 15, cy + 70);
+      ctx.stroke();
+      // 3 Bean bump circles inside
+      ctx.fillStyle = '#ef493c';
+      [-10, 15, 40].forEach(dy => {
+        ctx.beginPath();
+        ctx.arc(cx + 6, cy + dy - 20, 6, 0, Math.PI * 2);
+        ctx.fill();
+      });
+    } else if (type === 'squash') {
+      // Butternut shape
+      ctx.beginPath();
+      ctx.moveTo(cx - 14, cy - 50);
+      ctx.lineTo(cx + 14, cy - 50);
+      ctx.quadraticCurveTo(cx + 16, cy - 10, cx + 38, cy + 30);
+      ctx.arc(cx, cy + 30, 38, 0, Math.PI);
+      ctx.quadraticCurveTo(cx - 16, cy - 10, cx - 14, cy - 50);
+      ctx.stroke();
+      // Stem in red
+      ctx.strokeStyle = '#ef493c';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 50);
+      ctx.lineTo(cx + 6, cy - 72);
+      ctx.stroke();
+    }
+  }
+
+  function initVarietyPlates() {
+    document.querySelectorAll('.card-plate-canvas').forEach(cv => {
+      const type = cv.getAttribute('data-plate');
+      drawPlate(cv, type);
+    });
+    const packetCv = document.getElementById('packet-canvas');
+    if (packetCv) drawPlate(packetCv, 'kale');
+  }
+
+  // Season band canvas: 22 stacked contour lines
+  const seasonCanvas = document.getElementById('canvas-season');
+  let seasonState = null;
+
+  function initSeasonCanvas() {
+    if (!seasonCanvas) return;
+    const { ctx, width, height } = setupCanvasDpi(seasonCanvas);
+    seasonState = { ctx, width, height };
+  }
+
+  function drawSeasonCanvas(time) {
+    if (!seasonState) return;
+    const { ctx, width, height } = seasonState;
+    ctx.clearRect(0, 0, width, height);
+
+    const lines = 22;
+    const t = time * 0.0006;
+    const stepY = height / (lines + 2);
+
+    for (let i = 0; i < lines; i++) {
+      const isRed = (i % 5 === 0);
+      ctx.strokeStyle = isRed ? '#ef493c' : 'rgba(23, 23, 23, 0.22)';
+      ctx.lineWidth = isRed ? 1.5 : 1;
+
+      const baseY = (i + 1.5) * stepY;
+      ctx.beginPath();
+      const points = 32;
+      for (let p = 0; p <= points; p++) {
+        const x = (p / points) * width;
+        const normX = p / points;
+        const wave1 = Math.sin(normX * Math.PI * 3 + t + i * 0.35) * 16;
+        const wave2 = Math.cos(normX * Math.PI * 6 - t * 0.7 + i * 0.2) * 7;
+        const y = baseY + wave1 + wave2;
+        if (p === 0) ctx.moveTo(x, y);
+        else ctx.lineTo(x, y);
+      }
+      ctx.stroke();
+    }
+  }
+
+  /* ------------------------------------------------------------------------
+     4. STAGE PROGRESS & PROPERTY DRIVER ENGINE
+     ------------------------------------------------------------------------ */
+  const root = document.documentElement;
+
+  // DOM Elements
+  const stageHero = document.getElementById('stage-hero');
+  const stageManifesto = document.getElementById('stage-manifesto');
+  const stageRail = document.getElementById('stage-rail');
+  const railTrack = document.getElementById('rail-track');
+  const stageArtifact = document.getElementById('stage-artifact');
+  const stageSeason = document.getElementById('stage-season');
+  const topBar = document.getElementById('top-bar');
+  const globalMeter = document.getElementById('global-meter');
+
+  // Artifact interactive state
+  let currentArtifactIndex = -1;
+  const cueElements = document.querySelectorAll('#artifact-cues-list .artifact-cue');
+  const valLot = document.getElementById('packet-val-lot');
+  const valGerm = document.getElementById('packet-val-germ');
+  const valWindow = document.getElementById('packet-val-window');
+  const packetStatusText = document.getElementById('packet-status-text');
+
+  // Season chapters
+  const seasonChapters = [
+    document.getElementById('season-ch-0'),
+    document.getElementById('season-ch-1'),
+    document.getElementById('season-ch-2')
+  ];
+  let currentSeasonChapter = -1;
+
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function getStageProgress(el) {
+    if (!el) return 0;
+    const rect = el.getBoundingClientRect();
+    const h = rect.height - window.innerHeight;
+    if (h <= 0) return 0;
+    return clamp(-rect.top / h, 0, 1);
+  }
+
+  let overflowWidth = 0;
+  function measureRailOverflow() {
+    if (!railTrack) return;
+    overflowWidth = Math.max(0, railTrack.scrollWidth - window.innerWidth + 64);
+  }
+
+  function updateArtifactPhase(idx) {
+    if (idx === currentArtifactIndex) return;
+    currentArtifactIndex = idx;
+
+    // Update cues cumulatively
+    cueElements.forEach((cueEl, cIdx) => {
+      cueEl.classList.remove('is-active', 'is-past');
+      const statusSpan = cueEl.querySelector('.cue-status');
+      if (cIdx < idx) {
+        cueEl.classList.add('is-past');
+        if (statusSpan) statusSpan.textContent = 'CONFIRMED';
+      } else if (cIdx === idx) {
+        cueEl.classList.add('is-active');
+        if (statusSpan) statusSpan.textContent = 'ACTIVE ASSAY';
+      } else {
+        if (statusSpan) statusSpan.textContent = 'PENDING';
+      }
+    });
+
+    // Mutate printed values only on index changes
+    if (idx === 0) {
+      if (valLot) valLot.textContent = 'DRAFT-00';
+      if (valGerm) valGerm.textContent = 'PENDING';
+      if (valWindow) valWindow.textContent = 'HOLD';
+      if (packetStatusText) packetStatusText.textContent = 'STATUS: STAGE 01 / BLANK PACKET INITIATED';
+    } else if (idx === 1) {
+      if (valLot) valLot.textContent = 'DRAFT-00';
+      if (valGerm) valGerm.textContent = 'GERM 98%';
+      if (valWindow) valWindow.textContent = 'OCTOBER - MARCH';
+      if (packetStatusText) packetStatusText.textContent = 'STATUS: STAGE 02 / PETRI DISH VIABILITY CERTIFIED (98%)';
+    } else if (idx === 2) {
+      if (valLot) valLot.textContent = 'LOT FR-2026-B';
+      if (valGerm) valGerm.textContent = 'GERM 98%';
+      if (valWindow) valWindow.textContent = 'OCTOBER - MARCH';
+      if (packetStatusText) packetStatusText.textContent = 'STATUS: STAGE 03 / LOT RECORD REGISTERED & SOWING DATED';
+    } else if (idx >= 3) {
+      if (valLot) valLot.textContent = 'LOT FR-2026-B';
+      if (valGerm) valGerm.textContent = 'GERM 98%';
+      if (valWindow) valWindow.textContent = 'OCTOBER - MARCH';
+      if (packetStatusText) packetStatusText.textContent = 'STATUS: STAGE 04 / SECURITY PERFORATION OPENED & CURED';
+    }
+  }
+
+  function updateSeasonChapter(chIdx) {
+    if (chIdx === currentSeasonChapter) return;
+    currentSeasonChapter = chIdx;
+    seasonChapters.forEach((el, i) => {
+      if (!el) return;
+      if (i === chIdx) el.classList.add('is-active');
+      else el.classList.remove('is-active');
+    });
+  }
+
+  /* ------------------------------------------------------------------------
+     5. UNIFIED RAF SCROLL TICK
+     ------------------------------------------------------------------------ */
+  let isTicking = false;
+
+  function onScrollTick() {
+    const scrollY = window.scrollY || window.pageYOffset;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const globalProgress = docHeight > 0 ? clamp(scrollY / docHeight, 0, 1) : 0;
+
+    // Global meter
+    if (globalMeter) {
+      globalMeter.style.width = (globalProgress * 100).toFixed(2) + '%';
+    }
+
+    // Top bar theme toggling based on stage in viewport
+    const heroRect = stageHero.getBoundingClientRect();
+    const artifactRect = stageArtifact.getBoundingClientRect();
+    const isOverDarkHero = heroRect.top <= 40 && heroRect.bottom >= 40;
+    const isOverDarkArtifact = artifactRect.top <= 40 && artifactRect.bottom >= 40;
+    if (isOverDarkHero || isOverDarkArtifact) {
+      topBar.classList.add('is-dark');
+    } else {
+      topBar.classList.remove('is-dark');
+    }
+
+    // 1. Stage 1 Hero (0..1)
+    const p1 = getStageProgress(stageHero);
+    root.style.setProperty('--hero-type-y', (-90 * p1) + 'px');
+    root.style.setProperty('--hero-type-scale', (1 - 0.26 * p1).toFixed(3));
+    root.style.setProperty('--hero-type-alpha', Math.max(0, (1 - 1.25 * p1)).toFixed(3));
+
+    // 2. Stage 2 Manifesto (0..1)
+    const p2 = getStageProgress(stageManifesto);
+    root.style.setProperty('--manifesto-wipe', (p2 * 100).toFixed(2) + '%');
+    root.style.setProperty('--manifesto-scale', (1 + 0.05 * p2).toFixed(3));
+
+    // 3. Stage 3 Rail (0..1)
+    const p3 = getStageProgress(stageRail);
+    const railTranslate = -1 * p3 * overflowWidth;
+    root.style.setProperty('--rail-x', railTranslate.toFixed(1) + 'px');
+    root.style.setProperty('--rail-meter', (p3 * 100).toFixed(2) + '%');
+
+    // 4. Stage 4 Artifact (0..1)
+    const p4 = getStageProgress(stageArtifact);
+    const packetAlpha = clamp(p4 * 3.5, 0, 1);
+    const packetEnter = (38 * (1 - clamp(p4 * 2.5, 0, 1))).toFixed(1);
+    const packetScale = (0.78 + 0.22 * clamp(p4 * 2.2, 0, 1)).toFixed(3);
+    const packetCut = p4 > 0.75 ? clamp((p4 - 0.75) / 0.25, 0, 1) : 0;
+    const packetCopyX = (-24 * p4).toFixed(1);
+
+    root.style.setProperty('--packet-alpha', packetAlpha);
+    root.style.setProperty('--packet-enter', packetEnter + 'px');
+    root.style.setProperty('--packet-scale', packetScale);
+    root.style.setProperty('--packet-cut', packetCut.toFixed(3));
+    root.style.setProperty('--packet-copy-x', packetCopyX + 'px');
+
+    // Artifact phase index: 0, 1, 2, 3
+    const artifactPhase = Math.min(3, Math.floor(p4 * 4));
+    updateArtifactPhase(artifactPhase);
+
+    // 5. Stage 5 Season (0..1)
+    const p5 = getStageProgress(stageSeason);
+    const seasonY = (-4 + 8 * p5).toFixed(2);
+    const seasonScale = (1.10 - 0.045 * p5).toFixed(3);
+    root.style.setProperty('--season-y', seasonY + '%');
+    root.style.setProperty('--season-scale', seasonScale);
+
+    // Season chapters: exactly one active
+    const chIdx = Math.min(2, Math.floor(p5 * 3));
+    updateSeasonChapter(chIdx);
+
+    isTicking = false;
+  }
+
+  function requestScrollTick() {
+    if (!isTicking) {
+      window.requestAnimationFrame(onScrollTick);
+      isTicking = true;
+    }
+  }
+
+  window.addEventListener('scroll', requestScrollTick, { passive: true });
+
+  /* ------------------------------------------------------------------------
+     6. CONTINUOUS CANVAS ANIMATION LOOP
+     ------------------------------------------------------------------------ */
+  function animLoop(time) {
+    drawHeroCanvas(time);
+    drawSeasonCanvas(time);
+    window.requestAnimationFrame(animLoop);
+  }
+
+  /* ------------------------------------------------------------------------
+     7. INITIALIZATION & RESIZE HANDLING
+     ------------------------------------------------------------------------ */
+  function handleResize() {
+    initHeroCanvas();
+    initVarietyPlates();
+    initSeasonCanvas();
+    measureRailOverflow();
+    requestScrollTick();
+  }
+
+  window.addEventListener('resize', handleResize);
+
+  window.addEventListener('DOMContentLoaded', () => {
+    handleResize();
+    updateArtifactPhase(0);
+    updateSeasonChapter(0);
+    window.requestAnimationFrame(animLoop);
+  });
+
+})();
+</script>
+</body>
+</html>
+

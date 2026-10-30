@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaitaSaathiAI — Government Administration &amp; Monitoring Portal</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    .admin-header {
+      background: #064e3b;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .admin-badge {
+      background: #059669;
+      color: white;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-weight: 700;
+    }
+    .table-container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      overflow-x: auto;
+      margin-bottom: 2rem;
+      border: 1px solid #e5e7eb;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+    th, td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #f3f4f6;
+    }
+    th {
+      background: #f9fafb;
+      font-weight: 700;
+      color: #374151;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+    }
+    tr:hover { background: #f0fdf4; }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-size: 0.78rem;
+    }
+    .status-APPROVED { background: #dcfce7; color: #166534; }
+    .status-BENEFIT_DISBURSED { background: #dbeafe; color: #1e40af; }
+    .status-SUBMITTED, .status-PENDING { background: #fef3c7; color: #92400e; }
+    .status-UNDER_VERIFICATION { background: #fef08a; color: #854d0e; }
+    .status-REJECTED { background: #fee2e2; color: #991b1b; }
+  </style>
+</head>
+<body style="background:#f4f6f8; min-height:100vh;">
+
+  <!-- Admin Header -->
+  <header class="admin-header">
+    <div style="display:flex; align-items:center; gap:12px;">
+      <span style="font-size:1.6rem;">🏛️</span>
+      <div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <h2 style="color:white; font-size:1.25rem; font-weight:800; margin:0;">RaitaSaathiAI &bull; Admin Portal</h2>
+          <span class="admin-badge">DISTRICT AUTHORITY</span>
+        </div>
+        <div style="font-size:0.8rem; color:#a7f3d0; margin-top:2px;" id="admin-officer-info">
+          Dr. Basavaraj Patil &bull; Department of Agriculture, Govt. of Karnataka
+        </div>
+      </div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <button onclick="openBroadcastModal()" class="btn" style="background:#10b981; color:#ffffff !important; font-weight:800; border:none; padding:8px 20px; font-size:0.9rem; border-radius:9999px; box-shadow:0 4px 14px rgba(16,185,129,0.35); display:inline-flex; align-items:center; gap:8px; cursor:pointer; transition:all 0.2s ease;">
+        <span style="font-size:1.05rem;">📢</span> <span style="color:#ffffff !important; font-weight:800;">Broadcast Notice</span>
+      </button>
+      <button onclick="adminLogout()" class="btn" style="background:#dc2626; color:#ffffff !important; font-weight:800; border:none; padding:8px 18px; font-size:0.9rem; border-radius:9999px; box-shadow:0 4px 14px rgba(220,38,38,0.35); cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s ease;" title="Officer Logout">
+        <span>🚪</span> <span style="color:#ffffff !important; font-weight:800;">Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:2rem; padding-bottom:4rem;">
+
+    <!-- KPI Statistics -->
+    <div class="grid-3" style="margin-bottom:2rem;">
+      <div class="card" style="border-left:4px solid #10b981;">
+        <span style="font-size:0.82rem; font-weight:700; color:#6b7280; text-transform:uppercase;">Registered Farmers</span>
+        <div class="metric-value" id="kpi-farmers" style="color:#065f46; font-size:2.2rem; font-weight:800; margin-top:4px;">1</div>
+        <p style="font-size:0.85rem; color:#6b7280; margin-top:4px;">100% Aadhaar e-KYC Verified in Mandya District</p>
+      </div>
+      <div class="card" style="border-left:4px solid #3b82f6;">
+        <span style="font-size:0.82rem; font-weight:700; color:#6b7280; text-transform:uppercase;">Scheme Applications</span>
+        <div class="metric-value" id="kpi-applications" style="color:#1d4ed8; font-size:2.2rem; font-weight:800; margin-top:4px;">4</div>
+        <p style="font-size:0.85rem; color:#6b7280; margin-top:4px;" id="kpi-app-subtext">2 Approved &bull; 2 Under Review</p>
+      </div>
+      <div class="card" style="border-left:4px solid #8b5cf6;">
+        <span style="font-size:0.82rem; font-weight:700; color:#6b7280; text-transform:uppercase;">Benefits Disbursed (Est.)</span>
+        <div class="metric-value" id="kpi-disbursed" style="color:#6d28d9; font-size:2.2rem; font-weight:800; margin-top:4px;">₹16,000</div>
+        <p style="font-size:0.85rem; color:#6b7280; margin-top:4px;">Via Direct Benefit Transfer (DBT) to Verified Accounts</p>
+      </div>
+    </div>
+
+    <!-- Analytics Charts Row -->
+    <div class="grid-2" style="margin-bottom:2.5rem;">
+      <div class="card">
+        <h3 style="font-size:1.1rem; color:#111827; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+          📊 Scheme Application Share
+        </h3>
+        <canvas id="schemePopularityChart" style="max-height:240px;"></canvas>
+      </div>
+      <div class="card">
+        <h3 style="font-size:1.1rem; color:#111827; margin-bottom:1rem; display:flex; align-items:center; gap:8px;">
+          🛡️ Application Status Breakdown
+        </h3>
+        <canvas id="statusBreakdownChart" style="max-height:240px;"></canvas>
+      </div>
+    </div>
+
+    <!-- Applications Management Section -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+      <div>
+        <h2 style="font-size:1.4rem; color:#111827; font-weight:800; margin:0;">
+          📋 Scheme Applications Management (Live Audit &amp; Approvals)
+        </h2>
+        <p style="font-size:0.88rem; color:#6b7280; margin:2px 0 0;">
+          Inspect submissions, review land details, update application status, and trigger automated farmer notifications.
+        </p>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <select id="admin-status-filter" onchange="loadAdminApplications()" style="padding:6px 12px; font-size:0.85rem; border:1px solid #d1d5db; border-radius:6px; font-weight:600;">
+          <option value="ALL">All Statuses</option>
+          <option value="SUBMITTED">Submitted</option>
+          <option value="UNDER_VERIFICATION">Under Verification</option>
+          <option value="APPROVED">Approved</option>
+          <option value="BENEFIT_DISBURSED">Benefit Disbursed</option>
+          <option value="REJECTED">Rejected</option>
+        </select>
+        <button onclick="loadAdminApplications()" class="btn btn-outline" style="padding:6px 12px; font-size:0.85rem;">🔄 Refresh</button>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Application Ref</th>
+            <th>Applicant Name</th>
+            <th>Scheme</th>
+            <th>District / Village</th>
+            <th>Applied Date</th>
+            <th>Status</th>
+            <th>Actions / Status Update</th>
+          </tr>
+        </thead>
+        <tbody id="admin-applications-table-body">
+          <tr><td colspan="7" style="text-align:center; padding:2rem; color:#6b7280;">Loading applications...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Registered Farmers Section -->
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:10px;">
+      <div>
+        <h2 style="font-size:1.4rem; color:#111827; font-weight:800; margin:0;">
+          👨‍🌾 Verified Farmer Digital Identities (AgriStack Registry)
+        </h2>
+        <p style="font-size:0.88rem; color:#6b7280; margin:2px 0 0;">
+          Official directory of farmers holding verified digital credentials in Karnataka.
+        </p>
+      </div>
+      <input type="text" id="farmer-search-input" placeholder="Search by Farmer ID, Name, Village..." oninput="loadAdminFarmers()" style="padding:6px 12px; font-size:0.88rem; border:1px solid #d1d5db; border-radius:6px; min-width:240px;">
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Farmer ID</th>
+            <th>Full Name</th>
+            <th>Mobile</th>
+            <th>District</th>
+            <th>Village</th>
+            <th>Land Area</th>
+            <th>e-KYC Status</th>
+            <th>Profile Completion</th>
+          </tr>
+        </thead>
+        <tbody id="admin-farmers-table-body">
+          <tr><td colspan="8" style="text-align:center; padding:2rem; color:#6b7280;">Loading farmers...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+
+  <!-- Status Update Modal -->
+  <div id="status-update-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+    <div class="card" style="max-width:500px; width:100%; background:white; padding:2rem; border-radius:12px;">
+      <h3 style="font-size:1.25rem; color:#111827; font-weight:800; margin-bottom:4px;">Update Application Status</h3>
+      <p style="font-size:0.88rem; color:#6b7280; margin-bottom:1.2rem;" id="modal-app-info">Application Ref: APP-2026-KM-1001</p>
+
+      <label style="font-size:0.88rem; font-weight:700; color:#374151;">New Status:</label>
+      <select id="modal-status-select" style="width:100%; padding:8px 12px; margin-bottom:14px; border:1px solid #d1d5db; border-radius:6px; font-weight:600;">
+        <option value="UNDER_VERIFICATION">Under Verification (ದಾಖಲೆ ಪರಿಶೀಲನೆ)</option>
+        <option value="DEPARTMENT_REVIEW">Department Review (ಇಲಾಖಾ ಪರಿಶೀಲನೆ)</option>
+        <option value="APPROVED">APPROVED (ಅನುಮೋದನೆ)</option>
+        <option value="BENEFIT_DISBURSED">BENEFIT DISBURSED (ಸೌಲಭ್ಯ ವರ್ಗಾವಣೆ)</option>
+        <option value="ADDITIONAL_DOCUMENTS_REQUIRED">Additional Documents Required</option>
+        <option value="REJECTED">REJECTED (ತಿರಸ್ಕೃತ)</option>
+      </select>
+
+      <label style="font-size:0.88rem; font-weight:700; color:#374151;">Department Remarks / Reason:</label>
+      <textarea id="modal-remarks" rows="3" style="width:100%; padding:8px 12px; margin-bottom:14px; border:1px solid #d1d5db; border-radius:6px;" placeholder="e.g. Land RTC verified against Karnataka FRUITS database. Approved for DBT benefit."></textarea>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button onclick="closeStatusModal()" class="btn btn-outline" style="padding:8px 16px;">Cancel</button>
+        <button onclick="submitStatusUpdate()" class="btn btn-emerald" style="padding:8px 18px;">✓ Save &amp; Notify Farmer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Broadcast Notification Modal -->
+  <div id="broadcast-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; padding:1rem;">
+    <div class="card" style="max-width:500px; width:100%; background:white; padding:2rem; border-radius:12px;">
+      <h3 style="font-size:1.25rem; color:#111827; font-weight:800; margin-bottom:4px;">Broadcast Notice to Farmers</h3>
+      <p style="font-size:0.88rem; color:#6b7280; margin-bottom:1.2rem;">Send an official announcement to all registered farmers in the district.</p>
+
+      <label style="font-size:0.88rem; font-weight:700; color:#374151;">Notice Title:</label>
+      <input type="text" id="broadcast-title" value="Kharif 2026 Seed Distribution & PM-KISAN e-KYC Reminder" style="width:100%; padding:8px 12px; margin-bottom:14px; border:1px solid #d1d5db; border-radius:6px; font-weight:600;">
+
+      <label style="font-size:0.88rem; font-weight:700; color:#374151;">Notice Content:</label>
+      <textarea id="broadcast-message" rows="4" style="width:100%; padding:8px 12px; margin-bottom:16px; border:1px solid #d1d5db; border-radius:6px;" placeholder="Enter message for farmers..."></textarea>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px;">
+        <button onclick="closeBroadcastModal()" class="btn btn-outline" style="padding:8px 16px;">Cancel</button>
+        <button onclick="submitBroadcast()" class="btn btn-emerald" style="padding:8px 18px;">📢 Send Broadcast</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let activeUpdatingAppId = null;
+    let schemeChart = null;
+    let statusChart = null;
+
+    async function loadAdminAnalytics() {
+      try {
+        const res = await fetch('/api/admin/analytics');
+        const json = await res.json();
+        if (json.success) {
+          const s = json.data.summary;
+          document.getElementById('kpi-farmers').innerText = s.total_farmers;
+          document.getElementById('kpi-applications').innerText = s.total_applications;
+          document.getElementById('kpi-app-subtext').innerText = `${s.approved_applications} Approved &bull; ${s.pending_applications} Under Review`;
+          document.getElementById('kpi-disbursed').innerText = s.total_disbursed_estimated;
+
+          // Render Scheme Popularity Chart
+          const schemeLabels = Object.keys(json.data.scheme_popularity);
+          const schemeData = Object.values(json.data.scheme_popularity);
+          const ctx1 = document.getElementById('schemePopularityChart').getContext('2d');
+          if (schemeChart) schemeChart.destroy();
+          schemeChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+              labels: schemeLabels.length ? schemeLabels : ['PM-KISAN', 'Raitha Siri', 'PMFBY', 'Krishi Bhagya'],
+              datasets: [{
+                label: 'Applications',
+                data: schemeData.length ? schemeData : [1, 1, 1, 1],
+                backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#8b5cf6']
+              }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+          });
+
+          // Render Status Breakdown Chart
+          const statusLabels = Object.keys(json.data.status_distribution);
+          const statusData = Object.values(json.data.status_distribution);
+          const ctx2 = document.getElementById('statusBreakdownChart').getContext('2d');
+          if (statusChart) statusChart.destroy();
+          statusChart = new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+              labels: statusLabels,
+              datasets: [{
+                data: statusData,
+                backgroundColor: ['#10b981', '#3b82f6', '#f59e0b', '#ef4444']
+              }]
+            },
+            options: { responsive: true }
+          });
+        }
+      } catch (e) { console.error("Analytics load error", e); }
+    }
+
+    async function loadAdminApplications() {
+      const statusFilter = document.getElementById('admin-status-filter').value;
+      const tbody = document.getElementById('admin-applications-table-body');
+      try {
+        const res = await fetch(`/api/admin/applications?status=${statusFilter}`);
+        const json = await res.json();
+        if (json.success) {
+          const apps = json.data.applications;
+          if (!apps.length) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:1.5rem; color:#6b7280;">No applications found matching criteria.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = apps.map(a => `
+            <tr>
+              <td><strong>${a.application_ref}</strong></td>
+              <td>${a.applicant_name}</td>
+              <td>${a.scheme_name_en}</td>
+              <td>${a.village}, ${a.district}</td>
+              <td>${a.applied_at.split(' ')[0]}</td>
+              <td><span class="status-badge status-${a.status}">${a.status.replace('_', ' ')}</span></td>
+              <td>
+                <button onclick="openStatusModal(${a.id}, '${a.application_ref}', '${a.status}')" class="btn btn-emerald" style="padding:4px 10px; font-size:0.8rem; border-radius:6px;">
+                  ✏️ Update Status
+                </button>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) { tbody.innerHTML = '<tr><td colspan="7" style="color:red; text-align:center;">Failed to load applications.</td></tr>'; }
+    }
+
+    async function loadAdminFarmers() {
+      const search = document.getElementById('farmer-search-input').value;
+      const tbody = document.getElementById('admin-farmers-table-body');
+      try {
+        const res = await fetch(`/api/admin/farmers?search=${encodeURIComponent(search)}`);
+        const json = await res.json();
+        if (json.success) {
+          const farmers = json.data.farmers;
+          if (!farmers.length) {
+            tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; padding:1.5rem; color:#6b7280;">No registered farmers found.</td></tr>';
+            return;
+          }
+          tbody.innerHTML = farmers.map(f => `
+            <tr>
+              <td><strong style="color:#065f46;">${f.farmer_id}</strong></td>
+              <td><strong>${f.full_name}</strong></td>
+              <td>${f.mobile}</td>
+              <td>${f.district}</td>
+              <td>${f.village}</td>
+              <td>${f.land_acres} Acres</td>
+              <td><span class="status-badge status-APPROVED">✓ ${f.verification_status}</span></td>
+              <td>
+                <div style="display:flex; align-items:center; gap:6px;">
+                  <div style="width:80px; height:8px; background:#e5e7eb; border-radius:4px; overflow:hidden;">
+                    <div style="width:${f.profile_completion_pct}%; height:100%; background:#10b981;"></div>
+                  </div>
+                  <span style="font-size:0.8rem; font-weight:700;">${f.profile_completion_pct}%</span>
+                </div>
+              </td>
+            </tr>
+          `).join('');
+        }
+      } catch (e) { tbody.innerHTML = '<tr><td colspan="8" style="color:red; text-align:center;">Failed to load farmers.</td></tr>'; }
+    }
+
+    function openStatusModal(appId, appRef, currentStatus) {
+      activeUpdatingAppId = appId;
+      document.getElementById('modal-app-info').innerText = `Application Ref: ${appRef}`;
+      document.getElementById('modal-status-select').value = currentStatus;
+      document.getElementById('modal-remarks').value = '';
+      document.getElementById('status-update-modal').style.display = 'flex';
+    }
+
+    function closeStatusModal() {
+      document.getElementById('status-update-modal').style.display = 'none';
+      activeUpdatingAppId = null;
+    }
+
+    async function submitStatusUpdate() {
+      if (!activeUpdatingAppId) return;
+      const newStatus = document.getElementById('modal-status-select').value;
+      const remarks = document.getElementById('modal-remarks').value;
+
+      try {
+        const res = await fetch(`/api/admin/applications/${activeUpdatingAppId}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ status: newStatus, remarks: remarks })
+        });
+        const json = await res.json();
+        if (json.success) {
+          alert(`Application status updated to '${newStatus}'! Notification dispatched to farmer.`);
+          closeStatusModal();
+          loadAdminApplications();
+          loadAdminAnalytics();
+        } else {
+          alert(json.error.message || 'Update failed');
+        }
+      } catch (e) { alert('Status update failed'); }
+    }
+
+    function openBroadcastModal() {
+      document.getElementById('broadcast-modal').style.display = 'flex';
+    }
+    function closeBroadcastModal() {
+      document.getElementById('broadcast-modal').style.display = 'none';
+    }
+    async function submitBroadcast() {
+      const title = document.getElementById('broadcast-title').value.trim();
+      const message = document.getElementById('broadcast-message').value.trim();
+      if (!message) { alert('Please enter notice content'); return; }
+
+      try {
+        const res = await fetch('/api/admin/broadcast-notification', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ title: title, message: message })
+        });
+        const json = await res.json();
+        if (json.success) {
+          alert(json.data.message);
+          closeBroadcastModal();
+        }
+      } catch (e) { alert('Broadcast failed'); }
+    }
+
+    async function checkAdminAuth() {
+      try {
+        const res = await fetch('/api/admin/me');
+        if (res.status === 401 || !res.ok) {
+          window.location.href = '/login?role=officer';
+          return false;
+        }
+        const json = await res.json();
+        if (json.success && json.data.admin) {
+          const admin = json.data.admin;
+          const infoEl = document.getElementById('admin-officer-info');
+          if (infoEl) {
+            infoEl.innerHTML = `<strong>${admin.full_name}</strong> &bull; ${admin.district} District Authority &bull; ${admin.department || 'Dept. of Agriculture, Govt. of Karnataka'}`;
+          }
+          return true;
+        } else {
+          window.location.href = '/login?role=officer';
+          return false;
+        }
+      } catch (e) {
+        window.location.href = '/login?role=officer';
+        return false;
+      }
+    }
+
+    async function adminLogout() {
+      try {
+        await fetch('/api/admin/logout', { method: 'POST' });
+      } catch (e) {}
+      window.location.href = '/login?role=officer';
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+      const authed = await checkAdminAuth();
+      if (!authed) return;
+      loadAdminAnalytics();
+      loadAdminApplications();
+      loadAdminFarmers();
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaitaSaathiAI — Understand Every Farmer. Empower Every Field.</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    .lang-switcher-pill {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: 9999px;
+      padding: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .lang-btn {
+      border: none;
+      padding: 5px 14px;
+      font-size: 0.82rem;
+      border-radius: 9999px;
+      cursor: pointer;
+      background: transparent;
+      color: #64748b;
+      font-weight: 700;
+      transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: #ffffff;
+      color: #064e3b;
+      font-weight: 800;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Glassmorphism Navigation Bar -->
+  <header class="navbar" style="padding: 0.8rem 1.8rem; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0,0,0,0.06); display:flex; justify-content:space-between; align-items:center;">
+    <a href="/" class="brand" style="text-decoration:none; display:flex; align-items:center; gap:8px;">
+      <div class="brand-icon" style="font-size:1.6rem;">🌱</div>
+      <span style="font-size:1.25rem; font-weight:800; color:#064e3b;">RaitaSaathiAI</span>
+      <span class="brand-badge" id="brand-badge-text" style="background:#ecfdf5; color:#059669; font-weight:800; padding:2px 8px; border-radius:6px; font-size:0.75rem;">ರೈತಸಾಥಿ AI</span>
+    </a>
+
+    <div style="display:flex; align-items:center; gap:16px;">
+      <!-- Language Switcher (Kannada | English ONLY, NO brackets) -->
+      <div class="lang-switcher-pill">
+        <button type="button" onclick="switchLanguage('kn')" id="btn-lang-kn" class="lang-btn active">ಕನ್ನಡ</button>
+        <button type="button" onclick="switchLanguage('en')" id="btn-lang-en" class="lang-btn">English</button>
+      </div>
+
+      <ul class="nav-links" style="margin:0; padding:4px;">
+        <li><a href="/login?role=farmer" id="nav-farmer-link" style="color:#064e3b; font-weight:700;">👨‍🌾 ರೈತರ ಪೋರ್ಟಲ್</a></li>
+        <li><a href="/login?role=officer" id="nav-officer-link" style="color:#064e3b; font-weight:700;">🏛️ ಅಧಿಕಾರಿಗಳ ಪೋರ್ಟಲ್</a></li>
+        <li><a href="/login" class="btn" id="nav-login-btn" style="background:#064e3b; color:#ffffff !important; font-weight:800; padding:0.6rem 1.4rem; border-radius:9999px; text-decoration:none; display:inline-flex; align-items:center; gap:6px; box-shadow:0 4px 14px rgba(6,78,59,0.35);">ಲಾಗಿನ್ &rarr;</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+    <!-- Modern Hero Section -->
+    <section class="hero">
+      <div class="hero-pill">
+        <span id="hero-tagline">✨ ಕರ್ನಾಟಕ ಕೃಷಿ ಇಂಟೆಲಿಜೆನ್ಸ್ ವೇದಿಕೆ</span>
+      </div>
+      <h1 id="hero-main-title">
+        ಪ್ರತಿಯೊಬ್ಬ ರೈತರನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ.<br>
+        <span class="text-gradient">ಪ್ರತಿಯೊಂದು ಹೊಲವನ್ನೂ ಸಶಕ್ತಗೊಳಿಸಿ.</span>
+      </h1>
+      <p id="hero-desc" style="max-width:760px; margin:1.2rem auto; font-size:1.1rem; line-height:1.7; color:var(--text-secondary);">
+        ಕರ್ನಾಟಕ ಕೃಷಿಗಾಗಿ ವಿಶೇಷವಾಗಿ ವಿನ್ಯಾಸಗೊಳಿಸಲಾದ ಧ್ವನಿ-ಮೊದಲ ಕೃಷಿ ವೇದಿಕೆ. ಪಾರದರ್ಶಕ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು, ಐಸಿಎಆರ್ ಆಧಾರಿತ ಬೆಳೆ ಸಲಹೆ ಮತ್ತು ನಿಖರವಾದ ಆರ್ಥಿಕ ಯೋಜನಾ ಮಾದರಿ.
+      </p>
+
+      <div style="display:flex; justify-content:center; gap:1.2rem; flex-wrap:wrap; margin-top:2rem;">
+        <a href="/login?role=farmer" id="hero-farmer-btn" class="btn" style="background:#10b981; color:#ffffff !important; font-size:1.05rem; padding:0.9rem 2.2rem; border-radius:9999px; font-weight:800; box-shadow:0 6px 20px rgba(16,185,129,0.35); text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+          👨‍🌾 ರೈತರ ಪೋರ್ಟಲ್
+        </a>
+        <a href="/login?role=officer" id="hero-officer-btn" class="btn" style="background:#ffffff; color:#064e3b !important; font-size:1.05rem; padding:0.9rem 2.2rem; border-radius:9999px; font-weight:800; border:2px solid #064e3b; box-shadow:0 4px 14px rgba(0,0,0,0.06); text-decoration:none; display:inline-flex; align-items:center; gap:8px;">
+          🏛️ ಅಧಿಕಾರಿಗಳ ಪೋರ್ಟಲ್
+        </a>
+      </div>
+    </section>
+
+    <!-- Interactive Value Cards -->
+    <section class="container" style="margin-top:1rem; margin-bottom:4rem;">
+      <div class="grid-3">
+        <div class="card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <div style="width:44px; height:44px; border-radius:12px; background:#ecfdf5; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">🎙️</div>
+            <h3 id="card1-title">ಕೃಷಿ ಧ್ವನಿ ಸಹಾಯಕ</h3>
+          </div>
+          <p id="card1-desc" style="color:var(--text-secondary); font-size:0.95rem;">
+            ನೈಸರ್ಗಿಕ ಕನ್ನಡ ಧ್ವನಿ ಮತ್ತು ಪ್ರಾದೇಶಿಕ ಭಾಷಾ ಶೈಲಿಗಳನ್ನು ಗುರುತಿಸುತ್ತದೆ. ಪ್ರಮುಖ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ನಡೆಸುವ ಮುನ್ನ ಧ್ವನಿ ದೃಢೀಕರಣ ಕಾರ್ಡ್ ಮೂಲಕ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳುತ್ತದೆ.
+          </p>
+          <div class="trust-source">
+            <span>🛡️ ಭಾಷಾ ಶೈಲಿ ಎಂಜಿನ್ &bull; ದೃಢೀಕರಣ ಗೇಟ್</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <div style="width:44px; height:44px; border-radius:12px; background:#eff6ff; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">📜</div>
+            <h3 id="card2-title">ಯೋಜನಾ ಪಾಸ್‌ಪೋರ್ಟ್</h3>
+          </div>
+          <p id="card2-desc" style="color:var(--text-secondary); font-size:0.95rem;">
+            ಪಿಎಂ-ಕಿಸಾನ್, ರೈತ ಸಿರಿ ಮತ್ತು ಕೃಷಿ ಭಾಗ್ಯ ಸೇರಿದಂತೆ 20+ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಅರ್ಹತೆಯನ್ನು ನಿಖರವಾಗಿ ಮೌಲ್ಯಮಾಪನ ಮಾಡುತ್ತದೆ.
+          </p>
+          <div class="trust-source">
+            <span>🏛️ ಸೇವಾ ಸಿಂಧು ಮತ್ತು ರೈತ ಮಿತ್ರ ನಿಯಮಗಳು</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px;">
+            <div style="width:44px; height:44px; border-radius:12px; background:#fef3c7; display:flex; align-items:center; justify-content:center; font-size:1.4rem;">⚖️</div>
+            <h3 id="card3-title">ಕೃಷಿ ಆಯವ್ಯಯ ಲ್ಯಾಬ್</h3>
+          </div>
+          <p id="card3-desc" style="color:var(--text-secondary); font-size:0.95rem;">
+            ಎರಡು ಸನ್ನಿವೇಶಗಳ ಆರ್ಥಿಕ ಹೋಲಿಕೆ. ವೆಚ್ಚಗಳು, ಆದಾಯಗಳು ಮತ್ತು ಮಾರುಕಟ್ಟೆ ಬೆಲೆ ವ್ಯತ್ಯಾಸಗಳ ನಿಖರ ಲೆಕ್ಕಾಚಾರ.
+          </p>
+          <div class="trust-source">
+            <span>📊 ಗಣಿತೀಯ ಲೆಕ್ಕಾಚಾರ ಮತ್ತು ಗ್ರಾಫ್ ದೃಶ್ಯಾವಳಿ</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="container" style="background:white; border-radius:var(--radius-lg); padding:3.5rem 2.5rem; box-shadow:var(--shadow-card); margin-bottom:4rem;">
+      <div style="text-align:center; max-width:640px; margin:0 auto 3rem;">
+        <span class="hero-pill" id="how-pill">⚡ ಕಾರ್ಯವಿಧಾನ</span>
+        <h2 id="how-title" style="font-size:2rem; font-weight:800; color:var(--primary); margin-top:0.5rem;">ರೈತಸಾಥಿ ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ</h2>
+        <p id="how-sub" style="color:var(--text-secondary); margin-top:0.5rem;">ಧ್ವನಿ ಸಂಭಾಷಣೆಯಿಂದ ವಿವರಣಾತ್ಮಕ ಕೃಷಿ ಮಾರ್ಗದರ್ಶನದವರೆಗಿನ ಪರಿಶೀಲಿಸಿದ ಪ್ರಕ್ರಿಯೆ.</p>
+      </div>
+
+      <div class="grid-3" style="position:relative;">
+        <div style="padding:1.5rem; border-left:3px solid var(--emerald); background:#fafafa; border-radius:0 14px 14px 0;">
+          <div id="step1-title" style="font-weight:800; font-size:1.1rem; color:var(--primary); margin-bottom:6px;">೧. ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ</div>
+          <p id="step1-desc" style="font-size:0.92rem; color:var(--text-secondary);">ನಿಮ್ಮ ನೈಸರ್ಗಿಕ ಶೈಲಿಯಲ್ಲಿ ಮಾತನಾಡಿ. ಬೆಳೆಗಳ ಹೆಸರು ಮತ್ತು 'ಗುಂಟೆ', 'ಎಕರೆ' ಪ್ರಮಾಣಗಳನ್ನು ವ್ಯವಸ್ಥೆ ಗುರುತಿಸುತ್ತದೆ.</p>
+        </div>
+
+        <div style="padding:1.5rem; border-left:3px solid #3b82f6; background:#fafafa; border-radius:0 14px 14px 0;">
+          <div id="step2-title" style="font-weight:800; font-size:1.1rem; color:var(--primary); margin-bottom:6px;">೨. ಕೃಷಿ ಧ್ವನಿ ದೃಢೀಕರಣ</div>
+          <p id="step2-desc" style="font-size:0.92rem; color:var(--text-secondary);">ಯಾವುದೇ ಅರ್ಜಿ ಸಲ್ಲಿಕೆಯ ಮುನ್ನ ಜಮೀನು ಮತ್ತು ಬೆಳೆ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಲು ಪರದೆಯ ಮೇಲೆ ದೃಢೀಕರಣ ಕಾರ್ಡ್ ನೀಡಲಾಗುತ್ತದೆ.</p>
+        </div>
+
+        <div style="padding:1.5rem; border-left:3px solid #8b5cf6; background:#fafafa; border-radius:0 14px 14px 0;">
+          <div id="step3-title" style="font-weight:800; font-size:1.1rem; color:var(--primary); margin-bottom:6px;">೩. ಅಧಿಕೃತ ಮಾರ್ಗದರ್ಶನ</div>
+          <p id="step3-desc" style="font-size:0.92rem; color:var(--text-secondary);">ಪ್ರತಿಯೊಂದು ಶಿಫಾರಸು ಅಧಿಕೃತ ಸರ್ಕಾರಿ ನಿಯಮಗಳು, ಅನುದಾನ ಮಾನದಂಡಗಳು ಮತ್ತು ತಜ್ಞರ ಆಧಾರವನ್ನು ಒಳಗೊಂಡಿರುತ್ತದೆ.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer style="text-align:center; padding:2rem 1.5rem; color:var(--text-muted); font-size:0.9rem; border-top:1px solid #e5e7eb;">
+    <p>🌱 RaitaSaathiAI &bull; <em id="footer-tagline">"ಪ್ರತಿಯೊಬ್ಬ ರೈತರನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ. ಪ್ರತಿಯೊಂದು ಹೊಲವನ್ನೂ ಸಶಕ್ತಗೊಳಿಸಿ."</em></p>
+    <p id="footer-sub" style="margin-top:4px; font-size:0.8rem;">ಕರ್ನಾಟಕದ ರೈತರಿಗೆ ನಿಷ್ಠಾವಂತ ಕೃಷಿ ಇಂಟೆಲಿಜೆನ್ಸ್</p>
+  </footer>
+
+  <script>
+    const CONTENT = {
+      kn: {
+        nav_farmer: "👨‍🌾 ರೈತರ ಪೋರ್ಟಲ್",
+        nav_officer: "🏛️ ಅಧಿಕಾರಿಗಳ ಪೋರ್ಟಲ್",
+        nav_login: "ಲಾಗಿನ್ &rarr;",
+        brand_badge: "ರೈತಸಾಥಿ AI",
+        hero_tagline: "✨ ಕರ್ನಾಟಕ ಕೃಷಿ ಇಂಟೆಲಿಜೆನ್ಸ್ ವೇದಿಕೆ",
+        hero_main_title: "ಪ್ರತಿಯೊಬ್ಬ ರೈತರನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ.<br><span class=\"text-gradient\">ಪ್ರತಿಯೊಂದು ಹೊಲವನ್ನೂ ಸಶಕ್ತಗೊಳಿಸಿ.</span>",
+        hero_desc: "ಕರ್ನಾಟಕ ಕೃಷಿಗಾಗಿ ವಿಶೇಷವಾಗಿ ವಿನ್ಯಾಸಗೊಳಿಸಲಾದ ಧ್ವನಿ-ಮೊದಲ ಕೃಷಿ ವೇದಿಕೆ. ಪಾರದರ್ಶಕ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು, ಐಸಿಎಆರ್ ಆಧಾರಿತ ಬೆಳೆ ಸಲಹೆ ಮತ್ತು ನಿಖರವಾದ ಆರ್ಥಿಕ ಯೋಜನಾ ಮಾದರಿ.",
+        hero_farmer: "👨‍🌾 ರೈತರ ಪೋರ್ಟಲ್",
+        hero_officer: "🏛️ ಅಧಿಕಾರಿಗಳ ಪೋರ್ಟಲ್",
+        card1_title: "ಕೃಷಿ ಧ್ವನಿ ಸಹಾಯಕ",
+        card1_desc: "ನೈಸರ್ಗಿಕ ಕನ್ನಡ ಧ್ವನಿ ಮತ್ತು ಪ್ರಾದೇಶಿಕ ಭಾಷಾ ಶೈಲಿಗಳನ್ನು ಗುರುತಿಸುತ್ತದೆ. ಪ್ರಮುಖ ಪ್ರಕ್ರಿಯೆಗಳನ್ನು ನಡೆಸುವ ಮುನ್ನ ಧ್ವನಿ ದೃಢೀಕರಣ ಕಾರ್ಡ್ ಮೂಲಕ ಖಚಿತಪಡಿಸಿಕೊಳ್ಳುತ್ತದೆ.",
+        card2_title: "ಯೋಜನಾ ಪಾಸ್‌ಪೋರ್ಟ್",
+        card2_desc: "ಪಿಎಂ-ಕಿಸಾನ್, ರೈತ ಸಿರಿ ಮತ್ತು ಕೃಷಿ ಭಾಗ್ಯ ಸೇರಿದಂತೆ 20+ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳ ಅರ್ಹತೆಯನ್ನು ನಿಖರವಾಗಿ ಮೌಲ್ಯಮಾಪನ ಮಾಡುತ್ತದೆ.",
+        card3_title: "ಕೃಷಿ ಆಯವ್ಯಯ ಲ್ಯಾಬ್",
+        card3_desc: "ಎರಡು ಸನ್ನಿವೇಶಗಳ ಆರ್ಥಿಕ ಹೋಲಿಕೆ. ವೆಚ್ಚಗಳು, ಆದಾಯಗಳು ಮತ್ತು ಮಾರುಕಟ್ಟೆ ಬೆಲೆ ವ್ಯತ್ಯಾಸಗಳ ನಿಖರ ಲೆಕ್ಕಾಚಾರ.",
+        how_pill: "⚡ ಕಾರ್ಯವಿಧಾನ",
+        how_title: "ರೈತಸಾಥಿ ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ",
+        how_sub: "ಧ್ವನಿ ಸಂಭಾಷಣೆಯಿಂದ ವಿವರಣಾತ್ಮಕ ಕೃಷಿ ಮಾರ್ಗದರ್ಶನದವರೆಗಿನ ಪರಿಶೀಲಿಸಿದ ಪ್ರಕ್ರಿಯೆ.",
+        step1_title: "೧. ಕನ್ನಡದಲ್ಲಿ ಮಾತನಾಡಿ",
+        step1_desc: "ನಿಮ್ಮ ನೈಸರ್ಗಿಕ ಶೈಲಿಯಲ್ಲಿ ಮಾತನಾಡಿ. ಬೆಳೆಗಳ ಹೆಸರು ಮತ್ತು 'ಗುಂಟೆ', 'ಎಕರೆ' ಪ್ರಮಾಣಗಳನ್ನು ವ್ಯವಸ್ಥೆ ಗುರುತಿಸುತ್ತದೆ.",
+        step2_title: "೨. ಕೃಷಿ ಧ್ವನಿ ದೃಢೀಕರಣ",
+        step2_desc: "ಯಾವುದೇ ಅರ್ಜಿ ಸಲ್ಲಿಕೆಯ ಮುನ್ನ ಜಮೀನು ಮತ್ತು ಬೆಳೆ ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಲು ಪರದೆಯ ಮೇಲೆ ದೃಢೀಕರಣ ಕಾರ್ಡ್ ನೀಡಲಾಗುತ್ತದೆ.",
+        step3_title: "೩. ಅಧಿಕೃತ ಮಾರ್ಗದರ್ಶನ",
+        step3_desc: "ಪ್ರತಿಯೊಂದು ಶಿಫಾರಸು ಅಧಿಕೃತ ಸರ್ಕಾರಿ ನಿಯಮಗಳು, ಅನುದಾನ ಮಾನದಂಡಗಳು ಮತ್ತು ತಜ್ಞರ ಆಧಾರವನ್ನು ಒಳಗೊಂಡಿರುತ್ತದೆ.",
+        footer_tagline: "\"ಪ್ರತಿಯೊಬ್ಬ ರೈತರನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಿ. ಪ್ರತಿಯೊಂದು ಹೊಲವನ್ನೂ ಸಶಕ್ತಗೊಳಿಸಿ.\"",
+        footer_sub: "ಕರ್ನಾಟಕದ ರೈತರಿಗೆ ನಿಷ್ಠಾವಂತ ಕೃಷಿ ಇಂಟೆಲಿಜೆನ್ಸ್"
+      },
+      en: {
+        nav_farmer: "👨‍🌾 Farmer Portal",
+        nav_officer: "🏛️ Officials Portal",
+        nav_login: "Login &rarr;",
+        brand_badge: "RaitaSaathi AI",
+        hero_tagline: "✨ Karnataka Agricultural Intelligence Platform",
+        hero_main_title: "Understand Every Farmer.<br><span class=\"text-gradient\">Empower Every Field.</span>",
+        hero_desc: "A voice-first, multimodal farming companion tailored for Karnataka agriculture. Transparent, explainable government scheme eligibility, ICAR-grounded crop care, and deterministic financial scenario modeling.",
+        hero_farmer: "👨‍🌾 Farmer Portal",
+        hero_officer: "🏛️ Officials Portal",
+        card1_title: "Krishi Echo & Dialects",
+        card1_desc: "Understands natural spoken Kannada and regional dialect expressions. Confirms understanding with a confirmation card before executing consequential actions.",
+        card2_title: "Scheme Passport",
+        card2_desc: "Deterministic Tri-State rule evaluation for 20+ state and central schemes without hallucinations or arbitrary disqualifications.",
+        card3_title: "Farm Scenario Lab",
+        card3_desc: "Two-scenario financial comparison laboratory. Pure arithmetic for costs, revenues, margins, and market price sensitivity projections.",
+        how_pill: "⚡ The Farmer Workflow",
+        how_title: "How RaitaSaathiAI Works",
+        how_sub: "A verified pipeline from spoken voice to explainable farm guidance.",
+        step1_title: "1. Speak in Kannada",
+        step1_desc: "Speak naturally using regional terms. The audio transcription detects colloquial crop names and units like 'Gunte' or 'Acre'.",
+        step2_title: "2. Krishi Echo Verification",
+        step2_desc: "The assistant presents an interactive confirmation card to verify landholding and crops before executing any actions.",
+        step3_title: "3. Audited Decision Trail",
+        step3_desc: "Every recommendation includes verified source citations, statutory clauses, and explicit statements of uncertainty.",
+        footer_tagline: "\"Understand Every Farmer. Empower Every Field.\"",
+        footer_sub: "Empowering Karnataka Farmers with Honest Agricultural Intelligence"
+      }
+    };
+
+    let currentLang = localStorage.getItem('raitasaathi_lang') || localStorage.getItem('krishi_lang') || 'kn';
+
+    function switchLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('raitasaathi_lang', lang);
+      localStorage.setItem('krishi_lang', lang);
+
+      document.getElementById('btn-lang-kn').classList.toggle('active', lang === 'kn');
+      document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
+
+      const c = CONTENT[lang];
+      document.getElementById('nav-farmer-link').innerText = c.nav_farmer;
+      document.getElementById('nav-officer-link').innerText = c.nav_officer;
+      document.getElementById('nav-login-btn').innerHTML = c.nav_login;
+      document.getElementById('brand-badge-text').innerText = c.brand_badge;
+      document.getElementById('hero-tagline').innerText = c.hero_tagline;
+      document.getElementById('hero-main-title').innerHTML = c.hero_main_title;
+      document.getElementById('hero-desc').innerText = c.hero_desc;
+      document.getElementById('hero-farmer-btn').innerText = c.hero_farmer;
+      document.getElementById('hero-officer-btn').innerText = c.hero_officer;
+      document.getElementById('card1-title').innerText = c.card1_title;
+      document.getElementById('card1-desc').innerText = c.card1_desc;
+      document.getElementById('card2-title').innerText = c.card2_title;
+      document.getElementById('card2-desc').innerText = c.card2_desc;
+      document.getElementById('card3-title').innerText = c.card3_title;
+      document.getElementById('card3-desc').innerText = c.card3_desc;
+      document.getElementById('how-pill').innerText = c.how_pill;
+      document.getElementById('how-title').innerText = c.how_title;
+      document.getElementById('how-sub').innerText = c.how_sub;
+      document.getElementById('step1-title').innerText = c.step1_title;
+      document.getElementById('step1-desc').innerText = c.step1_desc;
+      document.getElementById('step2-title').innerText = c.step2_title;
+      document.getElementById('step2-desc').innerText = c.step2_desc;
+      document.getElementById('step3-title').innerText = c.step3_title;
+      document.getElementById('step3-desc').innerText = c.step3_desc;
+      document.getElementById('footer-tagline').innerText = c.footer_tagline;
+      document.getElementById('footer-sub').innerText = c.footer_sub;
+    }
+
+    // Apply language on load
+    window.addEventListener('DOMContentLoaded', () => {
+      switchLanguage(currentLang);
+    });
+  </script>
+</body>
+</html>

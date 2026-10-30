@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RaitaSaathiAI — Farmer Digital Identity & Government Benefit Hub</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <!-- ====================================================================
+       TOP NAVIGATION BAR
+       ==================================================================== -->
+  <header class="navbar">
+    <a href="/app" class="brand">
+      <div class="brand-icon">🌱</div>
+      <span>RaitaSaathiAI</span>
+      <span class="brand-badge" id="brand-tagline-badge" style="background:#ecfdf5; color:#059669; border:1px solid #a7f3d0; font-size:0.75rem; padding:2px 8px; border-radius:9999px;" data-i18n="brand_tagline">ರೈತಸಾಥಿ AI</span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a onclick="showTab('dashboard')" id="nav-dashboard" class="active"><span class="nav-icon">🏠</span> <span data-i18n="nav_dashboard">ಮುಖಪುಟ</span></a></li>
+      <li><a onclick="showTab('schemes')" id="nav-schemes"><span class="nav-icon">📜</span> <span data-i18n="nav_schemes">ಯೋಜನೆಗಳು</span></a></li>
+      <li><a onclick="showTab('tracking')" id="nav-tracking"><span class="nav-icon">📤</span> <span data-i18n="nav_tracking">ಅರ್ಜಿ ಟ್ರ್ಯಾಕಿಂಗ್</span></a></li>
+      <li><a onclick="showTab('profile')" id="nav-profile"><span class="nav-icon">👤</span> <span data-i18n="nav_profile">ನನ್ನ ಪ್ರೊಫೈಲ್</span></a></li>
+      <li><a onclick="showTab('assistant')" id="nav-assistant"><span class="nav-icon">🎤</span> <span data-i18n="nav_assistant">ಧ್ವನಿ ಸಹಾಯಕ</span></a></li>
+      <li><a onclick="showTab('calculator')" id="nav-calculator"><span class="nav-icon">⚖️</span> <span data-i18n="nav_calculator">ಬಜೆಟ್ ಲ್ಯಾಬ್</span></a></li>
+      <li><a onclick="showTab('crop')" id="nav-crop"><span class="nav-icon">🔬</span> <span data-i18n="nav_crop">ಬೆಳೆ ರೋಗ</span></a></li>
+      <li><a onclick="showTab('soil')" id="nav-soil"><span class="nav-icon">🧪</span> <span data-i18n="nav_soil">ಮಣ್ಣು ಪರೀಕ್ಷೆ</span></a></li>
+    </ul>
+
+    <!-- Top Navbar Right Actions: Location, Clean 2-Language Switcher, Notifications, Admin Portal -->
+    <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+      
+      <!-- Karnataka District Selector -->
+      <div style="display:flex; align-items:center; gap:6px; background:rgba(255,255,255,0.95); border:1.5px solid #d1fae5; border-radius:var(--radius-full); padding:3px 12px; box-shadow:0 1px 3px rgba(0,0,0,0.04);">
+        <span style="font-size:0.9rem;">📍</span>
+        <span id="nav-state-label" style="font-size:0.8rem; font-weight:800; color:var(--emerald);" data-i18n="state_karnataka">ಕರ್ನಾಟಕ</span>
+        <span style="color:#d1d5db;">|</span>
+        <select id="nav-select-district" onchange="onDistrictSelectChange(this.value, 'nav')" title="ಜಿಲ್ಲೆ" style="padding:3px 8px; font-size:0.8rem; border:1px solid #e5e7eb; border-radius:10px; background:#ffffff; font-weight:700; color:var(--primary); cursor:pointer; outline:none;">
+        </select>
+      </div>
+
+      <!-- Clean Language Switcher: Kannada & English ONLY (No Hindi, Zero Clutter) -->
+      <div style="display:flex; background:#f1f5f9; border-radius:var(--radius-full); padding:2px; border:1.5px solid #cbd5e1; box-shadow:0 1px 2px rgba(0,0,0,0.04);">
+        <button type="button" onclick="setLanguage('kn')" id="lang-kn" class="btn" style="padding:4px 14px; font-size:0.8rem; border-radius:var(--radius-full); background:#ffffff; font-weight:800; color:var(--primary); box-shadow:0 1px 3px rgba(0,0,0,0.1); cursor:pointer; transition:all 0.2s;">ಕನ್ನಡ</button>
+        <button type="button" onclick="setLanguage('en')" id="lang-en" class="btn" style="padding:4px 14px; font-size:0.8rem; border-radius:var(--radius-full); background:transparent; font-weight:600; color:#64748b; cursor:pointer; transition:all 0.2s;">English</button>
+      </div>
+
+      <!-- Notification Bell -->
+      <div class="notif-bell-container">
+        <button class="notif-bell-btn" onclick="toggleNotificationsDropdown()" title="ಅಧಿಸೂಚನೆಗಳು">
+          🔔
+          <span class="notif-badge-count" id="notif-badge" style="display:none;">0</span>
+        </button>
+        <div class="notif-dropdown" id="notif-dropdown">
+          <div class="notif-dropdown-header">
+            <span data-i18n="notif_header">🔔 ಅಧಿಸೂಚನೆಗಳು</span>
+            <button onclick="markAllNotificationsRead()" style="background:none; border:none; font-size:0.78rem; color:#059669; font-weight:700; cursor:pointer;" data-i18n="notif_mark_all">ಎಲ್ಲಾ ಓದಲಾಗಿದೆ</button>
+          </div>
+          <div class="notif-dropdown-body" id="notif-list">
+            <div style="padding:20px; text-align:center; color:var(--text-muted); font-size:0.85rem;" data-i18n="notif_loading">ಅಧಿಸೂಚನೆಗಳು ಲೋಡ್ ಆಗುತ್ತಿವೆ...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Farmer Logout -->
+      <button onclick="farmerLogout()" class="btn" style="padding:6px 16px; font-size:0.84rem; border-radius:var(--radius-full); font-weight:800; background:#fef2f2; color:#991b1b; border:1px solid #fecaca; cursor:pointer; display:inline-flex; align-items:center; gap:6px; box-shadow:0 1px 3px rgba(0,0,0,0.05);" title="Logout">
+        <span data-i18n="nav_logout">🚪 ನಿರ್ಗಮಿಸಿ</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="container" style="margin-top:1.5rem;">
+    
+    <!-- ====================================================================
+         1. DASHBOARD VIEW
+         ==================================================================== -->
+    <section id="view-dashboard">
+      
+      <!-- Farmer Profile Greeting Banner Card -->
+      <div class="card" style="margin-bottom:1.8rem; background:linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%); border-left: 5px solid var(--emerald); box-shadow:var(--shadow-card);">
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:1.2rem;">
+          <div style="flex:1; min-width:320px;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px; flex-wrap:wrap;">
+              <span class="badge badge-match" id="verification-status-badge"><span class="badge-dot"></span> <span data-i18n="verified_profile_badge">ದೃಢೀಕರಿಸಲ್ಪಟ್ಟ ರೈತ ಪ್ರೊಫೈಲ್</span></span>
+              <span id="farmer-id-badge" style="background:#eff6ff; color:#1d4ed8; border:1px solid #bfdbfe; font-size:0.78rem; font-weight:800; padding:2px 8px; border-radius:6px;">KM-KA-2026-0842</span>
+              <span id="active-location-badge" style="font-size:0.82rem; color:var(--text-muted); font-weight:700;">ಮಂಡ್ಯ ಜಿಲ್ಲೆ &bull; ಕರ್ನಾಟಕ</span>
+            </div>
+
+            <!-- Greeting Headline with Edit Button -->
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:6px; flex-wrap:wrap;">
+              <h2 id="greeting-name" style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin:0;">
+                ನಮಸ್ಕಾರ, ರೈತ ಮಿತ್ರ
+              </h2>
+              <button id="btn-edit-name" onclick="toggleNameInput(true)" class="btn btn-outline" style="padding:4px 12px; font-size:0.8rem; border-radius:var(--radius-full); display:inline-flex; align-items:center; gap:4px; background:#ffffff; box-shadow:var(--shadow-sm);" title="ಹೆಸರು ಬದಲಾಯಿಸಿ">
+                ✏️ <span id="btn-edit-name-text" data-i18n="btn_edit_name">ಹೆಸರು ಬದಲಾಯಿಸಿ</span>
+              </button>
+            </div>
+
+            <!-- Voice or Text Farmer Name Entry Bar -->
+            <div id="name-input-container" style="display:none; margin:10px 0; align-items:center; gap:8px; flex-wrap:wrap; background:#ffffff; padding:10px 14px; border-radius:var(--radius-md); border:1.5px solid #a7f3d0; box-shadow:0 2px 6px rgba(0,0,0,0.05); max-width:640px;">
+              <span style="font-size:0.88rem; font-weight:700; color:var(--text-secondary); white-space:nowrap;" data-i18n="farmer_name_label">👨‍🌾 ರೈತರ ಹೆಸರು:</span>
+              <div class="input-with-voice" style="flex:1; min-width:200px;">
+                <input type="text" id="farmer-name-input" placeholder="ಹೆಸರನ್ನು ಹೇಳಿ ಅಥವಾ ಬರೆಯಿರಿ..." data-i18n-ph="farmer_name_placeholder" style="width:100%; padding:6px 42px 6px 12px; font-size:0.9rem; border:1.5px solid #d1d5db; border-radius:6px; outline:none;" onkeydown="if(event.key==='Enter') saveFarmerName();">
+                <button type="button" onclick="startFieldVoice('farmer-name-input', 'name')" class="input-mic-btn" title="ಮಾತನಾಡಿ">🎙️</button>
+              </div>
+              
+              <!-- Save button -->
+              <button type="button" onclick="saveFarmerName()" class="btn btn-emerald" style="padding:6px 14px; font-size:0.84rem; border-radius:6px; font-weight:700;">
+                <span data-i18n="save_btn">ಉಳಿಸಿ</span>
+              </button>
+              
+              <!-- Close button -->
+              <button type="button" onclick="toggleNameInput(false)" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:1.15rem; padding:0 4px; line-height:1;" title="ಮುಚ್ಚಿ">
+                ✕
+              </button>
+            </div>
+
+            <p style="color:var(--text-secondary); font-size:0.92rem; margin-top:4px;" id="location-summary">
+              ಮಂಡ್ಯ ಜಿಲ್ಲೆ, ಕರ್ನಾಟಕ &bull; 2.5 ಎಕರೆ ಕೃಷಿ ಭೂಮಿ &bull; ಬೋರ್‌ವೆಲ್ ನೀರಾವರಿ
+            </p>
+
+            <!-- Profile Completion Progress Bar -->
+            <div style="margin-top:10px; max-width:480px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.78rem; font-weight:700; color:var(--text-secondary); margin-bottom:3px;">
+                <span data-i18n="profile_completion_label">ಪ್ರೊಫೈಲ್ ಪೂರ್ಣಗೊಂಡಿದೆ</span>
+                <span id="profile-pct-text">85%</span>
+              </div>
+              <div style="background:#e2e8f0; height:7px; border-radius:9999px; overflow:hidden;">
+                <div id="profile-pct-bar" style="background:var(--emerald-gradient); height:100%; width:85%; transition:width 0.4s ease;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons in Banner -->
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-self:flex-start;">
+            <button class="btn btn-emerald" onclick="showTab('assistant')">
+              <span data-i18n="banner_voice_btn">🎤 ಧ್ವನಿ ಪ್ರಶ್ನೆ</span>
+            </button>
+            <button class="btn btn-outline" onclick="showTab('schemes')">
+              <span data-i18n="banner_schemes_btn">📜 ಯೋಜನೆಗಳು</span>
+            </button>
+            <button class="btn btn-outline" onclick="showTab('profile')">
+              <span data-i18n="banner_profile_btn">👤 ನನ್ನ ಪ್ರೊಫೈಲ್</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           6 STATISTIC CARDS (KPIs)
+           ==================================================================== -->
+      <div class="grid-6">
+        
+        <!-- 1. Total Schemes -->
+        <div class="metric-kpi-card" onclick="showTab('schemes')" style="cursor:pointer;">
+          <div class="metric-kpi-header">
+            <span class="metric-kpi-title" data-i18n="kpi_total_title">ಒಟ್ಟು ಯೋಜನೆಗಳು</span>
+            <div class="metric-kpi-icon" style="background:#ecfdf5; color:#059669;">📜</div>
+          </div>
+          <div class="metric-kpi-value" id="kpi-total-schemes">20</div>
+          <div class="metric-kpi-sub" data-i18n="kpi_total_sub">ಕೇಂದ್ರ ಮತ್ತು ಕರ್ನಾಟಕ</div>
+        </div>
+
+        <!-- 2. Eligible Schemes -->
+        <div class="metric-kpi-card" onclick="showTab('schemes')" style="cursor:pointer;">
+          <div class="metric-kpi-header">
+            <span class="metric-kpi-title" data-i18n="kpi_eligible_title">ಅರ್ಹ ಯೋಜನೆಗಳು</span>
+            <div class="metric-kpi-icon" style="background:#ecfdf5; color:#059669;">🎯</div>
+          </div>
+          <div class="metric-kpi-value" style="color:var(--status-match);" id="kpi-eligible-schemes">8</div>
+          <div class="metric-kpi-sub" data-i18n="kpi_eligible_sub">ನಿಮ್ಮ ಭೂಮಿ ಮತ್ತು ಬೆಳೆಗೆ</div>
+        </div>
+
+        <!-- 3. Applications Submitted -->
+        <div class="metric-kpi-card" onclick="showTab('tracking')" style="cursor:pointer;">
+          <div class="metric-kpi-header">
+            <span class="metric-kpi-title" data-i18n="kpi_submitted_title">ಸಲ್ಲಿಸಿದ ಅರ್ಜಿಗಳು</span>
+            <div class="metric-kpi-icon" style="background:#eff6ff; color:#2563eb;">📤</div>
+          </div>
+          <div class="metric-kpi-value" style="color:#2563eb;" id="kpi-submitted-apps">4</div>
+          <div class="metric-kpi-sub" data-i18n="kpi_submitted_sub">ಟ್ರ್ಯಾಕಿಂಗ್ ಲಭ್ಯವಿದೆ</div>
+        </div>
+
+        <!-- 4. Approved Applications -->
+        <div class="metric-kpi-card" onclick="filterApplicationsByStatus('APPROVED')" style="cursor:pointer;">
+          <div class="metric-kpi-header">
+            <span class="metric-kpi-title" data-i18n="kpi_approved_title">ಅನುಮೋದಿತ ಅರ್ಜಿಗಳು</span>
+            <div class="metric-kpi-icon" style="background:#ecfdf5; color:#059669;">✅</div>
+          </div>
+          <div class="metric-kpi-value" style="color:#059669;" id="kpi-approved-apps">2</div>
+          <div class="metric-kpi-sub" data-i18n="kpi_approved_sub">ಮಂಜೂರಾದವುಗಳು</div>
+        </div>
+
+        <!-- 5. Pending Applications -->
+        <div class="metric-kpi-card" onclick="filterApplicationsByStatus('PENDING')" style="cursor:pointer;">
+          <div class="metric-kpi-header">
+            <span class="metric-kpi-title" data-i18n="kpi_pending_title">ಪರಿಶೀಲನೆಯಲ್ಲಿರುವ ಅರ್ಜಿಗಳು</span>
+            <div class="metric-kpi-icon" style="background:#fffbeb; color:#d97706;">⏳</div>
+          </div>
+          <div class="metric-kpi-value" style="color:#d97706;" id="kpi-pending-apps">2</div>
+          <div class="metric-kpi-sub" data-i18n="kpi_pending_sub">ಇಲಾಖಾ ಪ್ರಕ್ರಿಯೆಯಲ್ಲಿವೆ</div>
+        </div>
+
+        <!-- 6. Total Benefits Disbursed -->
+        <div class="metric-kpi-card" onclick="showTab('tracking')" style="cursor:pointer;">
+          <div class="metric-kpi-header">
+            <span class="metric-kpi-title" data-i18n="kpi_benefits_title">ಪಡೆದ ಸೌಲಭ್ಯ ಮೊತ್ತ</span>
+            <div class="metric-kpi-icon" style="background:#fef3c7; color:#b45309;">💰</div>
+          </div>
+          <div class="metric-kpi-value" style="color:#059669; font-size:1.6rem;" id="kpi-benefits-received">₹16,000</div>
+          <div class="metric-kpi-sub" data-i18n="kpi_benefits_sub">ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ ನೇರ ವರ್ಗಾವಣೆ</div>
+        </div>
+      </div>
+
+      <!-- ====================================================================
+           SCHEME TRACKING PREVIEW TABLE
+           ==================================================================== -->
+      <div class="card" style="margin-bottom:2rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:1.2rem;">
+          <div>
+            <h3 style="color:var(--primary); font-size:1.35rem; font-weight:800; margin:0;" data-i18n="recent_apps_title">
+              ಇತ್ತೀಚಿನ ಅರ್ಜಿಗಳ ಸ್ಥಿತಿ
+            </h3>
+            <p style="color:var(--text-secondary); font-size:0.85rem; margin-top:2px;" data-i18n="recent_apps_sub">
+              ಅರ್ಜಿ ಪ್ರಗತಿ, ಪರಿಶೀಲನಾ ಹಂತ ಮತ್ತು ನೇರ ಹಣ ಜಮೆ ವಿವರಗಳು
+            </p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-outline" onclick="showTab('tracking')" style="font-size:0.85rem;">
+              <span data-i18n="view_all_apps_btn">ಎಲ್ಲಾ ಅರ್ಜಿಗಳು ನೋಡಿ &rarr;</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Tracking Table -->
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.88rem;">
+            <thead>
+              <tr style="border-bottom:2px solid #e2e8f0; color:var(--text-secondary); background:#f8fafc;">
+                <th style="padding:10px 14px;" data-i18n="th_app_id">ಅರ್ಜಿ ಸಂಖ್ಯೆ</th>
+                <th style="padding:10px 14px;" data-i18n="th_scheme_name">ಯೋಜನೆಯ ಹೆಸರು</th>
+                <th style="padding:10px 14px;" data-i18n="th_date">ದಿನಾಂಕ</th>
+                <th style="padding:10px 14px;" data-i18n="th_benefit">ಸೌಲಭ್ಯ ಮೊತ್ತ</th>
+                <th style="padding:10px 14px;" data-i18n="th_status">ಸ್ಥಿತಿ</th>
+                <th style="padding:10px 14px; text-align:right;" data-i18n="th_action">ವಿವರ</th>
+              </tr>
+            </thead>
+            <tbody id="dashboard-recent-apps-body">
+              <tr><td colspan="6" style="padding:20px; text-align:center; color:var(--text-muted);" data-i18n="loading_apps">ಅರ್ಜಿಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Quick Action Shortcuts -->
+      <div class="grid-2">
+        <div class="card">
+          <h3 data-i18n="quick_advice_title">⚡ ತ್ವರಿತ ಕೃಷಿ ಸಲಹೆ</h3>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:1rem;" data-i18n="quick_advice_sub">
+            ಪ್ರಸ್ತುತ ಋತುವಿನ ಬೆಳೆಗಳು ಮತ್ತು ಕೀಟ ನಿರ್ವಹಣೆಯ ಬಗ್ಗೆ ಧ್ವನಿಯ ಮೂಲಕ ಕೇಳಿ.
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-outline" style="font-size:0.85rem;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'How to manage fertilizer for Ragi crop?' : 'ರಾಗಿ ಬೆಳೆಗೆ ಎಷ್ಟು ಗೊಬ್ಬರ ಹಾಕಬೇಕು?')">
+              <span data-i18n="chip_ragi">🌱 ರಾಗಿ ಗೊಬ್ಬರ ನಿರ್ವಹಣೆ</span>
+            </button>
+            <button class="btn btn-outline" style="font-size:0.85rem;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'How to control stem borer in paddy crop?' : 'ಭತ್ತದ ಬೆಳೆಯ ಕಾಂಡ ಕೊರೆಯುವ ಹುಳು ಹತೋಟಿ ಹೇಗೆ?')">
+              <span data-i18n="chip_paddy">🌾 ಭತ್ತದ ಹುಳು ಹತೋಟಿ</span>
+            </button>
+            <button class="btn btn-outline" style="font-size:0.85rem;" onclick="quickAssistantPrompt(activeLanguage === 'en' ? 'What government schemes are available for my 2.5 acres land?' : 'ನನ್ನ 2.5 ಎಕರೆ ಜಮೀನಿಗೆ ಯಾವ ಯಾವ ಯೋಜನೆಗಳಿವೆ?')">
+              <span data-i18n="chip_schemes">📜 ನನ್ನ ಅರ್ಹ ಯೋಜನೆಗಳು</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="scenario_lab_card_title">📊 ಕೃಷಿ ಬಜೆಟ್ ಲ್ಯಾಬ್</h3>
+          <p style="color:var(--text-secondary); font-size:0.92rem; margin-bottom:1rem;" data-i18n="scenario_lab_card_sub">
+            ಬೆಳೆಗಳ ಖರ್ಚು, ಆದಾಯ ಮತ್ತು ನಿವ್ವಳ ಲಾಭದ ಗಣಿತೀಯ ಹೋಲಿಕೆ.
+          </p>
+          <button class="btn btn-primary" onclick="showTab('calculator')">
+            <span data-i18n="open_lab_btn">⚖️ ಬಜೆಟ್ ಲ್ಯಾಬ್ ತೆರೆಯಿರಿ</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         2. SCHEMES DISCOVERY VIEW (ALL 20 SCHEMES WITH ELIGIBILITY)
+         ==================================================================== -->
+    <section id="view-schemes" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span class="hero-pill">🏛️ Government Scheme Discovery Engine</span>
+          <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="schemes_heading">
+            ಸರ್ಕಾರಿ ಕೃಷಿ ಯೋಜನೆಗಳು
+          </h2>
+          <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="schemes_sub">
+            ಕೇಂದ್ರ ಮತ್ತು ಕರ್ನಾಟಕ ಸರ್ಕಾರದ 20 ಅಧಿಕೃತ ಕೃಷಿ ಯೋಜನೆಗಳು — ನಿಮ್ಮ ಜಮೀನು ಮತ್ತು ಬೆಳೆಗೆ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.
+          </p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn btn-primary" onclick="loadSchemeRecommendations()">
+            <span data-i18n="reevaluate_schemes_btn">🔄 ಅರ್ಹತೆ ಮರುಪರಿಶೀಲಿಸಿ</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills -->
+      <div class="filter-pills-row">
+        <button class="filter-pill active" onclick="filterSchemesByCategory('ALL', this)" data-i18n="filter_all_schemes">ಎಲ್ಲಾ ಯೋಜನೆಗಳು (20)</button>
+        <button class="filter-pill" onclick="filterSchemesByCategory('FINANCIAL', this)" data-i18n="filter_dbt">💵 ನೇರ ನಗದು / ಡಿಬಿಟಿ (7)</button>
+        <button class="filter-pill" onclick="filterSchemesByCategory('SUBSIDY', this)" data-i18n="filter_subsidy">🚜 ಸಬ್ಸಿಡಿ &amp; ಯಂತ್ರೋಪಕರಣ (6)</button>
+        <button class="filter-pill" onclick="filterSchemesByCategory('IRRIGATION', this)" data-i18n="filter_irrigation">💧 ನೀರಾವರಿ &amp; ಕೃಷಿ ಹೊಂಡ (2)</button>
+        <button class="filter-pill" onclick="filterSchemesByCategory('INSURANCE', this)" data-i18n="filter_insurance">🛡️ ಬೆಳೆ ವಿಮೆ &amp; ಸಾಲ (1)</button>
+        <button class="filter-pill" onclick="filterSchemesByCategory('INFRASTRUCTURE', this)" data-i18n="filter_infra">🏛️ ಮೂಲಸೌಕರ್ಯ &amp; ತಂತ್ರಜ್ಞಾನ (3)</button>
+        <button class="filter-pill" onclick="filterSchemesByCategory('ORGANIC', this)" data-i18n="filter_organic">🌱 ಸಾವಯವ ಕೃಷಿ (1)</button>
+      </div>
+
+      <!-- Schemes Grid Container -->
+      <div id="schemes-grid-container" class="grid-2">
+        <div style="padding:40px; text-align:center; color:var(--text-muted); grid-column:1/-1;" data-i18n="loading_schemes">ಯೋಜನೆಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         3. SCHEME TRACKING VIEW (DETAILED APPLICATIONS TABLE & 5-STAGE TIMELINE)
+         ==================================================================== -->
+    <section id="view-tracking" style="display:none;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom:1.5rem; flex-wrap:wrap; gap:1rem;">
+        <div>
+          <span class="hero-pill">📤 Benefit Tracking & Audit Trail</span>
+          <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="tracking_heading">
+            ನನ್ನ ಅರ್ಜಿಗಳ ಟ್ರ್ಯಾಕಿಂಗ್
+          </h2>
+          <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="tracking_sub">
+            ಅರ್ಜಿ ಸಲ್ಲಿಕೆಯಿಂದ ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ ನೇರ ಹಣ ಜಮೆ ಆಗುವವರೆಗಿನ 5 ಹಂತಗಳ ನೈಜ ಪ್ರಗತಿ.
+          </p>
+        </div>
+        <button class="btn btn-emerald" onclick="showTab('schemes')">
+          <span data-i18n="btn_apply_new_scheme">➕ ಹೊಸ ಯೋಜನೆಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</span>
+        </button>
+      </div>
+
+      <!-- Status Filters -->
+      <div class="filter-pills-row">
+        <button class="filter-pill active" onclick="filterApplicationsTable('ALL', this)" data-i18n="filter_all_apps">ಎಲ್ಲಾ ಅರ್ಜಿಗಳು</button>
+        <button class="filter-pill" onclick="filterApplicationsTable('PENDING', this)" data-i18n="filter_pending_apps">⏳ ಪರಿಶೀಲನೆಯಲ್ಲಿರುವ</button>
+        <button class="filter-pill" onclick="filterApplicationsTable('APPROVED', this)" data-i18n="filter_approved_apps">✅ ಅನುಮೋದಿತ</button>
+        <button class="filter-pill" onclick="filterApplicationsTable('BENEFIT_DISBURSED', this)" data-i18n="filter_disbursed_apps">💰 ಸೌಲಭ್ಯ ಜಮೆ</button>
+      </div>
+
+      <!-- Detailed Applications Table -->
+      <div class="card">
+        <div style="overflow-x:auto;">
+          <table style="width:100%; border-collapse:collapse; text-align:left; font-size:0.9rem;">
+            <thead>
+              <tr style="border-bottom:2px solid #e2e8f0; color:var(--text-secondary); background:#f8fafc;">
+                <th style="padding:12px 14px;" data-i18n="th_app_id">ಅರ್ಜಿ ಸಂಖ್ಯೆ</th>
+                <th style="padding:12px 14px;" data-i18n="th_scheme_dept">ಯೋಜನೆ ಮತ್ತು ಇಲಾಖೆ</th>
+                <th style="padding:12px 14px;" data-i18n="th_date">ಸಲ್ಲಿಸಿದ ದಿನಾಂಕ</th>
+                <th style="padding:12px 14px;" data-i18n="th_benefit">ಸೌಲಭ್ಯ ಮೊತ್ತ</th>
+                <th style="padding:12px 14px;" data-i18n="th_stage">ಪ್ರಸ್ತುತ ಹಂತ</th>
+                <th style="padding:12px 14px; text-align:right;" data-i18n="th_action">ಕ್ರಮ</th>
+              </tr>
+            </thead>
+            <tbody id="full-applications-table-body">
+              <tr><td colspan="6" style="padding:30px; text-align:center; color:var(--text-muted);" data-i18n="loading_apps">ಅರ್ಜಿಗಳನ್ನು ಲೋಡ್ ಮಾಡಲಾಗುತ್ತಿದೆ...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         4. FARMER PROFILE VIEW
+         ==================================================================== -->
+    <section id="view-profile" style="display:none;">
+      <div style="margin-bottom:1.8rem;">
+        <span class="hero-pill">👤 Farmer Digital Identity</span>
+        <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="profile_heading">
+          ರೈತರ ಡಿಜಿಟಲ್ ಗುರುತು
+        </h2>
+        <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="profile_sub">
+          ಆಧಾರ್ ಮೂಲಕ ದೃಢೀಕರಿಸಲ್ಪಟ್ಟ ವೈಯಕ್ತಿಕ, ಕೃಷಿ ಭೂಮಿ, ಬೆಳೆ ಮತ್ತು ಬ್ಯಾಂಕ್ ವಿವರಗಳು.
+        </p>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:2rem;">
+        
+        <!-- Section A: Personal Information -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+            <h3 style="color:var(--primary); font-size:1.15rem; margin:0;" data-i18n="profile_sec_a">ವೈಯಕ್ತಿಕ ವಿವರಗಳು</h3>
+            <span class="badge badge-match">VERIFIED</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:0.9rem;">
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_farmer_id">ರೈತ ಸಂಖ್ಯೆ:</span>
+              <strong id="prof-farmer-id" style="color:var(--primary);">KM-KA-2026-0842</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_full_name">ಪೂರ್ಣ ಹೆಸರು:</span>
+              <strong id="prof-farmer-name">ರಮೇಶ್ ಗೌಡ</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_mobile">ಮೊಬೈಲ್ ಸಂಖ್ಯೆ:</span>
+              <strong id="prof-mobile">+91 98XXXX2345</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_ekyc">ಆಧಾರ್ ದೃಢೀಕರಣ:</span>
+              <strong style="color:#059669;">✓ Masked (XXXX-XXXX-8421)</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_state">ರಾಜ್ಯ:</span>
+              <strong id="prof-state">ಕರ್ನಾಟಕ</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_district">ಜಿಲ್ಲೆ:</span>
+              <strong id="prof-district">ಮಂಡ್ಯ</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_taluk">ತಾಲ್ಲೂಕು:</span>
+              <strong id="prof-taluk">ಪಾಂಡವಪುರ</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_village">ಗ್ರಾಮ:</span>
+              <strong id="prof-village">ಚಿಕ್ಕ ಬ್ಯಾಡರಹಳ್ಳಿ</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section B: Agricultural Land Information -->
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+            <h3 style="color:var(--primary); font-size:1.15rem; margin:0;" data-i18n="profile_sec_b">ಕೃಷಿ ಭೂಮಿ ವಿವರಗಳು</h3>
+            <span class="badge" style="background:#eff6ff; color:#1d4ed8;">RTC SEEDED</span>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; font-size:0.9rem;">
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_total_land">ಒಟ್ಟು ಭೂಮಿ:</span>
+              <strong id="prof-land-acres">2.5 ಎಕರೆ</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_ownership">ಭೂಮಾಲೀಕತ್ವ:</span>
+              <strong data-i18n="val_owned">ಸ್ವಂತ ಭೂಮಿ</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_category">ರೈತರ ವರ್ಗ:</span>
+              <strong id="prof-farmer-category" data-i18n="val_small_farmer">ಸಣ್ಣ ರೈತರು</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_irrigation">ನೀರಾವರಿ ವ್ಯವಸ್ಥೆ:</span>
+              <strong id="prof-irrigation" data-i18n="val_borewell">ಬೋರ್‌ವೆಲ್ ನೀರಾವರಿ</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_soil_type">ಮಣ್ಣಿನ ವಿಧ:</span>
+              <strong id="prof-soil-type" data-i18n="val_red_soil">ಕೆಂಪು ಮರಳು ಮಿಶ್ರಿತ ಮಣ್ಣು</strong>
+            </div>
+            <div>
+              <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_main_crops">ಮುಖ್ಯ ಬೆಳೆಗಳು:</span>
+              <strong id="prof-crops">ಭತ್ತ, ರಾಗಿ</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section C: Bank & Scheme Linking -->
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid #f1f5f9; padding-bottom:10px;">
+          <h3 style="color:var(--primary); font-size:1.15rem; margin:0;" data-i18n="profile_sec_c">ಬ್ಯಾಂಕ್ ಖಾತೆ ಮತ್ತು ಸೌಲಭ್ಯ ಸ್ಥಿತಿ</h3>
+          <span class="badge badge-match">DBT ENABLED</span>
+        </div>
+
+        <div class="grid-3" style="font-size:0.9rem;">
+          <div>
+            <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_bank_name">ಬ್ಯಾಂಕ್ ಹೆಸರು:</span>
+            <strong data-i18n="val_sbi">ಸ್ಟೇಟ್ ಬ್ಯಾಂಕ್ ಆಫ್ ಇಂಡಿಯಾ</strong>
+          </div>
+          <div>
+            <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_account_no">ಖಾತೆ ಸಂಖ್ಯೆ:</span>
+            <strong>XXXX-XXXX-4521</strong>
+          </div>
+          <div>
+            <span style="color:var(--text-muted); font-size:0.8rem; display:block;" data-i18n="lbl_aadhaar_seed">ಆಧಾರ್ ಜೋಡಣೆ:</span>
+            <strong style="color:#059669;" data-i18n="val_seeded">✓ ಜೋಡಿಸಲಾಗಿದೆ ಮತ್ತು ಸಕ್ರಿಯವಾಗಿದೆ</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         5. VOICE ASSISTANT VIEW (KRISHI ECHO)
+         ==================================================================== -->
+    <section id="view-assistant" style="display:none;">
+      <div class="assistant-box">
+        <div style="text-align:center; max-width:600px; margin:0 auto;">
+          <span class="hero-pill">🎙️ Krishi Echo</span>
+          <h2 style="color:var(--primary); font-size:1.8rem; font-weight:800; margin-top:0.4rem;" data-i18n="assistant_title">
+            ರೈತಸಾಥಿ AI ಧ್ವನಿ ಸಹಾಯಕ
+          </h2>
+          <p style="color:var(--text-secondary); font-size:0.95rem; margin-top:0.4rem;" data-i18n="assistant_sub">
+            ಯೋಜನೆಗಳು, ಅರ್ಜಿ ಸ್ಥಿತಿ ಅಥವಾ ಬೆಳೆ ರೋಗಗಳ ಬಗ್ಗೆ ನೇರವಾಗಿ ಮಾತನಾಡಿ.
+          </p>
+        </div>
+
+        <!-- Glowing Microphone Button & Animated Audio Waves with Multi-Layer Radar Auras -->
+        <div class="mic-btn-container" id="mic-container">
+          <div class="mic-aura-ring mic-aura-3"></div>
+          <div class="mic-aura-ring mic-aura-2"></div>
+          <div class="mic-aura-ring mic-aura-1"></div>
+          <button class="mic-btn" id="mic-btn" onclick="toggleVoiceRecording()" title="ಮಾತನಾಡಲು ಒತ್ತಿರಿ">
+            <span class="mic-icon">🎤</span>
+          </button>
+          
+          <div class="audio-waves" id="audio-wave-bars">
+            <span class="wave-bar bar-1"></span>
+            <span class="wave-bar bar-2"></span>
+            <span class="wave-bar bar-3"></span>
+            <span class="wave-bar bar-4"></span>
+            <span class="wave-bar bar-5"></span>
+            <span class="wave-bar bar-6"></span>
+            <span class="wave-bar bar-7"></span>
+            <span class="wave-bar bar-8"></span>
+            <span class="wave-bar bar-9"></span>
+          </div>
+
+          <div class="voice-status-pill" id="voice-status-pill">
+            <span class="voice-status-dot"></span>
+            <span id="voice-status" data-i18n="voice_tap_prompt">ಮಾತನಾಡಲು ಮೈಕ್ರೊಫೋನ್ ಒತ್ತಿರಿ</span>
+          </div>
+        </div>
+
+        <!-- Interactive Spoken Voice Prompt Chips (Works on Click & Speech) -->
+        <div style="display:flex; justify-content:center; align-items:center; gap:8px; flex-wrap:wrap; margin:1rem 0 1.5rem;">
+          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted);" data-i18n="lbl_try_voice">ಧ್ವನಿ ಉದಾಹರಣೆಗಳು:</span>
+          <button type="button" class="btn btn-outline" onclick="triggerVoiceQuery('ಪಿಎಂ ಕಿಸಾನ್ 19ನೇ ಕಂತಿನ ಸ್ಥಿತಿ ತಿಳಿಸಿ', 'Check PM-KISAN 19th installment status')" style="padding:5px 14px; font-size:0.82rem; border-radius:9999px; background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.05); cursor:pointer;">
+            🌾 <span data-i18n="chip_pmkisan">ಪಿಎಂ ಕಿಸಾನ್ ಸ್ಥಿತಿ</span>
+          </button>
+          <button type="button" class="btn btn-outline" onclick="triggerVoiceQuery('ಟೊಮೆಟೊ ಎಲೆ ಹಳದಿಯಾಗುತ್ತಿದೆ ಪರಿಹಾರವೇನು', 'Tomato leaves are turning yellow what is the cure')" style="padding:5px 14px; font-size:0.82rem; border-radius:9999px; background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.05); cursor:pointer;">
+            🍅 <span data-i18n="chip_tomato">ಟೊಮೆಟೊ ಎಲೆ ಹಳದಿ ಪರಿಹಾರ</span>
+          </button>
+          <button type="button" class="btn btn-outline" onclick="triggerVoiceQuery('2.5 ಎಕರೆ ಜಮೀನಿಗೆ ಯಾವ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು ಲಭ್ಯ', 'Which government schemes are available for 2.5 acres')" style="padding:5px 14px; font-size:0.82rem; border-radius:9999px; background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.05); cursor:pointer;">
+            📜 <span data-i18n="chip_schemes">2.5 ಎಕರೆ ಯೋಜನೆಗಳು</span>
+          </button>
+          <button type="button" class="btn btn-outline" onclick="triggerVoiceQuery('ಕೃಷಿ ಭಾಗ್ಯ ಹನಿ ನೀರಾವರಿ ಸಬ್ಸಿಡಿ ಎಷ್ಟು', 'What is Krishi Bhagya drip irrigation subsidy')" style="padding:5px 14px; font-size:0.82rem; border-radius:9999px; background:#ffffff; box-shadow:0 1px 3px rgba(0,0,0,0.05); cursor:pointer;">
+            💧 <span data-i18n="chip_krishi_bhagya">ಕೃಷಿ ಭಾಗ್ಯ ಸಬ್ಸಿಡಿ</span>
+          </button>
+        </div>
+
+        <!-- Krishi Echo Confirmation Card -->
+        <div id="echo-confirmation-card" style="display:none; background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:var(--radius-md); padding:1.4rem; margin-bottom:1.5rem; box-shadow:var(--shadow-sm);">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <span style="font-size:1.2rem;">🔍</span>
+            <h4 style="color:#065f46; font-size:1.05rem; font-weight:700;" data-i18n="echo_card_title">ದೃಢೀಕರಣ ಅಗತ್ಯವಿದೆ</h4>
+          </div>
+          <p id="echo-prompt-text" style="font-size:1.05rem; color:#064e3b; margin-bottom:1.2rem; font-weight:500;"></p>
+          <div style="display:flex; gap:1rem;">
+            <button class="btn btn-emerald" onclick="confirmEcho(true)">
+              <span data-i18n="echo_btn_yes">✓ ಹೌದು, ಸರಿಯಾಗಿದೆ</span>
+            </button>
+            <button class="btn btn-outline" onclick="confirmEcho(false)">
+              <span data-i18n="echo_btn_no">✎ ಸರಿಪಡಿಸಿ</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Text Input & Submit Bar -->
+        <div style="display:flex; gap:10px; margin-bottom:2rem;">
+          <input type="text" id="user-text-input" placeholder="ನಿಮ್ಮ ಕೃಷಿ ಪ್ರಶ್ನೆಯನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ ಅಥವಾ ಮಾತನಾಡಿ..." data-i18n-ph="assistant_input_ph" onkeydown="if(event.key==='Enter') submitUserMessage();">
+          <button class="btn btn-primary" onclick="submitUserMessage()" style="padding: 0 1.8rem; white-space:nowrap;">
+            <span data-i18n="assistant_send_btn">ಕಳುಹಿಸಿ</span>
+          </button>
+        </div>
+
+        <!-- Conversation History Stream -->
+        <div id="assistant-conversation-history" style="display:flex; flex-direction:column; gap:1rem;"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         6. CALCULATOR & SCENARIO LAB
+         ==================================================================== -->
+    <section id="view-calculator" style="display:none;">
+      <div style="margin-bottom:2rem;">
+        <span class="hero-pill">📊 Financial Intelligence</span>
+        <h2 style="color:var(--primary); font-size:1.85rem; font-weight:800; letter-spacing:-0.03em; margin-top:0.4rem;" data-i18n="calc_heading">
+          ಕೃಷಿ ಬಜೆಟ್ ಲ್ಯಾಬ್
+        </h2>
+        <p style="color:var(--text-secondary); font-size:0.95rem;" data-i18n="calc_sub">
+          ಭತ್ತ ಮತ್ತು ಸಾವಯವ ರಾಗಿ ಬೆಳೆಗಳ ಖರ್ಚು, ಆದಾಯ ಮತ್ತು ನಿವ್ವಳ ಲಾಭದ ಹೋಲಿಕೆ.
+        </p>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:1.8rem;">
+        <!-- Scenario A Card -->
+        <div class="card" style="border-top:4px solid #3b82f6;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 data-i18n="scen_a_title">ಭತ್ತದ ಬೆಳೆ (ಮೂಲ ಯೋಜನೆ)</h3>
+            <span class="badge" style="background:#eff6ff; color:#1d4ed8;">BASELINE</span>
+          </div>
+          
+          <label data-i18n="lbl_land_area">ಜಮೀನಿನ ವಿಸ್ತೀರ್ಣ (ಎಕರೆ):</label>
+          <input type="number" id="scenA-acres" value="2.5" step="0.5" style="margin-bottom:12px;">
+
+          <label data-i18n="lbl_yield">ನಿರೀಕ್ಷಿತ ಇಳುವರಿ (ಕ್ವಿಂಟಾಲ್/ಎಕರೆ):</label>
+          <input type="number" id="scenA-yield" value="22" style="margin-bottom:12px;">
+
+          <label data-i18n="lbl_price">ಮಾರಾಟ ಬೆಲೆ (₹ ಪ್ರತಿ ಕ್ವಿಂಟಾಲ್‌ಗೆ):</label>
+          <input type="number" id="scenA-price" value="2200" style="margin-bottom:12px;">
+
+          <label data-i18n="lbl_costs">ಒಟ್ಟು ವೆಚ್ಚ (ಬೀಜ, ಗೊಬ್ಬರ, ಕೂಲಿ ₹):</label>
+          <input type="number" id="scenA-cost" value="45000" style="margin-bottom:12px;">
+        </div>
+
+        <!-- Scenario B Card -->
+        <div class="card" style="border-top:4px solid var(--emerald);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 data-i18n="scen_b_title">ಸಾವಯವ ರಾಗಿ (ಪ್ರಸ್ತಾಪಿತ ಯೋಜನೆ)</h3>
+            <span class="badge badge-match">PROPOSED</span>
+          </div>
+          
+          <label data-i18n="lbl_land_area">ಜಮೀನಿನ ವಿಸ್ತೀರ್ಣ (ಎಕರೆ):</label>
+          <input type="number" id="scenB-acres" value="2.5" step="0.5" style="margin-bottom:12px;">
+
+          <label data-i18n="lbl_yield">ನಿರೀಕ್ಷಿತ ಇಳುವರಿ (ಕ್ವಿಂಟಾಲ್/ಎಕರೆ):</label>
+          <input type="number" id="scenB-yield" value="16" style="margin-bottom:12px;">
+
+          <label data-i18n="lbl_price">ಮಾರಾಟ ಬೆಲೆ (₹ ಪ್ರತಿ ಕ್ವಿಂಟಾಲ್‌ಗೆ):</label>
+          <input type="number" id="scenB-price" value="3800" style="margin-bottom:12px;">
+
+          <label data-i18n="lbl_costs">ಒಟ್ಟು ವೆಚ್ಚ (ಸಾವಯವ ಗೊಬ್ಬರ, ಕೂಲಿ ₹):</label>
+          <input type="number" id="scenB-cost" value="28000" style="margin-bottom:12px;">
+        </div>
+      </div>
+
+      <button class="btn btn-primary" onclick="runFinancialComparison()" style="width:100%; padding:0.9rem; font-size:1.05rem; margin-bottom:2rem;">
+        <span data-i18n="btn_run_comparison">📊 ಲೆಕ್ಕಾಚಾರ ಮಾಡಿ</span>
+      </button>
+
+      <!-- Results Display -->
+      <div id="calculator-results" style="display:none;" class="card">
+        <h3 id="calc-verdict" style="margin-bottom:1.2rem; color:var(--primary);">Comparison Result</h3>
+        <div class="grid-2" style="align-items:center;">
+          <div id="scenario-summary-text" style="font-size:0.95rem; line-height:1.7;"></div>
+          <div style="background:white; padding:1rem; border-radius:var(--radius-md); box-shadow:var(--shadow-sm);">
+            <canvas id="profitComparisonChart" style="max-height:260px;"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         7. CROP DIAGNOSTIC VIEW
+         ==================================================================== -->
+    <section id="view-crop" style="display:none;">
+      <div class="card" style="max-width:760px; margin:0 auto;">
+        <span class="hero-pill">🔬 Agronomic Intelligence</span>
+        <h3 style="font-size:1.6rem; color:var(--primary); margin:0.4rem 0 1rem;" data-i18n="crop_heading">
+          ಬೆಳೆ ರೋಗ ತಪಾಸಣೆ
+        </h3>
+        
+        <label data-i18n="lbl_crop_name">ಬೆಳೆಯ ಹೆಸರು:</label>
+        <div class="input-with-voice" style="margin-bottom:14px;">
+          <input type="text" id="crop-diag-name" value="Tomato" style="padding-right:48px;">
+          <button type="button" onclick="startFieldVoice('crop-diag-name', 'general')" class="input-mic-btn" title="ಮಾತನಾಡಿ">🎙️</button>
+        </div>
+
+        <label data-i18n="lbl_crop_symptoms">ರೋಗದ ಲಕ್ಷಣಗಳನ್ನು ವಿವರಿಸಿ:</label>
+        <div class="input-with-voice" style="margin-bottom:16px;">
+          <textarea id="crop-diag-symptoms" rows="4" style="width:100%; padding-right:48px;" placeholder="ಎಲೆಗಳು ಹಳದಿಯಾಗುತ್ತಿವೆ ಮತ್ತು ಸುರುಳಿಯಾಗುತ್ತಿವೆ..." data-i18n-ph="crop_symptoms_ph"></textarea>
+          <button type="button" onclick="startFieldVoice('crop-diag-symptoms', 'general')" class="input-mic-btn" style="top:12px; right:10px;" title="ಮಾತನಾಡಿ">🎙️</button>
+        </div>
+
+        <button class="btn btn-emerald" onclick="submitCropDiagnostic()" style="width:100%; padding:0.85rem;">
+          <span data-i18n="btn_analyze_crop">ವಿಶ್ಲೇಷಿಸಿ</span>
+        </button>
+
+        <div id="crop-diagnostic-result" style="margin-top:1.8rem;"></div>
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         8. SOIL HEALTH INTERPRETER
+         ==================================================================== -->
+    <section id="view-soil" style="display:none;">
+      <div class="card" style="max-width:760px; margin:0 auto;">
+        <span class="hero-pill">🧪 Soil Health Card Protocol</span>
+        <h3 style="font-size:1.6rem; color:var(--primary); margin:0.4rem 0 1rem;" data-i18n="soil_heading">
+          ಮಣ್ಣು ಆರೋಗ್ಯ ವಿಶ್ಲೇಷಣೆ
+        </h3>
+        
+        <div class="grid-2">
+          <div>
+            <label data-i18n="lbl_soil_ph">pH ಮಟ್ಟ:</label>
+            <input type="number" step="0.1" id="soil-ph" value="6.5" style="margin-bottom:12px;">
+          </div>
+          <div>
+            <label data-i18n="lbl_soil_ec">ವಿದ್ಯುತ್ ವಾಹಕತೆ (EC dS/m):</label>
+            <input type="number" step="0.1" id="soil-ec" value="0.8" style="margin-bottom:12px;">
+          </div>
+          <div>
+            <label data-i18n="lbl_soil_n">ಸಾರಜನಕ (N kg/ha):</label>
+            <input type="number" id="soil-n" value="240" style="margin-bottom:12px;">
+          </div>
+          <div>
+            <label data-i18n="lbl_soil_p">ರಂಜಕ (P kg/ha):</label>
+            <input type="number" id="soil-p" value="18" style="margin-bottom:12px;">
+          </div>
+          <div>
+            <label data-i18n="lbl_soil_k">ಪೊಟ್ಯಾಶ್ (K kg/ha):</label>
+            <input type="number" id="soil-k" value="210" style="margin-bottom:12px;">
+          </div>
+        </div>
+
+        <button class="btn btn-primary" onclick="submitSoilInterpretation()" style="width:100%; margin-top:1.2rem; padding:0.85rem;">
+          <span data-i18n="btn_interpret_soil">ವರದಿ ಪರಿಶೀಲಿಸಿ</span>
+        </button>
+
+        <div id="soil-result-box" style="margin-top:1.8rem;"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       MODAL 1: 5-STAGE VISUAL TIMELINE MODAL
+       ==================================================================== -->
+  <div class="modal-overlay" id="timeline-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="timeline-modal-title" style="color:var(--primary); font-size:1.25rem; font-weight:800; margin:0;" data-i18n="timeline_modal_title">
+            ಅರ್ಜಿ ಪ್ರಗತಿ ಟೈಮ್‌ಲೈನ್
+          </h3>
+          <span id="timeline-modal-subtitle" style="font-size:0.82rem; color:var(--text-muted); font-weight:600;">
+            APP-2026-KM-8421 &bull; PM-KISAN
+          </span>
+        </div>
+        <button onclick="closeTimelineModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--text-muted);">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- 5-Stage Stepper Container -->
+        <div class="timeline-stepper" id="timeline-stepper-container">
+          <!-- Dynamically filled by JS -->
+        </div>
+
+        <!-- Disbursed info box if applicable -->
+        <div id="timeline-disbursed-box" style="display:none; background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:10px; padding:12px 16px; margin-top:16px;">
+          <strong style="color:#065f46; font-size:0.92rem; display:block;" data-i18n="disbursed_box_title">💰 ಸೌಲಭ್ಯ ಜಮೆ ವಿವರ:</strong>
+          <span id="timeline-disbursed-text" style="font-size:0.85rem; color:#064e3b;"></span>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeTimelineModal()">
+          <span data-i18n="modal_close_btn">ಮುಚ್ಚಿ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- ====================================================================
+       MODAL 3: APPLY NOW SCHEME MODAL
+       ==================================================================== -->
+  <div class="modal-overlay" id="apply-modal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h3 id="apply-modal-scheme-name" style="color:var(--primary); font-size:1.25rem; font-weight:800; margin:0;" data-i18n="apply_modal_title">
+            ಯೋಜನೆಗೆ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ
+          </h3>
+          <span id="apply-modal-scheme-sub" style="font-size:0.82rem; color:var(--text-muted);" data-i18n="apply_modal_sub">
+            ಕೃಷಿ ಇಲಾಖೆ, ಕರ್ನಾಟಕ ಸರ್ಕಾರ
+          </span>
+        </div>
+        <button onclick="closeApplyModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer; color:var(--text-muted);">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="apply-scheme-id">
+        
+        <div style="background:#f0fdf4; border:1px solid #a7f3d0; border-radius:10px; padding:12px 16px; margin-bottom:16px;">
+          <div style="font-size:0.8rem; color:#065f46; font-weight:700;" data-i18n="apply_lbl_benefit">ಸೌಲಭ್ಯ ಮೊತ್ತ:</div>
+          <div id="apply-modal-benefit" style="font-size:1.2rem; font-weight:800; color:#064e3b;">₹6,000 / ವರ್ಷ</div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label data-i18n="lbl_applicant_name">ಅರ್ಜಿದಾರರ ಹೆಸರು:</label>
+            <input type="text" id="apply-farmer-name" readonly style="background:#f8fafc; font-weight:700;">
+          </div>
+          <div>
+            <label data-i18n="lbl_farmer_id">ರೈತ ಸಂಖ್ಯೆ:</label>
+            <input type="text" id="apply-farmer-id" readonly style="background:#f8fafc; font-weight:700;">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div>
+            <label data-i18n="lbl_land_acres">ಜಮೀನು:</label>
+            <input type="text" id="apply-land-acres" readonly style="background:#f8fafc;">
+          </div>
+          <div>
+            <label data-i18n="lbl_district_taluk">ಜಿಲ್ಲೆ ಮತ್ತು ತಾಲ್ಲೂಕು:</label>
+            <input type="text" id="apply-location" readonly style="background:#f8fafc;">
+          </div>
+        </div>
+
+        <!-- Required Documents Checklist -->
+        <label style="margin-top:8px;" data-i18n="lbl_verified_docs">ಅಗತ್ಯ ದಾಖಲೆಗಳು:</label>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 14px; margin-bottom:16px; font-size:0.85rem; display:flex; flex-direction:column; gap:6px;">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" checked disabled>
+            <span data-i18n="doc_aadhaar_check">✓ ಆಧಾರ್ ಕಾರ್ಡ್ ದೃಢೀಕರಿಸಲಾಗಿದೆ</span>
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" id="apply-check-rtc" checked>
+            <span data-i18n="doc_rtc_check">✓ ಪಹಣಿ / RTC ಜೋಡಿಸಲಾಗಿದೆ</span>
+          </label>
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" id="apply-check-bank" checked>
+            <span data-i18n="doc_bank_check">✓ ಬ್ಯಾಂಕ್ ಖಾತೆ ಸಕ್ರಿಯವಾಗಿದೆ</span>
+          </label>
+        </div>
+
+        <button type="button" class="btn btn-emerald" onclick="submitSchemeApplication()" style="width:100%; padding:12px; font-size:1rem; font-weight:800;">
+          <span data-i18n="btn_submit_app">✓ ಅರ್ಜಿ ಸಲ್ಲಿಸಿ</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       UNIVERSAL VOICE HEARING ANIMATION OVERLAY
+       (Pulsing ring, 7 dancing equalizer wave bars, live transcript feedback)
+       ==================================================================== -->
+  <div class="voice-hearing-overlay" id="voice-hearing-overlay">
+    <div class="voice-hearing-card">
+      <div class="hearing-pulse-ring">
+        🎙️
+      </div>
+
+      <div class="hearing-field-tag" id="hearing-field-tag">
+        ಹೆಸರು
+      </div>
+
+      <h3 style="color:var(--primary); font-size:1.35rem; font-weight:800; margin-bottom:4px;" id="hearing-status-title">
+        ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ... ಮಾತನಾಡಿ
+      </h3>
+
+      <p style="font-size:0.86rem; color:var(--text-secondary); margin-bottom:8px;" id="hearing-instruction-tip">
+        ನಿಮ್ಮ ಧ್ವನಿಯನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಿ
+      </p>
+
+      <!-- 7 Animated Equalizer Soundwave Bars -->
+      <div class="hearing-wave-container">
+        <span class="hearing-bar"></span>
+        <span class="hearing-bar"></span>
+        <span class="hearing-bar"></span>
+        <span class="hearing-bar"></span>
+        <span class="hearing-bar"></span>
+        <span class="hearing-bar"></span>
+        <span class="hearing-bar"></span>
+      </div>
+
+      <!-- Real-time transcript display box -->
+      <div class="hearing-transcript-box" id="hearing-live-transcript">
+        ...
+      </div>
+
+      <div style="display:flex; gap:10px; justify-content:center; margin-top:14px;">
+        <button type="button" class="btn btn-outline" onclick="cancelHearingVoice()" style="padding:6px 18px; font-size:0.85rem;" id="hearing-cancel-btn">
+          ರದ್ದು
+        </button>
+        <button type="button" class="btn btn-emerald" onclick="confirmHearingVoice()" style="padding:6px 20px; font-size:0.85rem; font-weight:700;" id="hearing-confirm-btn">
+          ✓ ಸರಿ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====================================================================
+       GLOBAL FLOATING VOICE ASSISTANT BUTTON
+       ==================================================================== -->
+  <div class="floating-voice-widget">
+    <div class="floating-voice-tooltip" id="floating-voice-tooltip" data-i18n="floating_tooltip">ಮಾತನಾಡಲು ಒತ್ತಿರಿ</div>
+    <button class="floating-voice-btn" id="floating-mic-btn" onclick="toggleFloatingVoice()" title="ಧ್ವನಿ ಸಹಾಯಕ">
+      🎤
+    </button>
+  </div>
+
+  <script src="/assets/js/app.js"></script>
+</body>
+</html>
