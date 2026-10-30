@@ -428,8 +428,14 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const active = document.querySelector('.nimbus-item.active');
-      if (active) setTimeout(() => updateDroplet(active), 50);
+      if (active) {
+        updateDroplet(active);
+        setTimeout(() => updateDroplet(active), 50);
+      }
     });
+    // Immediate call on script execution
+    const initialActive = document.querySelector('.nimbus-item.active');
+    if (initialActive) updateDroplet(initialActive);
 
     function toggleTone() {
       document.body.classList.toggle('dark-mode');
