@@ -1636,14 +1636,15 @@ function renderDashboardRecentApps(apps) {
       statusBadge = `<span class="badge badge-no-match">${dict.status_rejected}</span>`;
     }
 
-    const rawTitle = activeLanguage === 'en' ? (app.scheme_name || app.scheme_name_kn) : (app.scheme_name_kn || app.scheme_name);
+    const appNumber = app.application_number || app.application_ref || ('APP-2026-KM-' + (1000 + (app.id || 1)));
+    const rawTitle = activeLanguage === 'en' ? (app.scheme_name || app.scheme_name_en || app.scheme_name_kn) : (app.scheme_name_kn || app.scheme_name || app.scheme_name_en);
     const schemeTitle = cleanBilingualText(rawTitle, activeLanguage);
     const deptTitle = activeLanguage === 'en' ? 'Department of Agriculture' : 'ಕೃಷಿ ಇಲಾಖೆ';
     const amt = app.sanctioned_amount ? `₹${Number(app.sanctioned_amount).toLocaleString()}` : (activeLanguage === 'en' ? '₹6,000 / yr' : '₹6,000 / ವರ್ಷ');
 
     return `
       <tr style="border-bottom:1px solid #f1f5f9; transition:background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-        <td style="padding:12px 14px; font-weight:700; color:var(--primary); font-family:monospace;">${app.application_number}</td>
+        <td style="padding:12px 14px; font-weight:700; color:var(--primary); font-family:monospace;">${appNumber}</td>
         <td style="padding:12px 14px;">
           <div style="font-weight:700; color:var(--primary);">${schemeTitle}</div>
           <div style="font-size:0.75rem; color:var(--text-muted);">${deptTitle}</div>
@@ -1652,7 +1653,7 @@ function renderDashboardRecentApps(apps) {
         <td style="padding:12px 14px; font-weight:700; color:#059669;">${amt}</td>
         <td style="padding:12px 14px;">${statusBadge}</td>
         <td style="padding:12px 14px; text-align:right;">
-          <button class="btn btn-outline" onclick="openTimelineModal('${app.application_number}')" style="padding:4px 10px; font-size:0.78rem; border-radius:6px; font-weight:700;">
+          <button class="btn btn-outline" onclick="openTimelineModal('${appNumber}')" style="padding:4px 10px; font-size:0.78rem; border-radius:6px; font-weight:700;">
             ${dict.view_timeline_btn}
           </button>
         </td>
@@ -1971,14 +1972,15 @@ function renderApplicationsTable(apps) {
       statusBadge = `<span class="badge badge-no-match">${dict.status_rejected}</span>`;
     }
 
-    const rawTitle = activeLanguage === 'en' ? (app.scheme_name || app.scheme_name_kn) : (app.scheme_name_kn || app.scheme_name);
+    const appNumber = app.application_number || app.application_ref || ('APP-2026-KM-' + (1000 + (app.id || 1)));
+    const rawTitle = activeLanguage === 'en' ? (app.scheme_name || app.scheme_name_en || app.scheme_name_kn) : (app.scheme_name_kn || app.scheme_name || app.scheme_name_en);
     const schemeTitle = cleanBilingualText(rawTitle, activeLanguage);
     const deptTitle = activeLanguage === 'en' ? 'Department of Agriculture' : 'ಕೃಷಿ ಇಲಾಖೆ';
     const amt = app.sanctioned_amount ? `₹${Number(app.sanctioned_amount).toLocaleString()}` : (activeLanguage === 'en' ? '₹6,000 / yr' : '₹6,000 / ವರ್ಷ');
 
     return `
       <tr style="border-bottom:1px solid #e2e8f0; transition:background 0.2s;" onmouseover="this.style.background='#f8fafc'" onmouseout="this.style.background='transparent'">
-        <td style="padding:14px; font-weight:800; color:var(--primary); font-family:monospace; font-size:0.95rem;">${app.application_number}</td>
+        <td style="padding:14px; font-weight:800; color:var(--primary); font-family:monospace; font-size:0.95rem;">${appNumber}</td>
         <td style="padding:14px;">
           <div style="font-weight:700; color:var(--primary);">${schemeTitle}</div>
           <div style="font-size:0.75rem; color:var(--text-muted);">${deptTitle}</div>
@@ -1987,7 +1989,7 @@ function renderApplicationsTable(apps) {
         <td style="padding:14px; font-weight:800; color:#059669;">${amt}</td>
         <td style="padding:14px;">${statusBadge}</td>
         <td style="padding:14px; text-align:right;">
-          <button class="btn btn-emerald" onclick="openTimelineModal('${app.application_number}')" style="padding:6px 14px; font-size:0.8rem; font-weight:700; border-radius:6px;">
+          <button class="btn btn-emerald" onclick="openTimelineModal('${appNumber}')" style="padding:6px 14px; font-size:0.8rem; font-weight:700; border-radius:6px;">
             ${dict.view_timeline_btn}
           </button>
         </td>
