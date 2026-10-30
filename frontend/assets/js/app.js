@@ -58,7 +58,7 @@ const I18N_DICTIONARY = {
     kpi_benefits_sub: "ಬ್ಯಾಂಕ್ ಖಾತೆಗೆ ನೇರ ವರ್ಗಾವಣೆ",
     recent_apps_title: "ಇತ್ತೀಚಿನ ಅರ್ಜಿಗಳ ಸ್ಥಿತಿ",
     recent_apps_sub: "ಅರ್ಜಿ ಪ್ರಗತಿ, ಪರಿಶೀಲನಾ ಹಂತ ಮತ್ತು ನೇರ ಹಣ ಜಮೆ ವಿವರಗಳು",
-    view_all_apps_btn: "ಎಲ್ಲಾ ಅರ್ಜಿಗಳು ನೋಡಿ &rarr;",
+    view_all_apps_btn: "📋 ಎಲ್ಲಾ ಅರ್ಜಿಗಳು ನೋಡಿ &rarr;",
     th_app_id: "ಅರ್ಜಿ ಸಂಖ್ಯೆ",
     th_scheme_name: "ಯೋಜನೆಯ ಹೆಸರು",
     th_scheme_dept: "ಯೋಜನೆ ಮತ್ತು ಇಲಾಖೆ",
@@ -81,7 +81,7 @@ const I18N_DICTIONARY = {
     schemes_heading: "ಸರ್ಕಾರಿ ಕೃಷಿ ಯೋಜನೆಗಳು",
     schemes_sub: "ಕೇಂದ್ರ ಮತ್ತು ಕರ್ನಾಟಕ ಸರ್ಕಾರದ 20 ಅಧಿಕೃತ ಕೃಷಿ ಯೋಜನೆಗಳು — ನಿಮ್ಮ ಜಮೀನು ಮತ್ತು ಬೆಳೆಗೆ ಅನುಗುಣವಾಗಿ ಪರಿಶೀಲಿಸಲಾಗಿದೆ.",
     reevaluate_schemes_btn: "🔄 ಅರ್ಹತೆ ಮರುಪರಿಶೀಲಿಸಿ",
-    filter_all_schemes: "ಎಲ್ಲಾ ಯೋಜನೆಗಳು (20)",
+    filter_all_schemes: "📋 ಎಲ್ಲಾ ಯೋಜನೆಗಳು (20)",
     filter_dbt: "💵 ನೇರ ನಗದು / ಡಿಬಿಟಿ (7)",
     filter_subsidy: "🚜 ಸಬ್ಸಿಡಿ ಮತ್ತು ಯಂತ್ರೋಪಕರಣ (6)",
     filter_irrigation: "💧 ನೀರಾವರಿ ಮತ್ತು ಕೃಷಿ ಹೊಂಡ (2)",
@@ -134,7 +134,7 @@ const I18N_DICTIONARY = {
     lbl_try_voice: "ಧ್ವನಿ ಉದಾಹರಣೆಗಳು:",
     chip_pmkisan: "ಪಿಎಂ ಕಿಸಾನ್ ಸ್ಥಿತಿ",
     chip_tomato: "ಟೊಮೆಟೊ ಎಲೆ ಹಳದಿ ಪರಿಹಾರ",
-    chip_schemes: "2.5 ಎಕರೆ ಯೋಜನೆಗಳು",
+    chip_schemes: "📜 2.5 ಎಕರೆ ಯೋಜನೆಗಳು",
     chip_krishi_bhagya: "ಕೃಷಿ ಭಾಗ್ಯ ಸಬ್ಸಿಡಿ",
     echo_card_title: "ದೃಢೀಕರಣ ಅಗತ್ಯವಿದೆ",
     echo_btn_yes: "✓ ಹೌದು, ಸರಿಯಾಗಿದೆ",
@@ -298,7 +298,7 @@ const I18N_DICTIONARY = {
     kpi_benefits_sub: "Direct Benefit Transfer",
     recent_apps_title: "Recent Scheme Applications",
     recent_apps_sub: "Application progress, verification stages, and disbursement details",
-    view_all_apps_btn: "View All Applications &rarr;",
+    view_all_apps_btn: "📋 View All Applications &rarr;",
     th_app_id: "Application ID",
     th_scheme_name: "Scheme Name",
     th_scheme_dept: "Scheme & Department",
@@ -321,7 +321,7 @@ const I18N_DICTIONARY = {
     schemes_heading: "Government Agricultural Schemes",
     schemes_sub: "20 Official Central & Karnataka State Schemes — Evaluated against your land and crops.",
     reevaluate_schemes_btn: "🔄 Re-evaluate Eligibility",
-    filter_all_schemes: "All Schemes (20)",
+    filter_all_schemes: "📋 All Schemes (20)",
     filter_dbt: "💵 Direct Benefit Transfer (7)",
     filter_subsidy: "🚜 Subsidies & Machinery (6)",
     filter_irrigation: "💧 Irrigation & Water Ponds (2)",
@@ -374,7 +374,7 @@ const I18N_DICTIONARY = {
     lbl_try_voice: "Try Voice Queries:",
     chip_pmkisan: "PM-KISAN Status",
     chip_tomato: "Tomato Yellow Leaf Cure",
-    chip_schemes: "Schemes for 2.5 Acres",
+    chip_schemes: "📜 Schemes for 2.5 Acres",
     chip_krishi_bhagya: "Krishi Bhagya Subsidy",
     echo_card_title: "Confirmation Required",
     echo_btn_yes: "✓ Yes, Confirmed",
@@ -601,6 +601,23 @@ function setLanguage(lang) {
 // ============================================================================
 // 1. Navigation & Tab Switching
 // ============================================================================
+function updateLiquidNavDroplet() {
+  const activeLink = document.querySelector('.nav-links a.active');
+  const droplet = document.getElementById('liquid-nav-droplet');
+  const navContainer = document.querySelector('.nav-links');
+  if (!activeLink || !droplet || !navContainer) return;
+
+  const linkRect = activeLink.getBoundingClientRect();
+  const navRect = navContainer.getBoundingClientRect();
+
+  const left = linkRect.left - navRect.left;
+  const width = linkRect.width;
+
+  droplet.style.transform = `translateX(${left}px)`;
+  droplet.style.width = `${width}px`;
+}
+window.updateLiquidNavDroplet = updateLiquidNavDroplet;
+
 function showTab(tabName) {
   const tabs = ['dashboard', 'schemes', 'tracking', 'profile', 'assistant', 'calculator', 'crop', 'soil'];
   tabs.forEach(t => {
@@ -621,6 +638,7 @@ function showTab(tabName) {
   if (tabName === 'tracking') loadApplicationsTracking();
   if (tabName === 'profile') loadProfileData();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  requestAnimationFrame(updateLiquidNavDroplet);
 }
 
 function quickAssistantPrompt(text) {
