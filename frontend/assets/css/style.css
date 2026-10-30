@@ -1,7 +1,7 @@
 /* ==========================================================================
    RAITASAATHIAI — MODERN PREMIUM DESIGN SYSTEM
    ========================================================================== */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+Kannada:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+Kannada:wght@400;500;600;700;800&display=swap');
 
 :root {
   /* Brand Palette - Lush Modern Agriculture */
@@ -41,7 +41,10 @@
   --status-unknown-border: #fde68a;
 
   /* Typography */
+  --font-display: 'Outfit', 'Noto Sans Kannada', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-sans: 'Plus Jakarta Sans', 'Noto Sans Kannada', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-numeric: 'Space Grotesk', 'Outfit', monospace;
+  --font-badge: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
   
   /* Geometry & Elevation */
   --radius-xs: 6px;
@@ -80,15 +83,28 @@ html {
 body {
   background-color: var(--bg-page);
   background-image: 
-    radial-gradient(at 0% 0%, rgba(16, 185, 129, 0.06) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(20, 184, 166, 0.05) 0px, transparent 50%);
+    linear-gradient(180deg, rgba(248, 250, 249, 0.92) 0%, rgba(248, 250, 249, 0.96) 35%, rgba(248, 250, 249, 0.93) 100%),
+    url('/assets/images/indian-crops-bg.jpg');
+  background-size: cover;
+  background-position: center top;
   background-attachment: fixed;
   color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 1rem;
   line-height: 1.6;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   width: 100%;
   overflow-x: hidden;
+}
+
+/* Headings with Modern Futuristic Display Typography */
+h1, h2, h3, h4, .brand, .hero h1 {
+  font-family: var(--font-display);
+}
+
+.brand {
+  font-family: var(--font-display) !important;
 }
 
 /* ==========================================================================
@@ -318,62 +334,119 @@ body {
 /* ==========================================================================
    BUTTONS & CONTROLS
    ========================================================================== */
+/* ==========================================================================
+   GLOSSY LIQUID TRANSPARENT BUTTONS WITH SPECULAR LIGHT REFLECTIONS
+   ========================================================================== */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 0.7rem 1.4rem;
+  padding: 0.72rem 1.5rem;
   border-radius: var(--radius-sm);
+  font-family: var(--font-display);
   font-weight: 700;
   font-size: 1rem;
-  border: none;
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
   text-decoration: none;
   line-height: 1.25;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  transform: translateZ(0);
 }
 
+/* Liquid Light Reflection Sweeping Sheen */
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -130%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 25%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(255, 255, 255, 0.12) 75%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: left 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.btn:hover::before {
+  left: 200%;
+}
+
+.btn:active {
+  transform: scale(0.97) translateY(1px);
+}
+
+/* Glossy Liquid Primary Button */
 .btn-primary {
-  background: var(--primary-gradient);
+  background: linear-gradient(135deg, rgba(15, 61, 46, 0.94) 0%, rgba(27, 94, 67, 0.9) 100%);
   color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(15, 61, 46, 0.25);
-  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 
+    0 4px 18px rgba(15, 61, 46, 0.28),
+    inset 0 1px 2px rgba(255, 255, 255, 0.45),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.2);
 }
 
 .btn-primary:hover {
+  background: linear-gradient(135deg, #114e38 0%, #1e6e4f 100%);
+  box-shadow: 
+    0 8px 28px rgba(15, 61, 46, 0.38),
+    0 0 22px rgba(16, 185, 129, 0.25),
+    inset 0 1px 2.5px rgba(255, 255, 255, 0.6);
   transform: translateY(-2px);
-  box-shadow: 0 8px 22px rgba(15, 61, 46, 0.35);
-  background: linear-gradient(135deg, #134e3b 0%, #237454 100%);
-  color: #ffffff !important;
 }
 
+/* Glossy Liquid Emerald Button */
 .btn-emerald {
-  background: var(--emerald-gradient);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.92) 100%);
   color: #ffffff !important;
-  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
-  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 4px 18px rgba(16, 185, 129, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.6),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .btn-emerald:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  box-shadow: 
+    0 8px 28px rgba(16, 185, 129, 0.45),
+    0 0 25px rgba(52, 211, 153, 0.35),
+    inset 0 1px 2.5px rgba(255, 255, 255, 0.75);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
-  color: #ffffff !important;
 }
 
+/* Glossy Liquid Translucent Outline Button */
 .btn-outline {
-  background: #ffffff;
-  border: 1.5px solid #d1d5db;
-  color: var(--text-primary);
-  font-weight: 700;
-  box-shadow: var(--shadow-sm);
+  background: rgba(255, 255, 255, 0.82);
+  border: 1.5px solid rgba(16, 185, 129, 0.32);
+  color: var(--primary);
+  box-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.03),
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.95);
 }
 
 .btn-outline:hover {
-  background: #f9fafb;
-  border-color: #9ca3af;
-  color: var(--primary);
-  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.98);
+  border-color: var(--emerald);
+  color: #064e3b;
+  box-shadow: 
+    0 6px 22px rgba(16, 185, 129, 0.2),
+    inset 0 1px 2.5px rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
 }
 
 /* ==========================================================================
@@ -400,6 +473,8 @@ body {
 }
 
 .hero-pill {
+  font-family: var(--font-badge);
+  letter-spacing: 0.03em;
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -460,23 +535,43 @@ body {
 }
 
 .card {
-  background: var(--surface-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.92);
   border-radius: var(--radius-md);
   padding: 1.8rem;
-  box-shadow: var(--shadow-card);
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  box-shadow: 
+    0 10px 30px -4px rgba(15, 61, 46, 0.06),
+    0 2px 6px -1px rgba(0, 0, 0, 0.02),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
   overflow: hidden;
 }
 
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: var(--shadow-hover);
-  background: var(--surface-card-hover);
-  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow: 
+    0 20px 40px -4px rgba(15, 61, 46, 0.12),
+    0 4px 12px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 2px rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.96);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+/* 4K Indian Farmer & Lush Crop Greeting Hero Card */
+.farmer-greeting-card {
+  margin-bottom: 1.8rem;
+  background: 
+    linear-gradient(90deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.94) 50%, rgba(255, 255, 255, 0.72) 75%, rgba(255, 255, 255, 0.45) 100%),
+    url('/assets/images/indian-farmer-hero.jpg') right center / cover no-repeat !important;
+  border-left: 6px solid var(--emerald) !important;
+  box-shadow: 0 12px 36px -4px rgba(15, 61, 46, 0.1), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  position: relative;
+  overflow: hidden;
 }
 
 .card::before {
@@ -844,6 +939,8 @@ label {
 
 /* Tri-State Badges */
 .badge {
+  font-family: var(--font-badge);
+  letter-spacing: 0.04em;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -981,7 +1078,8 @@ label {
 }
 
 .metric-kpi-value {
-  font-size: 2.25rem;
+  font-family: var(--font-numeric);
+  font-size: 2.35rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--primary);
@@ -1962,6 +2060,11 @@ label {
   max-width: 100%;
   width: 100%;
   margin: 0 auto;
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 253, 244, 0.92) 65%, rgba(255, 255, 255, 0.82) 100%),
+    url('/assets/images/lush-paddy-crops.jpg') right bottom / 420px auto no-repeat !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .camera-mode-switcher {
