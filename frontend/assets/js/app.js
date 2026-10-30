@@ -641,6 +641,10 @@ let activeHearingRecognition = null;
 let hearingAutoCloseTimeout = null;
 
 const HEARING_FIELD_META = {
+  'assistant_global': {
+    tag_kn: 'ಕೃಷಿ ಧ್ವನಿ ಸಹಾಯಕ', tag_en: 'Krishi Voice AI',
+    hint_kn: 'ಯೋಜನೆ, ಬೆಳೆ ರೋಗ ಅಥವಾ ಕೃಷಿ ಪ್ರಶ್ನೆಗಳನ್ನು ಕೇಳಿ', hint_en: 'Ask any farming, scheme, crop disease or soil question'
+  },
   'reg-name': {
     tag_kn: 'ರೈತರ ಹೆಸರು', tag_en: 'Farmer Name',
     hint_kn: 'ನಿಮ್ಮ ಪೂರ್ಣ ಹೆಸರನ್ನು ಸ್ಪಷ್ಟವಾಗಿ ಹೇಳಿ', hint_en: 'Speak your full name clearly'
@@ -759,7 +763,11 @@ function startFieldVoice(fieldId, fieldType = 'general') {
 
   const isKn = activeLanguage === 'kn';
   if (tagEl) tagEl.innerText = isKn ? meta.tag_kn : meta.tag_en;
-  if (titleEl) titleEl.innerText = isKn ? 'ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ... ಮಾತನಾಡಿ' : 'Listening... Please speak';
+  if (titleEl) titleEl.innerText = isKn ? 'ಮುಕ್ತವಾಗಿ ಮಾತನಾಡಿ, ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ..' : "Go ahead, I'm listening..";
+  const modalOrb = document.getElementById('modal-ai-orb');
+  const modalEq = document.getElementById('hearing-equalizer');
+  if (modalOrb) modalOrb.classList.add('listening');
+  if (modalEq) modalEq.classList.add('active');
   if (tipEl) tipEl.innerText = isKn ? meta.hint_kn : meta.hint_en;
   if (transcriptEl) transcriptEl.innerText = '...';
   if (cancelBtn) cancelBtn.innerText = isKn ? 'ರದ್ದು' : 'Cancel';
@@ -787,7 +795,11 @@ function startFieldVoice(fieldId, fieldType = 'general') {
   activeHearingRecognition.interimResults = true;
 
   activeHearingRecognition.onstart = () => {
-    if (titleEl) titleEl.innerText = isKn ? 'ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ... ಮಾತನಾಡಿ' : 'Listening... Please speak';
+    if (titleEl) titleEl.innerText = isKn ? 'ಮುಕ್ತವಾಗಿ ಮಾತನಾಡಿ, ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ..' : "Go ahead, I'm listening..";
+  const modalOrb = document.getElementById('modal-ai-orb');
+  const modalEq = document.getElementById('hearing-equalizer');
+  if (modalOrb) modalOrb.classList.add('listening');
+  if (modalEq) modalEq.classList.add('active');
   };
 
   activeHearingRecognition.onresult = (event) => {
@@ -827,6 +839,11 @@ function startFieldVoice(fieldId, fieldType = 'general') {
 }
 
 function applyVoiceToField(fieldId, fieldType, rawSpeech) {
+  if (fieldId === 'assistant_global' || fieldType === 'assistant') {
+    showTab('assistant');
+    triggerVoiceQuery(rawSpeech, rawSpeech);
+    return;
+  }
   const targetEl = document.getElementById(fieldId);
   const transcriptEl = document.getElementById('hearing-live-transcript');
   const titleEl = document.getElementById('hearing-status-title');
@@ -921,9 +938,22 @@ function cancelHearingVoice() {
   }
   const overlay = document.getElementById('voice-hearing-overlay');
   if (overlay) overlay.classList.remove('active');
+  const modalOrb = document.getElementById('modal-ai-orb');
+  const modalEq = document.getElementById('hearing-equalizer');
+  if (modalOrb) modalOrb.classList.remove('listening');
+  if (modalEq) modalEq.classList.remove('active');
   activeHearingTargetId = null;
   activeHearingFieldType = null;
 }
+
+function toggleHearingActive() {
+  if (activeHearingRecognition) {
+    cancelHearingVoice();
+  } else if (activeHearingTargetId) {
+    startFieldVoice(activeHearingTargetId, activeHearingFieldType || 'general');
+  }
+}
+window.toggleHearingActive = toggleHearingActive;
 
 function confirmHearingVoice() {
   cancelHearingVoice();
@@ -962,6 +992,39 @@ function setListeningUI(listening, isProcessing = false) {
   const container = document.getElementById('mic-container');
   const status = document.getElementById('voice-status');
   const waveBars = document.querySelectorAll('.audio-waves .wave-bar');
+  const mainOrb = document.getElementById('main-ai-orb');
+  const mainEq = document.getElementById('main-ai-equalizer');
+  const mainSub = document.getElementById('ai-orb-status-text');
+  const mainLive = document.getElementById('ai-orb-live-text');
+
+  if (mainOrb) {
+    if (listening) {
+      mainOrb.classList.add('listening');
+      if (mainEq) mainEq.classList.add('active');
+      if (mainSub) {
+        mainSub.innerText = activeLanguage === 'en' ? "Go ahead, I'm listening.." : "ಮುಕ್ತವಾಗಿ ಮಾತನಾಡಿ, ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ..";
+        mainSub.classList.add('active');
+      }
+      if (mainLive && (!mainLive.innerText || mainLive.innerText.includes('Tap the orb') || mainLive.innerText.includes('ಒತ್ತಿರಿ'))) {
+        mainLive.innerText = activeLanguage === 'en' ? "Listening for your voice..." : "ಧ್ವನಿಗಾಗಿ ಆಲಿಸಲಾಗುತ್ತಿದೆ...";
+        mainLive.classList.remove('empty');
+      }
+    } else if (isProcessing) {
+      mainOrb.classList.remove('listening');
+      if (mainEq) mainEq.classList.remove('active');
+      if (mainSub) {
+        mainSub.innerText = activeLanguage === 'en' ? "Analyzing speech & retrieving guidance..." : "ಧ್ವನಿ ವಿಶ್ಲೇಷಿಸಿ ಕೃಷಿ ಮಾಹಿತಿ ಪಡೆಯಲಾಗುತ್ತಿದೆ...";
+        mainSub.classList.remove('active');
+      }
+    } else {
+      mainOrb.classList.remove('listening');
+      if (mainEq) mainEq.classList.remove('active');
+      if (mainSub) {
+        mainSub.innerText = activeLanguage === 'en' ? "Go ahead, I'm listening.." : "ಮುಕ್ತವಾಗಿ ಮಾತನಾಡಿ, ಕೇಳಿಸಿಕೊಳ್ಳುತ್ತಿದ್ದೇವೆ..";
+        mainSub.classList.remove('active');
+      }
+    }
+  }
 
   if (waveAnimationTimer) {
     clearInterval(waveAnimationTimer);
@@ -1053,6 +1116,11 @@ function initSpeech() {
       const currentText = (finalTranscript || interim).trim();
       const inputEl = document.getElementById('user-text-input');
       if (inputEl && currentText) inputEl.value = currentText;
+      const mainLive = document.getElementById('ai-orb-live-text');
+      if (mainLive && currentText) {
+        mainLive.innerText = `"${cleanBilingualText(currentText, activeLanguage)}"`;
+        mainLive.classList.remove('empty');
+      }
 
       const status = document.getElementById('voice-status');
       if (status && currentText) {
@@ -1151,45 +1219,7 @@ function triggerVoiceQuery(knQuery, enQuery) {
 window.triggerVoiceQuery = triggerVoiceQuery;
 
 function toggleFloatingVoice() {
-  window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!window.SpeechRecognition) {
-    alert(activeLanguage === 'en' ? "Speech recognition not supported." : "ಧ್ವನಿ ಸೌಲಭ್ಯ ಬೆಂಬಲಿತವಾಗಿಲ್ಲ.");
-    return;
-  }
-
-  const btn = document.getElementById('floating-mic-btn');
-  const tooltip = document.getElementById('floating-voice-tooltip');
-
-  if (isFloatingRecording && floatingRecognition) {
-    floatingRecognition.stop();
-    return;
-  }
-
-  floatingRecognition = new window.SpeechRecognition();
-  floatingRecognition.lang = activeLanguage === 'en' ? 'en-IN' : 'kn-IN';
-  floatingRecognition.continuous = false;
-  floatingRecognition.interimResults = false;
-
-  floatingRecognition.onstart = () => {
-    isFloatingRecording = true;
-    if (btn) btn.classList.add('recording');
-    if (tooltip) tooltip.innerText = activeLanguage === 'en' ? 'Listening...' : 'ಆಲಿಸಲಾಗುತ್ತಿದೆ...';
-  };
-
-  floatingRecognition.onresult = (event) => {
-    const transcript = event.results[0][0].transcript.trim();
-    if (tooltip) tooltip.innerText = `"${transcript}"`;
-    handleVoiceCommand(transcript);
-  };
-
-  floatingRecognition.onerror = () => resetFloatingVoiceUI();
-  floatingRecognition.onend = () => resetFloatingVoiceUI();
-
-  try {
-    floatingRecognition.start();
-  } catch (e) {
-    resetFloatingVoiceUI();
-  }
+  startFieldVoice('assistant_global', 'assistant');
 }
 
 function resetFloatingVoiceUI() {
