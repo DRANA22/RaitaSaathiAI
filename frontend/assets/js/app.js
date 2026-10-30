@@ -598,11 +598,13 @@ function setLanguage(lang) {
   loadProfileData();
   loadNotifications();
   if (recognition) recognition.lang = (activeLanguage === 'en' ? 'en-IN' : 'kn-IN');
+  requestAnimationFrame(updateLiquidNavDroplet);
 }
 
 // ============================================================================
 // 1. Navigation & Tab Switching
 // ============================================================================
+let isLiquidNavInitialised = false;
 function updateLiquidNavDroplet() {
   const activeLink = document.querySelector('.nav-links a.active');
   const droplet = document.getElementById('liquid-nav-droplet');
@@ -613,10 +615,26 @@ function updateLiquidNavDroplet() {
   const navRect = navContainer.getBoundingClientRect();
 
   const left = linkRect.left - navRect.left;
+  const top = linkRect.top - navRect.top;
   const width = linkRect.width;
+  const height = linkRect.height;
 
-  droplet.style.transform = `translateX(${left}px)`;
+  if (!isLiquidNavInitialised) {
+    droplet.style.transition = 'none';
+    droplet.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+    droplet.style.width = `${width}px`;
+    droplet.style.height = `${height}px`;
+    droplet.style.opacity = '1';
+    droplet.offsetHeight; // force reflow
+    droplet.style.transition = '';
+    isLiquidNavInitialised = true;
+    return;
+  }
+
+  droplet.style.transform = `translate3d(${left}px, ${top}px, 0)`;
   droplet.style.width = `${width}px`;
+  droplet.style.height = `${height}px`;
+  droplet.style.opacity = '1';
 }
 window.updateLiquidNavDroplet = updateLiquidNavDroplet;
 
@@ -625,7 +643,17 @@ function showTab(tabName) {
   tabs.forEach(t => {
     const el = document.getElementById(`view-${t}`);
     const nav = document.getElementById(`nav-${t}`);
-    if (el) el.style.display = (t === tabName) ? 'block' : 'none';
+    if (el) {
+      if (t === tabName) {
+        el.style.display = 'block';
+        el.classList.remove('view-tab-animate');
+        void el.offsetWidth; // re-trigger animation
+        el.classList.add('view-tab-animate');
+      } else {
+        el.style.display = 'none';
+        el.classList.remove('view-tab-animate');
+      }
+    }
     if (nav) {
       if (t === tabName) nav.classList.add('active');
       else nav.classList.remove('active');
@@ -2870,4 +2898,6 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   const hash = window.location.hash.replace('#', '');
   if (hash) showTab(hash);
+  setTimeout(updateLiquidNavDroplet, 60);
+  window.addEventListener('resize', updateLiquidNavDroplet);
 });
